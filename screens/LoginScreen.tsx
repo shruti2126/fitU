@@ -3,34 +3,39 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/core';
 
-const LoginScreen = () => {
+
+type loginScreenProps = {
+  navigation: any;
+};
+
+const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
   
-    const navigation = useNavigation()
+    navigation = useNavigation()
     const auth = getAuth();
 
-    // useEffect(() => {
-    //     auth.onAuthStateChanged(user => {
-    //         if(user) {
-    //             navigation.navigate()
-    //         }
-    //     })
-    // });
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if(user) {
+                navigation.navigate("Home")
+            }
+        })
+    }, []);
 
     
     const signUp = () => {
-        console.log("here")
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
             console.log('Registered and logged in with: ', user.email)
+            
         })
         .catch((error) => {
             alert(error.message)
         });
-    }
+    };
 
     const login = () => {
         signInWithEmailAndPassword(auth, email, password)
@@ -61,12 +66,12 @@ const LoginScreen = () => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={()=> {login}}
+                <TouchableOpacity onPress={login}
                 style={styles.button}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={()=> {signUp}}
+                <TouchableOpacity onPress={signUp}
                 style={[styles.button, styles.buttonOutline]}>
                     <Text style={styles.buttonOutlineText}>Register</Text>
                 </TouchableOpacity>
@@ -75,9 +80,8 @@ const LoginScreen = () => {
 
         </KeyboardAvoidingView>
     );
-}
+};
 
-export default LoginScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -125,3 +129,5 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
   })
+
+  export default LoginScreen;

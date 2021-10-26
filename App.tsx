@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
-import RegisterScreen from './screens/RegisterScreen.js';
 import { initializeApp } from "firebase/app";
 import firebaseConfig from './config/config';
 
