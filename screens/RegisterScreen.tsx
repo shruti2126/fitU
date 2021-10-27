@@ -31,11 +31,14 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
             alert(error.message)
         });
     };
-    const image = {uri: "https://i.stack.imgur.com/cEz3G.jpg"};
+    //const image = {uri: "https://i.stack.imgur.com/cEz3G.jpg"};
     return (
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={require("../tree.jpeg")} style={styles.image}>
         <KeyboardAvoidingView style={styles.container} behavior="padding">
             <View style={styles.inputContainer}>
+            <View style={styles.titleContainer}>
+               <Text style={styles.heading}>fitU</Text>
+            </View>
             <TextInput 
                 placeholder="Username"
                 onChangeText={setUsername}
@@ -55,7 +58,7 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
                 style={styles.input}
                 secureTextEntry={true} />
             </View>
-            <View>
+            <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={signUp}
                 style={[styles.button, styles.buttonOutline]}>
                     <Text style={styles.buttonOutlineText}>Register</Text>
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     inputContainer: {
-      width: '80%'
+      width: '50%'
     },
     input: {
       backgroundColor: 'white',
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
       marginTop: 5,
     },
     buttonContainer: {
-      width: '60%',
+      width: '50%',
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 40,
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
       marginTop : 10
     },
     titleContainer : {
-      width: '60%',
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 15,

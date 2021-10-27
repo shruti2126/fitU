@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {getAuth} from 'firebase/auth'
 import { NavigationRouteContext, useNavigation } from '@react-navigation/core'
 
@@ -18,6 +18,10 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
         })
     }
     return (
+      <ImageBackground source={require("../leg.jpeg")} style={styles.image}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.heading}>fitU</Text>
+        </View>
         <View style={styles.container}>
           <Text>Email: {auth.currentUser?.email}</Text>
           <TouchableOpacity
@@ -27,6 +31,7 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
             <Text style={styles.buttonText}>Sign out</Text>
           </TouchableOpacity>
         </View>
+        </ImageBackground>
       )
     }
     
@@ -50,5 +55,26 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
         color: 'white',
         fontWeight: '700',
         fontSize: 16,
+      },
+      image: {
+        flex: 1,
+        justifyContent: "center",
+        alignContent: 'center',
+        width: '100%',
+        height: '100%',
+      },
+      text: {
+        marginTop : 10
+      },
+      titleContainer : {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 15,
+        marginBottom: 25
+      },
+      heading: {
+        fontSize: 100,
+        color: "#702963"
       },
     })
