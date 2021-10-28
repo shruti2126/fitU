@@ -9,10 +9,10 @@ const ProfileCard: React.FC<homeScreenProps> = ({
     card_title,
 }) => {
     return (
-        <View>
-            <View style={styles.container}>
-                
-            </View>
+        <View style={styles.container}>
+            <Text style={styles.text_title}>Today's Progress</Text>
+            <Text style={styles.text_body}>Steps Walked: </Text>
+            <Text style={styles.text_body}>Hours Slept Last night: </Text>
         </View>
     )
 }
