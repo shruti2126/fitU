@@ -42,7 +42,9 @@ const ProfileCard: React.FC<homeScreenProps> = ({
         <View style={styles.container}>
 
             <View style={styles.profile_header}>
-                <Text style={styles.text_title}>Welcome! {auth.currentUser.displayName ? auth.currentUser.displayName: 'User'} </Text>
+                <Text style={styles.text_title}>
+                    Welcome {auth.currentUser.displayName ? auth.currentUser.displayName: 'User'}!
+                </Text>
             </View>
 
             <View> 
@@ -68,9 +70,10 @@ const ProfileCard: React.FC<homeScreenProps> = ({
             <Pressable 
                 style={styles.text_body}
                 onPress={() => alert("see more goals")}
-            > See more
+            > 
+                See more/Add Goals
             </Pressable>
-            
+
         </View>
     )
 }
