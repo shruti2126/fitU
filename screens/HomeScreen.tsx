@@ -3,6 +3,8 @@ import React from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {getAuth} from 'firebase/auth'
 import { NavigationRouteContext, useNavigation } from '@react-navigation/core'
+import Card from "../components/Card"
+import ProfileCard from "../components/ProfileCard"
 
 type homeScreenProps = {
     navigation: any;
@@ -11,28 +13,42 @@ type homeScreenProps = {
 const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
     navigation = useNavigation()
     const auth = getAuth()
+    console.log(auth.currentUser.displayName)
     const signOut = () => {
         auth.signOut()
         .then(() => {
             navigation.replace("Login")
         })
     }
+
+    console.log(auth);
+    
+
     return (
-      <ImageBackground source={require("../leg.jpeg")} style={styles.image}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.heading}>fitU</Text>
-        </View>
-        <View style={styles.container}>
-          <Text>Email: {auth.currentUser?.email}</Text>
-          <TouchableOpacity
-            onPress={signOut}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Sign out</Text>
-          </TouchableOpacity>
-        </View>
-        </ImageBackground>
-      )
+      <View style={styles.container}>
+        <ProfileCard />
+        <Card card_title={"Steps"} nav_function={() => alert("Steps")}/>
+        <Card card_title={"Sleep"} nav_function={() => alert("Sleep")}/>
+      </View>
+    )
+
+    // return (
+    //   <ImageBackground source={require("../leg.jpeg")} style={styles.image}>
+    //     <View style={styles.square}></View>
+    //     <View style={styles.titleContainer}>
+    //       <Text style={styles.heading}>fitU</Text>
+    //     </View>
+    //     <View style={styles.container}>
+    //       <Text>Email: {auth.currentUser?.email}</Text>
+    //       <TouchableOpacity
+    //         onPress={signOut}
+    //         style={styles.button}
+    //       >
+    //         <Text style={styles.buttonText}>Sign out</Text>
+    //       </TouchableOpacity>
+    //     </View>
+    //     </ImageBackground>
+    //   )
     }
     
     export default HomeScreen;
@@ -41,7 +57,8 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
       container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: "#FFFFFF"
       },
        button: {
         backgroundColor: '#0782F9',
