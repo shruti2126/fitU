@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Image, FlatList } from 'react-native'
+import { View, StyleSheet, Text, Pressable, Image, FlatList } from 'react-native'
+import {getAuth} from 'firebase/auth'
+
 
 type homeScreenProps = {
     card_title?: string;
@@ -29,15 +31,25 @@ const DATA = [
 const ProfileCard: React.FC<homeScreenProps> = ({ 
     card_title,
 }) => {
+
+    const auth = getAuth()
+
     const renderItem = ({ item }) => (
         <Item title={item.title} />
     );
 
     return (
         <View style={styles.container}>
-            <Text style={styles.text_title}>Today's Progress</Text>
-            <Text style={styles.text_body}>Steps Walked: </Text>
-            <Text style={styles.text_body}>Hours Slept Last night: </Text>
+
+            <View style={styles.profile_header}>
+                <Text style={styles.text_title}>Welcome! {auth.currentUser.displayName ? auth.currentUser.displayName: 'User'} </Text>
+            </View>
+
+            <View> 
+                <Text style={styles.text_title}>Today's Progress</Text>
+                <Text style={styles.text_body}>Steps Walked: </Text>
+                <Text style={styles.text_body}>Hours Slept Last night: </Text>
+            </View>
 
             <Text style={[
                 styles.text_title,
@@ -53,7 +65,12 @@ const ProfileCard: React.FC<homeScreenProps> = ({
                 keyExtractor={item => item.id}
             />
 
-            <Text style={styles.text_body}>See more </Text>
+            <Pressable 
+                style={styles.text_body}
+                onPress={() => alert("see more goals")}
+            > See more
+            </Pressable>
+            
         </View>
     )
 }
@@ -63,11 +80,15 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         backgroundColor: "#E8E8E8",
         borderRadius: 10,
-        height: 200,
+        height: 300,
         width: 350,
         margin: 10,
         paddingLeft: 15,
         paddingTop: 5
+    },
+    profile_header: {
+        textAlign: "center",
+        marginBottom: 20
     },
     header: {},
     body: {

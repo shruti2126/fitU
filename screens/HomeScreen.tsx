@@ -26,7 +26,7 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-        <ProfileCard />
+        <ProfileCard auth={auth}/>
         <Card card_title={"Steps"} nav_function={() => alert("Steps")}/>
         <Card card_title={"Sleep"} nav_function={() => alert("Sleep")}/>
       </View>
