@@ -5,6 +5,9 @@ import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 
+import Steps from "../screens/Steps";
+import Sleep from "../screens/Sleep";
+
 const MainStack = createStackNavigator()
 
 const MainNavigator: React.FC = () => {
@@ -15,6 +18,8 @@ const MainNavigator: React.FC = () => {
             <Screen name="Login" component={LoginScreen} />
             <Screen name="Home" component={HomeScreen} />
             <Screen name="Register" component={RegisterScreen} />
+            <Screen name="Steps" component={Steps} />
+            <Screen name="Sleep" component={Sleep} />
         </Navigator>
     )
 }

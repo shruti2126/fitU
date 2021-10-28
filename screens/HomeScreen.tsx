@@ -13,7 +13,6 @@ type homeScreenProps = {
 const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
     navigation = useNavigation()
     const auth = getAuth()
-    console.log(auth.currentUser.displayName)
     const signOut = () => {
         auth.signOut()
         .then(() => {
@@ -27,8 +26,8 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
     return (
       <View style={styles.container}>
         <ProfileCard/>
-        <Card card_title={"Steps"} nav_function={() => alert("Steps")}/>
-        <Card card_title={"Sleep"} nav_function={() => alert("Sleep")}/>
+        <Card card_title={"Steps"} nav_function={() => navigation.navigate("Steps")}/>
+        <Card card_title={"Sleep"} nav_function={() => navigation.navigate("Sleep")}/>
 
         <TouchableOpacity
             onPress={signOut}
