@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar, Platform } from "react-native";
+import { StyleSheet, Text, View, SectionList, Platform, Image } from "react-native";
+import CircleButton from '../components/CircleButton';
 
 const DATA = [
     {
@@ -33,9 +34,16 @@ const Goals = () => {
             />
 
             <View style={ styles.bottomView} >
-            
-            <Text >This is Bottom View.</Text>
-
+               <CircleButton
+                    text="Btn-4"
+                    size={70}
+                    color="#00bcd4"
+                    textColor="white"
+                    margin={10}
+                    fontSize={20}
+                    source={{uri: "./plus.png"}}
+                    onPress={() => alert("add goal")}
+                />
             </View>
         </View>
     )
@@ -60,13 +68,10 @@ const styles = StyleSheet.create({
       fontSize: 24
     },
     bottomView:{
- 
         width: '100%', 
         height: 50, 
-        backgroundColor: '#FF9800', 
-        justifyContent: 'center', 
+        justifyContent: 'flex-end', 
         alignItems: 'center',
-        position: 'absolute',
         bottom: 0
     },
 });
