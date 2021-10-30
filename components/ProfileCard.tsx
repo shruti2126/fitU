@@ -72,6 +72,7 @@ const ProfileCard: React.FC<homeScreenProps> = ({
             <Pressable 
                 style={styles.text_body}
                 onPress={goal_navigation}
+                
             > 
                 <Text> See more/Add Goals </Text>
             </Pressable>
