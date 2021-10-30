@@ -5,6 +5,7 @@ import {getAuth} from 'firebase/auth'
 
 type homeScreenProps = {
     card_title?: string;
+    goal_navigation: () => void;
 };
 
 const DATA = [
@@ -30,6 +31,7 @@ const DATA = [
 
 const ProfileCard: React.FC<homeScreenProps> = ({ 
     card_title,
+    goal_navigation
 }) => {
 
     const auth = getAuth()
@@ -43,7 +45,7 @@ const ProfileCard: React.FC<homeScreenProps> = ({
 
             <View style={styles.profile_header}>
                 <Text style={styles.text_title}>
-                    Welcome {auth.currentUser.displayName ? auth.currentUser.displayName: 'User'}!
+                    Welcome {auth.currentUser.displayName ? auth.currentUser.displayName: 'Couch Potato'}!
                 </Text>
             </View>
 
@@ -69,9 +71,9 @@ const ProfileCard: React.FC<homeScreenProps> = ({
 
             <Pressable 
                 style={styles.text_body}
-                onPress={() => alert("see more goals")}
+                onPress={goal_navigation}
             > 
-                See more/Add Goals
+                <Text> See more/Add Goals </Text>
             </Pressable>
 
         </View>

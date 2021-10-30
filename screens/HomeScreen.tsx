@@ -25,16 +25,16 @@ const HomeScreen: React.FC<homeScreenProps> = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-        <ProfileCard/>
+        <ProfileCard goal_navigation={() => navigation.navigate("Goals")}/>
         <Card card_title={"Steps"} nav_function={() => navigation.navigate("Steps")}/>
         <Card card_title={"Sleep"} nav_function={() => navigation.navigate("Sleep")}/>
 
         <TouchableOpacity
             onPress={signOut}
             style={styles.button}
-          >
+        >
             <Text style={styles.buttonText}>Sign out</Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     )
 
