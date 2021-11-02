@@ -24,51 +24,57 @@ const Item = ({ title }) => (
 const Goals = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const saveGoal = ():void => {
+    setModalVisible(!modalVisible)
+    alert("Saved Goal")
+  }
+
     return (
         <View style={styles.container}>
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-        presentationStyle={'fullScreen'}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
 
-            <SectionList
-                sections={DATA}
-                keyExtractor={(item, index) => item + index}
-                renderItem={ ({ item }) => <Item title={item} /> }
-                renderSectionHeader={({ section: { title } }) => (
-                        <Text style={styles.header}>{title}</Text>
-                )}
-            />
-
-            <View style={ styles.bottomView} >
-               <CircleButton
-                    text="Btn-4"
-                    size={70}
-                    color="#00bcd4"
-                    textColor="white"
-                    margin={10}
-                    fontSize={20}
-                    source={{uri: "./plus.png"}}
-                    onPress={() => setModalVisible(!modalVisible)}
-                />
+          <Modal
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setModalVisible(!modalVisible);
+            }}
+            presentationStyle={'fullScreen'}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>New Goal</Text>
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => saveGoal()}
+                >
+                  <Text style={styles.textStyle}>Save</Text>
+                </Pressable>
+              </View>
             </View>
+          </Modal>
+
+          <SectionList
+              sections={DATA}
+              keyExtractor={(item, index) => item + index}
+              renderItem={ ({ item }) => <Item title={item} /> }
+              renderSectionHeader={({ section: { title } }) => (
+                      <Text style={styles.header}>{title}</Text>
+              )}
+          />
+
+          <View style={ styles.bottomView} >
+              <CircleButton
+                  text="Btn-4"
+                  size={70}
+                  color="#00bcd4"
+                  textColor="white"
+                  margin={10}
+                  fontSize={20}
+                  source={{uri: "./plus.png"}}
+                  onPress={() => setModalVisible(!modalVisible)}
+              />
+          </View>
         </View>
     )
 }
