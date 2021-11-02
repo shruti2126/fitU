@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, SectionList, Platform, Image, Modal, Alert, Pressable } from "react-native";
+import { StyleSheet, Text, View, SectionList, Platform, Image, Modal, Alert, Pressable, TextInput } from "react-native";
 import CircleButton from '../components/CircleButton';
 
 const DATA = [
@@ -23,59 +23,68 @@ const Item = ({ title }) => (
 
 const Goals = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [text, onChangeText] = React.useState("");
+
 
   const saveGoal = ():void => {
     setModalVisible(!modalVisible)
     alert("Saved Goal")
   }
 
-    return (
-        <View style={styles.container}>
+  return (
+      <View style={styles.container}>
+        
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(!modalVisible);
+          }}
+          presentationStyle={'fullScreen'}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>New Goal</Text>
 
-          <Modal
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-            presentationStyle={'fullScreen'}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>New Goal</Text>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => saveGoal()}
-                >
-                  <Text style={styles.textStyle}>Save</Text>
-                </Pressable>
-              </View>
-            </View>
-          </Modal>
-
-          <SectionList
-              sections={DATA}
-              keyExtractor={(item, index) => item + index}
-              renderItem={ ({ item }) => <Item title={item} /> }
-              renderSectionHeader={({ section: { title } }) => (
-                      <Text style={styles.header}>{title}</Text>
-              )}
-          />
-
-          <View style={ styles.bottomView} >
-              <CircleButton
-                  text="Btn-4"
-                  size={70}
-                  color="#00bcd4"
-                  textColor="white"
-                  margin={10}
-                  fontSize={20}
-                  source={{uri: "./plus.png"}}
-                  onPress={() => setModalVisible(!modalVisible)}
+              <TextInput
+                 style={styles.input}
+                onChangeText={onChangeText}
+                value={text}
               />
+
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => saveGoal()}
+              >
+                <Text style={styles.textStyle}>Save</Text>
+              </Pressable>
+            </View>
           </View>
+        </Modal>
+
+        <SectionList
+            sections={DATA}
+            keyExtractor={(item, index) => item + index}
+            renderItem={ ({ item }) => <Item title={item} /> }
+            renderSectionHeader={({ section: { title } }) => (
+                    <Text style={styles.header}>{title}</Text>
+            )}
+        />
+
+        <View style={ styles.bottomView} >
+            <CircleButton
+                text="Btn-4"
+                size={70}
+                color="#00bcd4"
+                textColor="white"
+                margin={10}
+                fontSize={20}
+                source={{uri: "./plus.png"}}
+                onPress={() => setModalVisible(!modalVisible)}
+            />
         </View>
+      </View>
     )
 }
 
@@ -142,6 +151,12 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       padding: 10,
       elevation: 2
+    },
+    input: {
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
     },
 });
 
