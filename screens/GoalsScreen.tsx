@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, View, SectionList, Platform, Image } from "react-native";
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, SectionList, Platform, Image, Modal, Alert, Pressable } from "react-native";
 import CircleButton from '../components/CircleButton';
 
 const DATA = [
@@ -22,8 +22,32 @@ const Item = ({ title }) => (
 
 
 const Goals = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+
     return (
         <View style={styles.container}>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+        presentationStyle={'fullScreen'}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello World!</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+
             <SectionList
                 sections={DATA}
                 keyExtractor={(item, index) => item + index}
@@ -42,7 +66,7 @@ const Goals = () => {
                     margin={10}
                     fontSize={20}
                     source={{uri: "./plus.png"}}
-                    onPress={() => alert("add goal")}
+                    onPress={() => setModalVisible(!modalVisible)}
                 />
             </View>
         </View>
@@ -73,6 +97,45 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end', 
         alignItems: 'center',
         bottom: 0
+    },
+
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
     },
 });
 
