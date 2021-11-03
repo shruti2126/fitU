@@ -1,114 +1,99 @@
-import React from 'react'
-import { View, StyleSheet, Text, Pressable, Image, FlatList } from 'react-native'
-import {getAuth} from 'firebase/auth'
-
+import React from 'react';
+import { View, StyleSheet, Text, Pressable, Image, FlatList } from 'react-native';
+import { getAuth } from 'firebase/auth';
 
 type homeScreenProps = {
-    card_title?: string;
-    goal_navigation: () => void;
+	card_title?: string;
+	goal_navigation: () => void;
 };
 
 const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Goal 1',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Goal 2',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Goal 3',
-    },
-  ];
+	{
+		id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+		title: 'Goal 1'
+	},
+	{
+		id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+		title: 'Goal 2'
+	},
+	{
+		id: '58694a0f-3da1-471f-bd96-145571e29d72',
+		title: 'Goal 3'
+	}
+];
 
-  const Item = ({ title }) => (
-    <View>
-      <Text>{title}</Text>
-    </View>
-  );
+const Item = ({ title }) => (
+	<View>
+		<Text>{title}</Text>
+	</View>
+);
 
-const ProfileCard: React.FC<homeScreenProps> = ({ 
-    card_title,
-    goal_navigation
-}) => {
+const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation }) => {
+	const auth = getAuth();
 
-    const auth = getAuth()
+	const renderItem = ({ item }) => <Item title={item.title} />;
 
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-    );
+	return (
+		<View style={styles.container}>
+			<View style={styles.profile_header}>
+				<Text style={styles.text_title}>
+					Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
+				</Text>
+			</View>
 
-    return (
-        <View style={styles.container}>
+			<View>
+				<Text style={styles.text_title}>Today's Progress</Text>
+				<Text style={styles.text_body}>Steps Walked: </Text>
+				<Text style={styles.text_body}>Hours Slept Last night: </Text>
+			</View>
 
-            <View style={styles.profile_header}>
-                <Text style={styles.text_title}>
-                    Welcome {auth.currentUser.displayName ? auth.currentUser.displayName: 'Couch Potato'}!
-                </Text>
-            </View>
+			<Text
+				style={[
+					styles.text_title,
+					{
+						marginTop: 5
+					}
+				]}
+			>
+				Daily Goals
+			</Text>
+			<FlatList data={DATA} renderItem={renderItem} keyExtractor={(item) => item.id} />
 
-            <View> 
-                <Text style={styles.text_title}>Today's Progress</Text>
-                <Text style={styles.text_body}>Steps Walked: </Text>
-                <Text style={styles.text_body}>Hours Slept Last night: </Text>
-            </View>
-
-            <Text style={[
-                styles.text_title,
-                {
-                    marginTop: 5
-                }
-            ]}>
-                Daily Goals
-            </Text>
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
-
-            <Pressable 
-                style={styles.text_body}
-                onPress={goal_navigation}
-                
-            > 
-                <Text> See more/Add Goals </Text>
-            </Pressable>
-
-        </View>
-    )
-}
+			<Pressable style={styles.text_body} onPress={goal_navigation}>
+				<Text> See more/Add Goals </Text>
+			</Pressable>
+		</View>
+	);
+};
 
 const styles = StyleSheet.create({
-    container: {
-        alignSelf: "center",
-        backgroundColor: "#E8E8E8",
-        borderRadius: 10,
-        height: 300,
-        width: 350,
-        margin: 10,
-        paddingLeft: 15,
-        paddingTop: 5
-    },
-    profile_header: {
-        textAlign: "center",
-        marginBottom: 20
-    },
-    header: {},
-    body: {
-        marginTop: 7
-    },
-    text_title: {
-        color: "#1F283A",
-        fontWeight: "700",
-        fontSize: 25,
-        // paddingLeft: 15
-    },
-    text_body: {
-        marginBottom: 2
-    },
-})
+	container: {
+		alignSelf: 'center',
+		backgroundColor: '#E8E8E8',
+		borderRadius: 10,
+		height: 300,
+		width: 350,
+		margin: 10,
+		paddingLeft: 15,
+		paddingTop: 5
+	},
+	profile_header: {
+		textAlign: 'center',
+		marginBottom: 20
+	},
+	header: {},
+	body: {
+		marginTop: 7
+	},
+	text_title: {
+		color: '#1F283A',
+		fontWeight: '700',
+		fontSize: 25
+		// paddingLeft: 15
+	},
+	text_body: {
+		marginBottom: 2
+	}
+});
 
-export default ProfileCard
+export default ProfileCard;
