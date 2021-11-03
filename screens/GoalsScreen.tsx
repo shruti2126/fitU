@@ -25,10 +25,14 @@ const Goals = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [text, onChangeText] = React.useState("");
 
+let test = DATA[0].data;
+let x = 1;
 
   const saveGoal = ():void => {
+    test.push(text);
+    onChangeText("");
     setModalVisible(!modalVisible)
-    alert("Saved Goal")
+    // alert("Saved Goal")
   }
 
   return (
