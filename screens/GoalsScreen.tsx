@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SectionList, Platform, Image, Modal, Alert, Pressable, TextInput } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	View,
+	SectionList,
+	Platform,
+	Image,
+	Modal,
+	Alert,
+	Pressable,
+	TextInput,
+	Button
+} from 'react-native';
 import CircleButton from '../components/CircleButton';
 
 interface Goal {
@@ -12,11 +24,11 @@ const DATA = [
 	{
 		title: 'Daily Steps Goal',
 		data: []
+	},
+	{
+		title: 'Daily Sleep Goal',
+		data: []
 	}
-	// {
-	// 	title: 'Daily Sleep Goal',
-	// 	data: [ 'French Fries' ]
-	// }
 ];
 
 const Item = ({ title }) => (
@@ -27,6 +39,7 @@ const Item = ({ title }) => (
 
 const Goals = () => {
 	const [ modalVisible, setModalVisible ] = useState(false);
+	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>();
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 
@@ -38,11 +51,16 @@ const Goals = () => {
 			title: newGoalTitle,
 			note: newGoalNote
 		};
-		test.push(newGoal);
+
+		if (isNewGoalTypeSteps) DATA[0].data.push(newGoal);
+		else DATA[1].data.push(newGoal);
 
 		console.log(newGoal);
+		console.log(isNewGoalTypeSteps);
 
 		setNewGoalTitle('');
+		setNewGoalNote('');
+
 		setModalVisible(!modalVisible);
 		// alert("Saved Goal")
 	};
@@ -61,6 +79,12 @@ const Goals = () => {
 				<View style={styles.centeredView}>
 					<View style={styles.modalView}>
 						<Text style={styles.modalTitle}>New Goal</Text>
+
+						<Text style={styles.modalText}>Type of Goal</Text>
+						<View style={styles.fixToText}>
+							<Button title="Steps" onPress={() => setIsNewGoalTypeSteps(true)} />
+							<Button title="Sleep" onPress={() => setIsNewGoalTypeSteps(false)} />
+						</View>
 
 						<Text style={styles.modalText}>Title</Text>
 						<TextInput style={styles.input} onChangeText={setNewGoalTitle} value={newGoalTitle} />
@@ -169,9 +193,13 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		height: 40,
-		margin: 12,
+		margin: 5,
 		borderWidth: 1,
 		padding: 10
+	},
+	fixToText: {
+		flexDirection: 'row',
+		justifyContent: 'space-between'
 	}
 });
 
