@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Pressable, Image, FlatList } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image, FlatList, Button } from 'react-native';
 import { getAuth } from 'firebase/auth';
 
 type homeScreenProps = {
@@ -35,33 +35,37 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.profile_header}>
-				<Text style={styles.text_title}>
-					Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
-				</Text>
-			</View>
 
-			<View>
+			<View style={styles.progress}>
 				<Text style={styles.text_title}>Today's Progress</Text>
-				<Text style={styles.text_body}>Steps Walked: </Text>
-				<Text style={styles.text_body}>Hours Slept Last night: </Text>
+			</View>
+			<View style={styles.progress}>
+				<Text style={styles.progress_body}>Steps Walked: </Text>
+			</View>
+			<View style={styles.progress}>
+				<Text style={styles.progress_body}>Hours Slept Last night: </Text>
 			</View>
 
-			<Text
-				style={[
-					styles.text_title,
-					{
-						marginTop: 5
-					}
-				]}
-			>
+			<Text style={[styles.text_title, { marginTop: 140 }]}>
 				Daily Goals
 			</Text>
-			<FlatList data={DATA} renderItem={renderItem} keyExtractor={(item) => item.id} />
 
-			<Pressable style={styles.text_body} onPress={goal_navigation}>
-				<Text> See more/Add Goals </Text>
-			</Pressable>
+			<View style={styles.dailyGoal}>
+				{/* <FlatList data={DATA} renderItem={renderItem} keyExtractor={(item) => item.id} /> */}
+				<Text style={styles.progress_body}>Goal 1 </Text>
+				<Text style={styles.progress_body}>Goal 2 </Text>
+				<Text style={styles.progress_body}>Goal 3 </Text>
+			</View>
+			<View style={styles.goalButton}>
+				<Button
+					title="Goal setting"
+					onPress={goal_navigation}
+					color="#f194ff"
+				/>
+			</View>
+			{/* <Pressable style={styles.text_body} onPress={goal_navigation}>
+				<Text style={styles.toGoals}> Click to Goals </Text>
+			</Pressable> */}
 		</View>
 	);
 };
@@ -69,13 +73,31 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 const styles = StyleSheet.create({
 	container: {
 		alignSelf: 'center',
-		backgroundColor: '#E8E8E8',
-		borderRadius: 10,
-		height: 300,
+		backgroundColor: 'oldlace',
+		borderRadius: 20,
+		height: 500,
 		width: 350,
 		margin: 10,
 		paddingLeft: 15,
+		paddingRight: 15,
 		paddingTop: 5
+	},
+	goalButton: {
+		marginTop: 80
+	},
+	progress: {
+		marginTop: 10
+	},
+	dailyGoal: {
+		marginTop: 15
+	},
+	progress_body: {
+		fontSize: 18,
+		marginBottom: 2
+	},
+	toGoals: {
+		marginBottom: 10,
+		paddingLeft: 0
 	},
 	profile_header: {
 		textAlign: 'center',
@@ -92,7 +114,8 @@ const styles = StyleSheet.create({
 		// paddingLeft: 15
 	},
 	text_body: {
-		marginBottom: 2
+		marginBottom: 2,
+		alignSelf: 'center'
 	}
 });
 
