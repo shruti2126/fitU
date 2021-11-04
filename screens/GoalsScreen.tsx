@@ -14,13 +14,16 @@ import {
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
-interface Goal {
+type Goal = {
 	title: string;
 	note?: string;
 	difficulty?: number;
-}
+};
 
-const DATA = [
+const DATA: {
+	title: string;
+	data: Goal[];
+}[] = [
 	{
 		title: 'Daily Steps Goal',
 		data: []
@@ -31,7 +34,12 @@ const DATA = [
 	}
 ];
 
-const Item = ({ title }) => (
+type itemProps = {
+	title: string;
+	notes?: string;
+};
+
+const Item: React.FC<itemProps> = ({ title }) => (
 	<View style={styles.item}>
 		<Text style={styles.title}>{title}</Text>
 	</View>
