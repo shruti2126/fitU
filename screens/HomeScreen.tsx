@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { NavigationRouteContext, useNavigation } from '@react-navigation/core';
 import Card from '../components/Card';
@@ -22,21 +22,23 @@ const HomeScreen: React.FC<homeScreenProps> = ({ navigation }) => {
 
 	return (
 		<ImageBackground source={require('../HomeScreenBackground.png')} style={styles.image}>
-			<View style={styles.container}>
-				<View style={styles.title_header}>
-					<Text style={styles.title}>
-						Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
-					</Text>
+			<ScrollView>
+				<View style={styles.container}>
+					<View style={styles.title_header}>
+						<Text style={styles.title}>
+							Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
+						</Text>
+					</View>
+					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
+					<View style={styles.sector_container}>
+						<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />
+						<Card card_title={'Sleep'} nav_function={() => navigation.navigate('Sleep')} />
+					</View>
+					<TouchableOpacity onPress={signOut} style={styles.button}>
+						<Text style={styles.buttonText}>Sign out</Text>
+					</TouchableOpacity>
 				</View>
-				<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
-				<View style={styles.sector_container}>
-					<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />
-					<Card card_title={'Sleep'} nav_function={() => navigation.navigate('Sleep')} />
-				</View>
-				<TouchableOpacity onPress={signOut} style={styles.button}>
-					<Text style={styles.buttonText}>Sign out</Text>
-				</TouchableOpacity>
-			</View>
+			</ScrollView>
 		</ImageBackground>
 	);
 
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		width: '100%',
 		height: '100%',
-		blurRadius: 50
+		// blurRadius: 50
 	}
 	// image: {
 	// 	flex: 1,

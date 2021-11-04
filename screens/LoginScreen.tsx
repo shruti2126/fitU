@@ -17,8 +17,8 @@ type loginScreenProps = {
 };
 
 const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
-	const [ email, setEmail ] = useState<string>('');
-	const [ password, setPassword ] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	navigation = useNavigation();
 	const auth = getAuth();
 
@@ -72,7 +72,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 						onPress={() => {
 							navigation.navigate('Register');
 						}}
-						style={[ styles.registerButton, styles.buttonOutline ]}
+						style={[styles.registerButton, styles.buttonOutline]}
 					>
 						<Text style={styles.buttonOutlineText}>Register</Text>
 					</TouchableOpacity>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		width: '100%',
 		height: '100%',
-		blurRadius: 50
+		//blurRadius: 50
 	}
 });
 
