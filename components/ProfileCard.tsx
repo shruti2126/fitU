@@ -35,7 +35,6 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 
 	return (
 		<View style={styles.container}>
-
 			<View style={styles.progress}>
 				<Text style={styles.text_title}>Today's Progress</Text>
 			</View>
@@ -46,9 +45,7 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 				<Text style={styles.progress_body}>Hours Slept Last night: </Text>
 			</View>
 
-			<Text style={[styles.text_title, { marginTop: 140 }]}>
-				Daily Goals
-			</Text>
+			<Text style={[ styles.text_title, { marginTop: 140 } ]}>Daily Goals</Text>
 
 			<View style={styles.dailyGoal}>
 				{/* <FlatList data={DATA} renderItem={renderItem} keyExtractor={(item) => item.id} /> */}
@@ -57,11 +54,7 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 				<Text style={styles.progress_body}>Goal 3 </Text>
 			</View>
 			<View style={styles.goalButton}>
-				<Button
-					title="Goal setting"
-					onPress={goal_navigation}
-					color="#f194ff"
-				/>
+				<Button title="View more goals" onPress={goal_navigation} color="#f194ff" />
 			</View>
 			{/* <Pressable style={styles.text_body} onPress={goal_navigation}>
 				<Text style={styles.toGoals}> Click to Goals </Text>

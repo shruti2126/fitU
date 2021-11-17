@@ -10,7 +10,8 @@ import {
 	Alert,
 	Pressable,
 	TextInput,
-	Button
+	Button,
+	TouchableOpacity
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
@@ -50,6 +51,7 @@ const Goals = () => {
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>();
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
+	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
 	let test = DATA[0].data;
 	let x = 1;
@@ -57,7 +59,8 @@ const Goals = () => {
 	const saveGoal = (): void => {
 		const newGoal: Goal = {
 			title: newGoalTitle,
-			note: newGoalNote
+			note: newGoalNote,
+			difficulty: newGoalDifficulty
 		};
 
 		if (isNewGoalTypeSteps) DATA[0].data.push(newGoal);
@@ -108,6 +111,15 @@ const Goals = () => {
 						<Text style={styles.modalText}>Notes</Text>
 						<TextInput style={styles.input} onChangeText={setNewGoalNote} value={newGoalNote} />
 
+						<Text style={styles.modalText}>Difficulty</Text>
+						<View style={styles.parent}>
+							<Button title="2" onPress={() => setNewGoalDifficulty(1)} />
+							<Button title="3" onPress={() => setNewGoalDifficulty(2)} />
+							<Button title="1" onPress={() => setNewGoalDifficulty(3)} />
+							<Button title="4" onPress={() => setNewGoalDifficulty(4)} />
+							<Button title="5" onPress={() => setNewGoalDifficulty(5)} />
+						</View>
+
 						<View>
 							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => cancelGoal()}>
 								<Text style={styles.textStyle}>Cancel</Text>
@@ -117,8 +129,6 @@ const Goals = () => {
 								<Text style={styles.textStyle}>Save</Text>
 							</Pressable>
 						</View>
-
-						<Text style={styles.modalText}>Difficulty</Text>
 					</View>
 				</View>
 			</Modal>
@@ -207,7 +217,8 @@ const styles = StyleSheet.create({
 	},
 	modalText: {
 		marginBottom: 5,
-		textAlign: 'left'
+		textAlign: 'left',
+		fontSize: 15
 	},
 	button: {
 		borderRadius: 20,
@@ -224,6 +235,11 @@ const styles = StyleSheet.create({
 	fixToText: {
 		flexDirection: 'row',
 		justifyContent: 'space-between'
+	},
+	parent: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'space-around'
 	}
 });
 
