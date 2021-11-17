@@ -73,6 +73,14 @@ const Goals = () => {
 		// alert("Saved Goal")
 	};
 
+	const cancelGoal = (): void => {
+		setNewGoalTitle('');
+		setNewGoalNote('');
+
+		setModalVisible(!modalVisible);
+		// alert("Saved Goal")
+	};
+
 	return (
 		<View style={styles.container}>
 			<Modal
@@ -100,9 +108,15 @@ const Goals = () => {
 						<Text style={styles.modalText}>Notes</Text>
 						<TextInput style={styles.input} onChangeText={setNewGoalNote} value={newGoalNote} />
 
-						<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => saveGoal()}>
-							<Text style={styles.textStyle}>Save</Text>
-						</Pressable>
+						<View>
+							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => cancelGoal()}>
+								<Text style={styles.textStyle}>Cancel</Text>
+							</Pressable>
+
+							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => saveGoal()}>
+								<Text style={styles.textStyle}>Save</Text>
+							</Pressable>
+						</View>
 					</View>
 				</View>
 			</Modal>

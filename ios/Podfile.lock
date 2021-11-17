@@ -5,8 +5,6 @@ PODS:
     - ExpoModulesCore
   - EXConstants (12.1.3):
     - ExpoModulesCore
-  - EXErrorRecovery (3.0.3):
-    - ExpoModulesCore
   - EXFileSystem (13.0.3):
     - ExpoModulesCore
   - EXFont (10.0.3):
@@ -367,7 +365,6 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
@@ -432,8 +429,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -524,22 +519,21 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  EXApplication: 4e001850816f38eb4812cb02fe059974daeafe4d
-  EXConstants: 66361ff23b5ea7eae3684ffad0f15955c23b5134
-  EXErrorRecovery: 0e088d138e44f0e4a24655040e7f7c34ede8cc06
-  EXFileSystem: 624eef3e3a853f19cc0c26eaffab1519001d8c35
-  EXFont: 6e8f77d9741f5cd83f710adbf26ebb57a036283b
-  EXJSONUtils: bafb27ed20417c018d942f334d969102e67be7e5
-  EXKeepAwake: ca4071fb63b89a70b13d33f6147cf9b5433c122a
-  EXManifests: 15831e369de4e989f9cfe8c3321303f26745e41d
-  Expo: 1f0deb1c07409d04a2babd0d2958e845d7da09dc
-  ExpoModulesCore: a2bd022d2118a579b3426d5bbfb9b22b326ed938
-  EXSplashScreen: 62f71e20d00cd42cf8cbdc808b848520ddebba01
-  EXStructuredHeaders: 7d4a100b8321c6db341e91e730949558d4a48818
-  EXUpdates: 05d1ee93f4e9b6b04a90420514e3ab93465bf70b
-  EXUpdatesInterface: 2413d24feea140d6b30f6c73ec7f7e0281d3594a
+  EXApplication: 0e15240e4d125b62f1cae48759ffbbd32b9286a6
+  EXConstants: 6d585d93723b18d7a8c283591a335609e3bc153e
+  EXFileSystem: 99aac7962c11c680681819dd9cbca24e20e5b1e7
+  EXFont: 2e1c6fe726d008a039db80df95f48b4921b7fe59
+  EXJSONUtils: f515cf71710855d7ba5bfc6752af3b9a6f6aad01
+  EXKeepAwake: 8aa32396a5972d26e75e538603aad0f032396503
+  EXManifests: 50e42e01335df4e54109dee7be5a91bfd37347db
+  Expo: f3357f1f9796d0b4d396d0be84c49933671db4ad
+  ExpoModulesCore: 47b403a33ad73770c49d7559615b3ea121a36116
+  EXSplashScreen: 57f329dbf25c5c12800feed79068a056453dc772
+  EXStructuredHeaders: 873e7f329c2f6279c1b1e0229df59c9861560b53
+  EXUpdates: b6c6a7027cd63cd1d8fe0c05662374c97065ec82
+  EXUpdatesInterface: e1c01b4f5ec76bd1d6cc714938f9edf5ef6379b9
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: 01207ca692b2694b714d002ed7ca56bb6cf44809
+  FBReactNativeSpec: 1d266c874cfbc85939f73aea39cbe5f3d6955b8e
   Firebase: 629510f1a9ddb235f3a7c5c8ceb23ba887f0f814
   FirebaseCore: 98b29e3828f0a53651c363937a7f7d92a19f1ba2
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
@@ -559,7 +553,7 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
