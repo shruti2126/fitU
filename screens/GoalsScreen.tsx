@@ -117,6 +117,8 @@ const Goals = () => {
 								<Text style={styles.textStyle}>Save</Text>
 							</Pressable>
 						</View>
+
+						<Text style={styles.modalText}>Difficulty</Text>
 					</View>
 				</View>
 			</Modal>
@@ -169,7 +171,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		bottom: 0
 	},
-
 	centeredView: {
 		flex: 1,
 		justifyContent: 'center',
@@ -217,7 +218,8 @@ const styles = StyleSheet.create({
 		height: 40,
 		margin: 5,
 		borderWidth: 1,
-		padding: 10
+		padding: 10,
+		width: 50
 	},
 	fixToText: {
 		flexDirection: 'row',
