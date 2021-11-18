@@ -231,9 +231,9 @@ const styles = StyleSheet.create({
 	input: {
 		height: 40,
 		marginTop: 5,
+		marginBottom: 5,
 		borderWidth: 1,
-		padding: 10,
-		width: 50
+		padding: 10
 	},
 	goalType: {
 		flexDirection: 'row',
