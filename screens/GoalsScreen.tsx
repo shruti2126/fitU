@@ -44,8 +44,8 @@ type itemProps = {
 
 const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => (
 	<View style={styles.item}>
-		<Text style={styles.title}>{title}</Text>
-		<Text style={styles.title}>{difficulty}</Text>
+		<Text style={styles.addedGoalText}>{title}</Text>
+		<Text style={styles.addedGoalText}>{difficulty}</Text>
 	</View>
 );
 
@@ -98,8 +98,8 @@ const Goals = () => {
 				}}
 				// presentationStyle={'fullScreen'}
 			>
-				<View style={styles.centeredView}>
-					<View style={styles.modalView}>
+				<View style={styles.modalView}>
+					<View style={styles.modalContent}>
 						<Text style={styles.modalTitle}>New Goal</Text>
 
 						<Text style={styles.modalText}>Type of Goal</Text>
@@ -109,10 +109,10 @@ const Goals = () => {
 						</View>
 
 						<Text style={styles.modalText}>Title</Text>
-						<TextInput style={styles.input} onChangeText={setNewGoalTitle} value={newGoalTitle} />
+						<TextInput style={styles.textInput} onChangeText={setNewGoalTitle} value={newGoalTitle} />
 
 						<Text style={styles.modalText}>Notes</Text>
-						<TextInput style={styles.input} onChangeText={setNewGoalNote} value={newGoalNote} />
+						<TextInput style={styles.textInput} onChangeText={setNewGoalNote} value={newGoalNote} />
 
 						<Text style={styles.modalText}>Difficulty</Text>
 						<View style={styles.difficulty}>
@@ -123,13 +123,13 @@ const Goals = () => {
 							<Button title="5" onPress={() => setNewGoalDifficulty(5)} />
 						</View>
 
-						<View style={styles.bottomGoal}>
+						<View style={styles.goalClose}>
 							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => cancelGoal()}>
-								<Text style={styles.textStyle}>Cancel</Text>
+								<Text style={styles.buttonText}>Cancel</Text>
 							</Pressable>
 
 							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => saveGoal()}>
-								<Text style={styles.textStyle}>Save</Text>
+								<Text style={styles.buttonText}>Save</Text>
 							</Pressable>
 						</View>
 					</View>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
 		fontSize: 32,
 		backgroundColor: '#fff'
 	},
-	title: {
+	addedGoalText: {
 		fontSize: 24
 	},
 	bottomView: {
@@ -184,13 +184,13 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-end',
 		bottom: 0
 	},
-	centeredView: {
+	modalView: {
 		flex: 1,
 		justifyContent: 'center',
 		// alignItems: 'center',
 		marginTop: 22
 	},
-	modalView: {
+	modalContent: {
 		margin: 20,
 		backgroundColor: 'white',
 		borderRadius: 20,
@@ -205,14 +205,6 @@ const styles = StyleSheet.create({
 		shadowRadius: 4,
 		elevation: 5
 	},
-	buttonClose: {
-		backgroundColor: '#2196F3'
-	},
-	textStyle: {
-		color: 'white',
-		fontWeight: 'bold',
-		textAlign: 'center'
-	},
 	modalTitle: {
 		marginBottom: 15,
 		textAlign: 'center',
@@ -223,12 +215,20 @@ const styles = StyleSheet.create({
 		textAlign: 'left',
 		fontSize: 15
 	},
+	buttonClose: {
+		backgroundColor: '#2196F3'
+	},
+	buttonText: {
+		color: 'white',
+		fontWeight: 'bold',
+		textAlign: 'center'
+	},
 	button: {
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2
 	},
-	input: {
+	textInput: {
 		height: 40,
 		marginTop: 5,
 		marginBottom: 5,
@@ -244,8 +244,9 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 		// justifyContent: 'space-around'
 	},
-	bottomGoal: {
-		flexDirection: 'row'
+	goalClose: {
+		flexDirection: 'row',
+		justifyContent: 'center'
 	}
 });
 
