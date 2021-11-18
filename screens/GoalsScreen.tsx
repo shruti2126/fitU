@@ -38,11 +38,14 @@ const DATA: {
 type itemProps = {
 	title: string;
 	notes?: string;
+	difficulty?: number;
+	reminder?: Date;
 };
 
-const Item: React.FC<itemProps> = ({ title }) => (
+const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => (
 	<View style={styles.item}>
 		<Text style={styles.title}>{title}</Text>
+		<Text style={styles.title}>{difficulty}</Text>
 	</View>
 );
 
@@ -87,20 +90,20 @@ const Goals = () => {
 	return (
 		<View style={styles.container}>
 			<Modal
-				transparent={true}
+				transparent={false}
 				visible={modalVisible}
 				onRequestClose={() => {
 					Alert.alert('Modal has been closed.');
 					setModalVisible(!modalVisible);
 				}}
-				presentationStyle={'fullScreen'}
+				// presentationStyle={'fullScreen'}
 			>
 				<View style={styles.centeredView}>
 					<View style={styles.modalView}>
 						<Text style={styles.modalTitle}>New Goal</Text>
 
 						<Text style={styles.modalText}>Type of Goal</Text>
-						<View style={styles.fixToText}>
+						<View style={styles.goalType}>
 							<Button title="Steps" onPress={() => setIsNewGoalTypeSteps(true)} />
 							<Button title="Sleep" onPress={() => setIsNewGoalTypeSteps(false)} />
 						</View>
@@ -112,15 +115,15 @@ const Goals = () => {
 						<TextInput style={styles.input} onChangeText={setNewGoalNote} value={newGoalNote} />
 
 						<Text style={styles.modalText}>Difficulty</Text>
-						<View style={styles.parent}>
-							<Button title="2" onPress={() => setNewGoalDifficulty(1)} />
-							<Button title="3" onPress={() => setNewGoalDifficulty(2)} />
-							<Button title="1" onPress={() => setNewGoalDifficulty(3)} />
+						<View style={styles.difficulty}>
+							<Button title="1" onPress={() => setNewGoalDifficulty(1)} />
+							<Button title="2" onPress={() => setNewGoalDifficulty(2)} />
+							<Button title="3" onPress={() => setNewGoalDifficulty(3)} />
 							<Button title="4" onPress={() => setNewGoalDifficulty(4)} />
 							<Button title="5" onPress={() => setNewGoalDifficulty(5)} />
 						</View>
 
-						<View>
+						<View style={styles.bottomGoal}>
 							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => cancelGoal()}>
 								<Text style={styles.textStyle}>Cancel</Text>
 							</Pressable>
@@ -137,7 +140,7 @@ const Goals = () => {
 				sections={DATA}
 				// keyExtractor={(item, index) => item + index}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
-				renderItem={({ item }) => <Item title={item.title} />}
+				renderItem={({ item }) => <Item title={item.title} notes={item.note} difficulty={item.difficulty} />}
 			/>
 
 			<View style={styles.bottomView}>
@@ -178,13 +181,13 @@ const styles = StyleSheet.create({
 		width: '100%',
 		height: 50,
 		justifyContent: 'flex-end',
-		alignItems: 'center',
+		alignItems: 'flex-end',
 		bottom: 0
 	},
 	centeredView: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center',
+		// alignItems: 'center',
 		marginTop: 22
 	},
 	modalView: {
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		borderRadius: 20,
 		padding: 35,
-		alignItems: 'center',
+		// alignItems: 'center',
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
@@ -227,19 +230,22 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		height: 40,
-		margin: 5,
+		marginTop: 5,
 		borderWidth: 1,
 		padding: 10,
 		width: 50
 	},
-	fixToText: {
+	goalType: {
 		flexDirection: 'row',
-		justifyContent: 'space-between'
+		justifyContent: 'center'
 	},
-	parent: {
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-around'
+	difficulty: {
+		// flex: 1
+		flexDirection: 'row'
+		// justifyContent: 'space-around'
+	},
+	bottomGoal: {
+		flexDirection: 'row'
 	}
 });
 
