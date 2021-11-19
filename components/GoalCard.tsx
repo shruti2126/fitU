@@ -19,15 +19,15 @@ const Card: React.FC<homeScreenProps> = ({ title: title, notes }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		marginLeft: 10
-		// backgroundColor: 'F2F2F2'
+		marginLeft: 10,
+		backgroundColor: '#FFFFFF',
+		borderRadius: 10
 	},
-	header: {},
+	header: { paddingLeft: 15 },
 	text_title: {
 		color: 'black',
 		fontWeight: '700',
 		fontSize: 25
-		// paddingLeft: 15
 	}
 });
 

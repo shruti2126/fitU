@@ -43,13 +43,7 @@ type itemProps = {
 	reminder?: Date;
 };
 
-const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => (
-	<GoalCard title={title} notes={notes} />
-	// <View style={styles.item}>
-	// 	<Text style={styles.addedGoalText}>{title}</Text>
-	// 	<Text style={styles.addedGoalText}>{difficulty}</Text>
-	// </View>
-);
+const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => <GoalCard title={title} notes={notes} />;
 
 const Goals = () => {
 	const [ modalVisible, setModalVisible ] = useState(false);
