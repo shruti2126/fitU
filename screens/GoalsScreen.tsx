@@ -14,7 +14,6 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
-import GoalCard from '../components/GoalCard';
 
 type Goal = {
 	title: string;
@@ -43,7 +42,12 @@ type itemProps = {
 	reminder?: Date;
 };
 
-const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => <GoalCard title={title} notes={notes} />;
+const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => (
+	<View style={styles.goalsContainer}>
+		<Text style={styles.goalsTitle}>{title}</Text>
+		<Text>{notes}</Text>
+	</View>
+);
 
 const Goals = () => {
 	const [ modalVisible, setModalVisible ] = useState(false);
@@ -137,7 +141,7 @@ const Goals = () => {
 
 			<SectionList
 				sections={DATA}
-				// keyExtractor={(item, index) => item + index}
+				// keyExtractor={(item, index) => index}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => <Item title={item.title} notes={item.note} difficulty={item.difficulty} />}
 			/>
@@ -168,6 +172,18 @@ const styles = StyleSheet.create({
 		backgroundColor: '#f9c2ff',
 		padding: 20,
 		marginVertical: 8
+	},
+	goalsContainer: {
+		marginLeft: 10,
+		backgroundColor: '#FFFFFF',
+		borderRadius: 10,
+		paddingLeft: 15,
+		marginBottom: 7
+	},
+	goalsTitle: {
+		color: 'black',
+		fontWeight: '700',
+		fontSize: 25
 	},
 	goalHeader: {
 		fontSize: 32,
