@@ -14,6 +14,7 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
+import GoalCard from '../components/GoalCard';
 
 type Goal = {
 	title: string;
@@ -43,10 +44,11 @@ type itemProps = {
 };
 
 const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => (
-	<View style={styles.item}>
-		<Text style={styles.addedGoalText}>{title}</Text>
-		<Text style={styles.addedGoalText}>{difficulty}</Text>
-	</View>
+	<GoalCard title={title} notes={notes} />
+	// <View style={styles.item}>
+	// 	<Text style={styles.addedGoalText}>{title}</Text>
+	// 	<Text style={styles.addedGoalText}>{difficulty}</Text>
+	// </View>
 );
 
 const Goals = () => {
@@ -72,6 +74,7 @@ const Goals = () => {
 		console.log(newGoal);
 		console.log(isNewGoalTypeSteps);
 
+		setIsNewGoalTypeSteps(true);
 		setNewGoalTitle('');
 		setNewGoalNote('');
 
@@ -80,9 +83,9 @@ const Goals = () => {
 	};
 
 	const cancelGoal = (): void => {
+		setIsNewGoalTypeSteps(true);
 		setNewGoalTitle('');
 		setNewGoalNote('');
-
 		setModalVisible(!modalVisible);
 		// alert("Saved Goal")
 	};
@@ -123,12 +126,14 @@ const Goals = () => {
 							<Button title="5" onPress={() => setNewGoalDifficulty(5)} />
 						</View>
 
+						<Text style={styles.modalText}>Add Reminder</Text>
+
 						<View style={styles.goalClose}>
-							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => cancelGoal()}>
+							<Pressable style={styles.buttonClose} onPress={() => cancelGoal()}>
 								<Text style={styles.buttonText}>Cancel</Text>
 							</Pressable>
 
-							<Pressable style={[ styles.button, styles.buttonClose ]} onPress={() => saveGoal()}>
+							<Pressable style={styles.buttonClose} onPress={() => saveGoal()}>
 								<Text style={styles.buttonText}>Save</Text>
 							</Pressable>
 						</View>
@@ -139,7 +144,7 @@ const Goals = () => {
 			<SectionList
 				sections={DATA}
 				// keyExtractor={(item, index) => item + index}
-				renderSectionHeader={({ section: { title } }) => <Text style={styles.header}>{title}</Text>}
+				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => <Item title={item.title} notes={item.note} difficulty={item.difficulty} />}
 			/>
 
@@ -170,9 +175,9 @@ const styles = StyleSheet.create({
 		padding: 20,
 		marginVertical: 8
 	},
-	header: {
+	goalHeader: {
 		fontSize: 32,
-		backgroundColor: '#fff'
+		margin: 10
 	},
 	addedGoalText: {
 		fontSize: 24
@@ -187,7 +192,6 @@ const styles = StyleSheet.create({
 	modalView: {
 		flex: 1,
 		justifyContent: 'center',
-		// alignItems: 'center',
 		marginTop: 22
 	},
 	modalContent: {
@@ -216,17 +220,16 @@ const styles = StyleSheet.create({
 		fontSize: 15
 	},
 	buttonClose: {
-		backgroundColor: '#2196F3'
+		backgroundColor: '#2196F3',
+		borderRadius: 20,
+		padding: 10,
+		elevation: 2,
+		margin: 5
 	},
 	buttonText: {
 		color: 'white',
 		fontWeight: 'bold',
 		textAlign: 'center'
-	},
-	button: {
-		borderRadius: 20,
-		padding: 10,
-		elevation: 2
 	},
 	textInput: {
 		height: 40,
@@ -240,9 +243,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	difficulty: {
-		// flex: 1
-		flexDirection: 'row'
-		// justifyContent: 'space-around'
+		flexDirection: 'row',
+		justifyContent: 'center'
 	},
 	goalClose: {
 		flexDirection: 'row',
