@@ -15,10 +15,17 @@ import {
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
+type goalReward = {
+	coins: number;
+	jewels: number;
+};
+
 type Goal = {
 	title: string;
 	note?: string;
 	difficulty?: number;
+	rewards?: goalReward;
+	reminder?: Date;
 };
 
 const DATA: {
@@ -35,17 +42,10 @@ const DATA: {
 	}
 ];
 
-type itemProps = {
-	title: string;
-	notes?: string;
-	difficulty?: number;
-	reminder?: Date;
-};
-
-const Item: React.FC<itemProps> = ({ title, notes, difficulty, reminder }) => (
+const Item: React.FC<Goal> = ({ title, note, difficulty, reminder }) => (
 	<View style={styles.goalsContainer}>
 		<Text style={styles.goalsTitle}>{title}</Text>
-		<Text>{notes}</Text>
+		<Text>{note}</Text>
 	</View>
 );
 
@@ -55,37 +55,41 @@ const Goals = () => {
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
+	const [ newGoalRewards, setNewGoalRewards ] = useState<goalReward>({
+		coins: newGoalDifficulty * 2,
+		jewels: 0
+	});
 
 	let test = DATA[0].data;
 	let x = 1;
+
+	const resetGoal = (): void => {
+		setIsNewGoalTypeSteps(true);
+		setNewGoalTitle('');
+		setNewGoalNote('');
+		setNewGoalDifficulty(1);
+		setNewGoalRewards({
+			coins: newGoalDifficulty * 2,
+			jewels: 0
+		});
+		setModalVisible(!modalVisible);
+	};
 
 	const saveGoal = (): void => {
 		const newGoal: Goal = {
 			title: newGoalTitle,
 			note: newGoalNote,
-			difficulty: newGoalDifficulty
+			difficulty: newGoalDifficulty,
+			rewards: {
+				coins: newGoalDifficulty * 2,
+				jewels: 0
+			}
 		};
 
 		if (isNewGoalTypeSteps) DATA[0].data.push(newGoal);
 		else DATA[1].data.push(newGoal);
 
-		console.log(newGoal);
-		console.log(isNewGoalTypeSteps);
-
-		setIsNewGoalTypeSteps(true);
-		setNewGoalTitle('');
-		setNewGoalNote('');
-
-		setModalVisible(!modalVisible);
-		// alert("Saved Goal")
-	};
-
-	const cancelGoal = (): void => {
-		setIsNewGoalTypeSteps(true);
-		setNewGoalTitle('');
-		setNewGoalNote('');
-		setModalVisible(!modalVisible);
-		// alert("Saved Goal")
+		resetGoal();
 	};
 
 	return (
@@ -127,7 +131,7 @@ const Goals = () => {
 						<Text style={styles.modalText}>Add Reminder</Text>
 
 						<View style={styles.goalClose}>
-							<Pressable style={styles.buttonClose} onPress={() => cancelGoal()}>
+							<Pressable style={styles.buttonClose} onPress={() => resetGoal()}>
 								<Text style={styles.buttonText}>Cancel</Text>
 							</Pressable>
 
@@ -143,7 +147,7 @@ const Goals = () => {
 				sections={DATA}
 				// keyExtractor={(item, index) => index}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
-				renderItem={({ item }) => <Item title={item.title} notes={item.note} difficulty={item.difficulty} />}
+				renderItem={({ item }) => <Item title={item.title} note={item.note} difficulty={item.difficulty} />}
 			/>
 
 			<View style={styles.bottomView}>
