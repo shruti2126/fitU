@@ -5,13 +5,11 @@ import {
 	View,
 	SectionList,
 	Platform,
-	Image,
 	Modal,
 	Alert,
 	Pressable,
 	TextInput,
-	Button,
-	TouchableOpacity
+	Button
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
@@ -46,6 +44,9 @@ const Item: React.FC<Goal> = ({ title, note, difficulty, reminder }) => (
 	<View style={styles.goalsContainer}>
 		<Text style={styles.goalsTitle}>{title}</Text>
 		<Text>{note}</Text>
+		<Pressable onPress={() => alert('hi')}>
+			<Text style={styles.editButton}>Edit</Text>
+		</Pressable>
 	</View>
 );
 
@@ -263,6 +264,10 @@ const styles = StyleSheet.create({
 	goalClose: {
 		flexDirection: 'row',
 		justifyContent: 'center'
+	},
+	editButton: {
+		color: '#1E8CfB'
+		// fontSize: 100
 	}
 });
 
