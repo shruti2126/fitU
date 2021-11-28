@@ -30,24 +30,40 @@ type Goal = {
 	reminder?: Date;
 };
 
-type goalData = {
+const DATA: {
 	title: string;
 	data: Goal[];
-}[];
+}[] = [
+	{
+		title: 'Daily Steps Goal',
+		data: []
+	},
+	{
+		title: 'Daily Sleep Goal',
+		data: []
+	}
+];
+
+const deleteGoal = (index: number, goalIsSteps: boolean): void => {
+	if (goalIsSteps) DATA[0].data.splice(0, 1);
+	alert(DATA[0].data.length);
+	// else DATA[1].data.splice(index, 1);
+	// console.log(index);
+	// console.log(DATA[0].data);
+};
+
+const Item: React.FC<Goal> = ({ index, goalIsSteps, title, note, difficulty, reminder }) => (
+	<View style={styles.goalsContainer}>
+		<Text style={styles.goalsTitle}>{title}</Text>
+		<Text>{note}</Text>
+		<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
+			<Text style={styles.editButton}>Delete</Text>
+		</Pressable>
+	</View>
+);
 
 const Goals = () => {
-	const [ DATA, setDATA ] = useState<goalData>([
-		{
-			title: 'Daily Steps Goal',
-			data: []
-		},
-		{
-			title: 'Daily Sleep Goal',
-			data: []
-		}
-	]);
-
-	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
+	const [ modalVisible, setModalVisible ] = useState(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
@@ -56,6 +72,9 @@ const Goals = () => {
 		coins: newGoalDifficulty * 2,
 		jewels: 0
 	});
+
+	let test = DATA[0].data;
+	let x = 1;
 
 	const resetGoal = (): void => {
 		setIsNewGoalTypeSteps(true);
@@ -83,50 +102,12 @@ const Goals = () => {
 			rewards: newGoalRewards
 		};
 
-		if (isNewGoalTypeSteps) {
-			const newStepGoals: Goal[] = [ ...DATA[0].data, newGoal ];
-
-			setDATA([
-				{
-					title: 'Daily Steps Goal',
-					data: newStepGoals
-				},
-				{ ...DATA[1] }
-			]);
-		}
-		else {
-			const newSleepGoals: Goal[] = [ ...DATA[1].data, newGoal ];
-
-			setDATA([
-				{ ...DATA[0] },
-				{
-					title: 'Daily Sleep Goal',
-					data: newSleepGoals
-				}
-			]);
-		}
+		if (isNewGoalTypeSteps) DATA[0].data.push(newGoal);
+		else DATA[1].data.push(newGoal);
 
 		resetGoal();
 		index++;
 	};
-
-	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
-		if (goalIsSteps) DATA[0].data.splice(0, 1);
-		alert(DATA[0].data.length);
-		// else DATA[1].data.splice(index, 1);
-		// console.log(index);
-		// console.log(DATA[0].data);
-	};
-
-	const Item: React.FC<Goal> = ({ index, goalIsSteps, title, note, difficulty, reminder }) => (
-		<View style={styles.goalsContainer}>
-			<Text style={styles.goalsTitle}>{title}</Text>
-			<Text>{note}</Text>
-			<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
-				<Text style={styles.editButton}>Delete</Text>
-			</Pressable>
-		</View>
-	);
 
 	return (
 		<View style={styles.container}>
