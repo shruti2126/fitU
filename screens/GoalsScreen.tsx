@@ -111,9 +111,10 @@ const Goals = () => {
 	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
+		alert(goalIsSteps);
 		if (goalIsSteps) {
-			let updatedGoals = [ ...DATA[0].data ];
-			updatedGoals.splice(index, 1);
+			const updatedGoals = DATA[0].data.filter((goal) => goal.index != index);
+
 			setDATA([
 				{
 					title: 'Daily Steps Goal',
@@ -123,7 +124,15 @@ const Goals = () => {
 			]);
 		}
 		else {
-			alert('sadge');
+			const updatedGoals = DATA[1].data.filter((goal) => goal.index != index);
+
+			setDATA([
+				{ ...DATA[0] },
+				{
+					title: 'Daily Sleep Goal',
+					data: updatedGoals
+				}
+			]);
 		}
 	};
 
