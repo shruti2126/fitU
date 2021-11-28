@@ -83,7 +83,6 @@ const Goals = () => {
 
 		if (isNewGoalTypeSteps) {
 			const newStepGoals: Goal[] = [ ...DATA[0].data, newGoal ];
-
 			setDATA([
 				{
 					title: 'Daily Steps Goal',
@@ -91,12 +90,9 @@ const Goals = () => {
 				},
 				{ ...DATA[1] }
 			]);
-
-			console.log(newStepGoals);
 		}
 		else {
 			const newSleepGoals: Goal[] = [ ...DATA[1].data, newGoal ];
-
 			setDATA([
 				{ ...DATA[0] },
 				{
@@ -111,7 +107,6 @@ const Goals = () => {
 	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
-		alert(goalIsSteps);
 		if (goalIsSteps) {
 			const updatedGoals = DATA[0].data.filter((goal) => goal.index != index);
 
@@ -204,7 +199,7 @@ const Goals = () => {
 				renderItem={({ item }) => (
 					<Item
 						index={item.index}
-						goalIsSteps={isNewGoalTypeSteps}
+						goalIsSteps={item.goalIsSteps}
 						title={item.title}
 						note={item.note}
 						difficulty={item.difficulty}
