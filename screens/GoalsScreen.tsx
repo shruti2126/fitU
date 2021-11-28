@@ -13,15 +13,13 @@ import {
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
-let index: number = 0;
-
 type goalReward = {
 	coins: number;
 	jewels: number;
 };
 
 type Goal = {
-	index: number;
+	index: number; //string format: epoch time as created by new Date().getTime();
 	goalIsSteps: boolean;
 	title: string;
 	note?: string;
@@ -66,7 +64,6 @@ const Goals = () => {
 			coins: newGoalDifficulty * 2,
 			jewels: 0
 		});
-		setModalVisible(!modalVisible);
 	};
 
 	const saveGoal = (): void => {
@@ -74,8 +71,9 @@ const Goals = () => {
 			coins: newGoalDifficulty * 2,
 			jewels: 0
 		});
+
 		const newGoal: Goal = {
-			index: index,
+			index: new Date().getTime(),
 			goalIsSteps: isNewGoalTypeSteps,
 			title: newGoalTitle,
 			note: newGoalNote,
@@ -93,6 +91,8 @@ const Goals = () => {
 				},
 				{ ...DATA[1] }
 			]);
+
+			console.log(newStepGoals);
 		}
 		else {
 			const newSleepGoals: Goal[] = [ ...DATA[1].data, newGoal ];
@@ -107,15 +107,24 @@ const Goals = () => {
 		}
 
 		resetGoal();
-		index++;
+		setModalVisible(false);
 	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
-		if (goalIsSteps) DATA[0].data.splice(0, 1);
-		alert(DATA[0].data.length);
-		// else DATA[1].data.splice(index, 1);
-		// console.log(index);
-		// console.log(DATA[0].data);
+		if (goalIsSteps) {
+			let updatedGoals = [ ...DATA[0].data ];
+			updatedGoals.splice(index, 1);
+			setDATA([
+				{
+					title: 'Daily Steps Goal',
+					data: updatedGoals
+				},
+				{ ...DATA[1] }
+			]);
+		}
+		else {
+			alert('sadge');
+		}
 	};
 
 	const Item: React.FC<Goal> = ({ index, goalIsSteps, title, note, difficulty, reminder }) => (
@@ -123,7 +132,7 @@ const Goals = () => {
 			<Text style={styles.goalsTitle}>{title}</Text>
 			<Text>{note}</Text>
 			<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
-				<Text style={styles.editButton}>Delete</Text>
+				<Text style={styles.editButton}>Delete, {index}</Text>
 			</Pressable>
 		</View>
 	);
@@ -181,11 +190,11 @@ const Goals = () => {
 
 			<SectionList
 				sections={DATA}
-				// keyExtractor={(item, index) => index}
+				// keyExtractor={(index) => index}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => (
 					<Item
-						index={index}
+						index={item.index}
 						goalIsSteps={isNewGoalTypeSteps}
 						title={item.title}
 						note={item.note}
