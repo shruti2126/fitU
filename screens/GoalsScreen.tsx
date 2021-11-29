@@ -169,9 +169,7 @@ const Goals = () => {
 	const Item: React.FC<Goal> = ({ index, goalIsSteps, title, note, difficulty, reminder }) => (
 		<View style={styles.goalsContainer}>
 			<Text style={styles.goalsTitle}>{title}</Text>
-			<Text>
-				{note}, {index}
-			</Text>
+			<Text>{note}</Text>
 
 			<View style={styles.goalCardFooter}>
 				<Pressable onPress={() => updateGoal(index, goalIsSteps)}>
