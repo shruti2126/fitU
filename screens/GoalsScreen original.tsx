@@ -14,8 +14,25 @@ import {
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
-import { goalReward, Goal, goalData } from '../types/GoalTypes';
-import GoalCard from '../components/GoalCard';
+type goalReward = {
+	coins: number;
+	jewels: number;
+};
+
+type Goal = {
+	index: number; //string format: epoch time as created by new Date().getTime();
+	goalIsSteps: boolean;
+	title: string;
+	note?: string;
+	difficulty?: number;
+	rewards?: goalReward;
+	reminder?: Date;
+};
+
+type goalData = {
+	title: string;
+	data: Goal[];
+}[];
 
 const Goals = () => {
 	const [ DATA, setDATA ] = useState<goalData>([
@@ -100,6 +117,72 @@ const Goals = () => {
 		setModalVisible(false);
 	};
 
+	const updateGoal = (index: number, goalIsSteps: boolean): void => {
+		let currentGoal;
+		if (goalIsSteps) {
+			currentGoal = DATA[0].data.find((goal) => goal.index == index);
+		}
+		else {
+			currentGoal = DATA[1].data.find((goal) => goal.index == index);
+		}
+
+		if (!currentGoal) {
+			alert('goal not found');
+			return;
+		}
+
+		setGoal(
+			currentGoal.goalIsSteps,
+			currentGoal.title,
+			currentGoal.note,
+			currentGoal.difficulty,
+			currentGoal.rewards
+		);
+
+		setModalVisible(true);
+		deleteGoal(index, goalIsSteps);
+	};
+
+	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
+		if (goalIsSteps) {
+			const updatedGoals = DATA[0].data.filter((goal) => goal.index != index);
+			setDATA([
+				{
+					title: 'Daily Steps Goal',
+					data: updatedGoals
+				},
+				{ ...DATA[1] }
+			]);
+		}
+		else {
+			const updatedGoals = DATA[1].data.filter((goal) => goal.index != index);
+			setDATA([
+				{ ...DATA[0] },
+				{
+					title: 'Daily Sleep Goal',
+					data: updatedGoals
+				}
+			]);
+		}
+	};
+
+	const Item: React.FC<Goal> = ({ index, goalIsSteps, title, note, difficulty, reminder }) => (
+		<View style={styles.goalsContainer}>
+			<Text style={styles.goalsTitle}>{title}</Text>
+			<Text>{note}</Text>
+
+			<View style={styles.goalCardFooter}>
+				<Pressable onPress={() => updateGoal(index, goalIsSteps)}>
+					<Text style={styles.editButton}>Edit</Text>
+				</Pressable>
+
+				<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
+					<Text style={styles.deleteButton}>Delete</Text>
+				</Pressable>
+			</View>
+		</View>
+	);
+
 	return (
 		<View style={styles.container}>
 			<Modal
@@ -109,6 +192,7 @@ const Goals = () => {
 					Alert.alert('Modal has been closed.');
 					setModalVisible(!modalVisible);
 				}}
+				// presentationStyle={'fullScreen'}
 			>
 				<View style={styles.modalView}>
 					<View style={styles.modalContent}>
@@ -158,18 +242,15 @@ const Goals = () => {
 
 			<SectionList
 				sections={DATA}
-				keyExtractor={(item) => `${item.index}`}
+				// keyExtractor={(index) => index}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => (
-					<GoalCard
-						DATA={DATA}
-						openGoalModal={() => setModalVisible(true)}
-						setGoal={setGoal}
-						setDATA={setDATA}
+					<Item
 						index={item.index}
 						goalIsSteps={item.goalIsSteps}
 						title={item.title}
 						note={item.note}
+						difficulty={item.difficulty}
 					/>
 				)}
 			/>
@@ -201,9 +282,24 @@ const styles = StyleSheet.create({
 		padding: 20,
 		marginVertical: 8
 	},
+	goalsContainer: {
+		marginLeft: 10,
+		backgroundColor: '#FFFFFF',
+		borderRadius: 10,
+		paddingLeft: 15,
+		marginBottom: 7
+	},
+	goalsTitle: {
+		color: 'black',
+		fontWeight: '700',
+		fontSize: 25
+	},
 	goalHeader: {
 		fontSize: 32,
 		margin: 10
+	},
+	addedGoalText: {
+		fontSize: 24
 	},
 	bottomView: {
 		width: '100%',
@@ -272,6 +368,16 @@ const styles = StyleSheet.create({
 	goalClose: {
 		flexDirection: 'row',
 		justifyContent: 'center'
+	},
+	goalCardFooter: {
+		flexDirection: 'row'
+	},
+	editButton: {
+		color: '#1E8CfB',
+		marginRight: 20
+	},
+	deleteButton: {
+		color: 'red'
 	}
 });
 
