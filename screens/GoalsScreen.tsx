@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Row } from 'react-bootstrap';
 import {
 	StyleSheet,
 	Text,
@@ -66,7 +67,7 @@ const Goals = () => {
 		});
 	};
 
-	const saveGoal = (): void => {
+	const createGoal = (): void => {
 		setNewGoalRewards({
 			coins: newGoalDifficulty * 2,
 			jewels: 0
@@ -106,10 +107,11 @@ const Goals = () => {
 		setModalVisible(false);
 	};
 
+	const updateGoal = (index: number): void => alert(`edit goal: ${index}`);
+
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
 		if (goalIsSteps) {
 			const updatedGoals = DATA[0].data.filter((goal) => goal.index != index);
-
 			setDATA([
 				{
 					title: 'Daily Steps Goal',
@@ -120,7 +122,6 @@ const Goals = () => {
 		}
 		else {
 			const updatedGoals = DATA[1].data.filter((goal) => goal.index != index);
-
 			setDATA([
 				{ ...DATA[0] },
 				{
@@ -135,9 +136,16 @@ const Goals = () => {
 		<View style={styles.goalsContainer}>
 			<Text style={styles.goalsTitle}>{title}</Text>
 			<Text>{note}</Text>
-			<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
-				<Text style={styles.editButton}>Delete, {index}</Text>
-			</Pressable>
+
+			<View style={styles.goalCardFooter}>
+				<Pressable onPress={() => updateGoal(index)}>
+					<Text style={styles.editButton}>Edit</Text>
+				</Pressable>
+
+				<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
+					<Text style={styles.deleteButton}>Delete</Text>
+				</Pressable>
+			</View>
 		</View>
 	);
 
@@ -180,11 +188,11 @@ const Goals = () => {
 						<Text style={styles.modalText}>Add Reminder</Text>
 
 						<View style={styles.goalClose}>
-							<Pressable style={styles.buttonClose} onPress={() => resetGoal()}>
+							<Pressable style={styles.buttonModalClose} onPress={() => resetGoal()}>
 								<Text style={styles.buttonText}>Cancel</Text>
 							</Pressable>
 
-							<Pressable style={styles.buttonClose} onPress={() => saveGoal()}>
+							<Pressable style={styles.buttonModalClose} onPress={() => createGoal()}>
 								<Text style={styles.buttonText}>Save</Text>
 							</Pressable>
 						</View>
@@ -290,7 +298,7 @@ const styles = StyleSheet.create({
 		textAlign: 'left',
 		fontSize: 15
 	},
-	buttonClose: {
+	buttonModalClose: {
 		backgroundColor: '#2196F3',
 		borderRadius: 20,
 		padding: 10,
@@ -321,9 +329,15 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center'
 	},
+	goalCardFooter: {
+		flexDirection: 'row'
+	},
 	editButton: {
-		color: '#1E8CfB'
-		// fontSize: 100
+		color: '#1E8CfB',
+		marginRight: 20
+	},
+	deleteButton: {
+		color: 'red'
 	}
 });
 
