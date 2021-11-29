@@ -135,7 +135,7 @@ const Goals = () => {
 							<Button title="5" onPress={() => setNewGoalDifficulty(5)} />
 						</View>
 
-						<Text style={styles.modalText}>Add Reminder</Text>
+						{/* <Text style={styles.modalText}>Add Reminder</Text> */}
 
 						<View style={styles.goalClose}>
 							<Pressable
