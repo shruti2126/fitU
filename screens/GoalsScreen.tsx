@@ -17,7 +17,12 @@ import CircleButton from '../components/CircleButton';
 import { goalReward, Goal, goalData } from '../types/GoalTypes';
 import GoalCard from '../components/GoalCard';
 
+import { useDispatch } from 'react-redux';
+import * as actions from '../actions';
+
 const Goals = () => {
+	const dispatch = useDispatch();
+
 	const [ DATA, setDATA ] = useState<goalData>([
 		{
 			title: 'Daily Steps Goal',

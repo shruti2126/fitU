@@ -7,17 +7,26 @@ import { initializeApp } from 'firebase/app';
 import firebaseConfig from './config/config';
 import MainNavigator from './Routes/Navigator';
 
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import allReducers from './reducers';
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 const stack = createNativeStackNavigator();
 
+// Initialize redux store
+const store = createStore(allReducers);
+
 export default function App() {
 	return (
-		<NavigationContainer>
-			<StatusBar barStyle="light-content" />
-			<MainNavigator />
-		</NavigationContainer>
+		<Provider store={store}>
+			<NavigationContainer>
+				<StatusBar barStyle="light-content" />
+				<MainNavigator />
+			</NavigationContainer>
+		</Provider>
 	);
 }
 
