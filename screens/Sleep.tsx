@@ -1,12 +1,12 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import { View, Text } from 'react-native';
 
 const Sleep = () => {
-    return (
-        <View>
-            <Text>Sleep</Text>
-        </View>
-    )
-}
+	return (
+		<View>
+			<Text>Sleep</Text>
+		</View>
+	);
+};
 
-export default Sleep
+export default Sleep;
