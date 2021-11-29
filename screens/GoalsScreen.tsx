@@ -56,15 +56,25 @@ const Goals = () => {
 		jewels: 0
 	});
 
-	const resetGoal = (): void => {
-		setIsNewGoalTypeSteps(true);
-		setNewGoalTitle('');
-		setNewGoalNote('');
-		setNewGoalDifficulty(1);
-		setNewGoalRewards({
-			coins: newGoalDifficulty * 2,
-			jewels: 0
-		});
+	const setGoal = (
+		isSteps: boolean = true,
+		title: string = '',
+		note: string = '',
+		difficulty: number = 1,
+		rewards?: goalReward
+	): void => {
+		if (!rewards) {
+			rewards = {
+				coins: newGoalDifficulty * 2,
+				jewels: 0
+			};
+		}
+
+		setIsNewGoalTypeSteps(isSteps);
+		setNewGoalTitle(title);
+		setNewGoalNote(note);
+		setNewGoalDifficulty(difficulty);
+		setNewGoalRewards(rewards);
 	};
 
 	const createGoal = (): void => {
@@ -103,11 +113,35 @@ const Goals = () => {
 			]);
 		}
 
-		resetGoal();
+		setGoal(); //reset the states for goals to init values
 		setModalVisible(false);
 	};
 
-	const updateGoal = (index: number): void => alert(`edit goal: ${index}`);
+	const updateGoal = (index: number, goalIsSteps: boolean): void => {
+		let currentGoal;
+		if (goalIsSteps) {
+			currentGoal = DATA[0].data.find((goal) => goal.index == index);
+		}
+		else {
+			currentGoal = DATA[1].data.find((goal) => goal.index == index);
+		}
+
+		if (!currentGoal) {
+			alert('goal not found');
+			return;
+		}
+
+		setGoal(
+			currentGoal.goalIsSteps,
+			currentGoal.title,
+			currentGoal.note,
+			currentGoal.difficulty,
+			currentGoal.rewards
+		);
+
+		setModalVisible(true);
+		deleteGoal(index, goalIsSteps);
+	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
 		if (goalIsSteps) {
@@ -135,10 +169,12 @@ const Goals = () => {
 	const Item: React.FC<Goal> = ({ index, goalIsSteps, title, note, difficulty, reminder }) => (
 		<View style={styles.goalsContainer}>
 			<Text style={styles.goalsTitle}>{title}</Text>
-			<Text>{note}</Text>
+			<Text>
+				{note}, {index}
+			</Text>
 
 			<View style={styles.goalCardFooter}>
-				<Pressable onPress={() => updateGoal(index)}>
+				<Pressable onPress={() => updateGoal(index, goalIsSteps)}>
 					<Text style={styles.editButton}>Edit</Text>
 				</Pressable>
 
@@ -188,7 +224,13 @@ const Goals = () => {
 						<Text style={styles.modalText}>Add Reminder</Text>
 
 						<View style={styles.goalClose}>
-							<Pressable style={styles.buttonModalClose} onPress={() => resetGoal()}>
+							<Pressable
+								style={styles.buttonModalClose}
+								onPress={() => {
+									setGoal();
+									setModalVisible(false);
+								}}
+							>
 								<Text style={styles.buttonText}>Cancel</Text>
 							</Pressable>
 
