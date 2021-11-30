@@ -39,18 +39,15 @@ const Goals = () => {
 		}
 	]);
 
-	// console.log(goalData);
-	
-
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
-	const [ newGoalRewards, setNewGoalRewards ] = useState<goalReward>({
-		coins: newGoalDifficulty * 2,
-		jewels: 0
-	});
+	// const [ newGoalRewards, setNewGoalRewards ] = useState<goalReward>({
+	// 	coins: newGoalDifficulty * 2,
+	// 	jewels: 0
+	// });
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -70,7 +67,33 @@ const Goals = () => {
 		setNewGoalTitle(title);
 		setNewGoalNote(note);
 		setNewGoalDifficulty(difficulty);
-		setNewGoalRewards(rewards);
+		// setNewGoalRewards(rewards);
+	};
+
+	const createGoal = (): void => {
+		// setNewGoalRewards();
+
+		console.log(newGoalDifficulty);
+		
+
+		const newGoal: Goal = {
+			index: new Date().getTime(),
+			goalIsSteps: isNewGoalTypeSteps,
+			title: newGoalTitle,
+			note: newGoalNote,
+			difficulty: newGoalDifficulty,
+			rewards: {
+				coins: newGoalDifficulty * 2,
+				jewels: 0
+			}
+		};
+
+		dispatch(actions.ADD_GOAL(newGoal));
+		console.log(goalData);
+
+		updateDATA(newGoal)
+		setGoalStates(); //reset the states for goals to init values
+		setModalVisible(false);
 	};
 
 	const updateDATA = (goal: Goal): void => {
@@ -93,29 +116,6 @@ const Goals = () => {
 			])
 		}
 	}
-
-	const createGoal = (): void => {
-		setNewGoalRewards({
-			coins: newGoalDifficulty * 2,
-			jewels: 0
-		});
-
-		const newGoal: Goal = {
-			index: new Date().getTime(),
-			goalIsSteps: isNewGoalTypeSteps,
-			title: newGoalTitle,
-			note: newGoalNote,
-			difficulty: newGoalDifficulty,
-			rewards: newGoalRewards
-		};
-
-		dispatch(actions.ADD_GOAL(newGoal));
-		console.log(goalData);
-
-		updateDATA(newGoal)
-		setGoalStates(); //reset the states for goals to init values
-		setModalVisible(false);
-	};
 
 	const updateGoal = (index: number, goalIsSteps: boolean): void => {
 		let currentGoal;

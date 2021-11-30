@@ -22,13 +22,12 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 
 			// api call to update the firestore with the new goal
 			// console.log(newGoal);
-			// console.log(state);
+			console.log(state);
 			return state;
 
 		case actionTypes.DELETE_GOAL:
 			// console.log(action.payload);
 			const payload: Goal = action.payload;
-			console.log(state);
 			console.log(payload);
 
 			if (payload.goalIsSteps) state[0].data = state[0].data.filter((goal) => goal.index != payload.index);
