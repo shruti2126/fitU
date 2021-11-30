@@ -6,7 +6,7 @@ type props = {
 	DATA: goalData;
 	openGoalModal(): void;
 	setGoal: Function;
-	setDATA: Function;
+	setDATA?: Function;
 	title: string;
 	note: string | undefined;
 	index: number;
@@ -50,26 +50,26 @@ export const GoalCard: React.FC<props> = ({
 	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
-		if (goalIsSteps) {
-			const updatedGoals = DATA[0].data.filter((goal) => goal.index != index);
-			setDATA([
-				{
-					title: 'Daily Steps Goal',
-					data: updatedGoals
-				},
-				{ ...DATA[1] }
-			]);
-		}
-		else {
-			const updatedGoals = DATA[1].data.filter((goal) => goal.index != index);
-			setDATA([
-				{ ...DATA[0] },
-				{
-					title: 'Daily Sleep Goal',
-					data: updatedGoals
-				}
-			]);
-		}
+		// if (goalIsSteps) {
+		// 	const updatedGoals = DATA[0].data.filter((goal) => goal.index != index);
+		// 	setDATA([
+		// 		{
+		// 			title: 'Daily Steps Goal',
+		// 			data: updatedGoals
+		// 		},
+		// 		{ ...DATA[1] }
+		// 	]);
+		// }
+		// else {
+		// 	const updatedGoals = DATA[1].data.filter((goal) => goal.index != index);
+		// 	setDATA([
+		// 		{ ...DATA[0] },
+		// 		{
+		// 			title: 'Daily Sleep Goal',
+		// 			data: updatedGoals
+		// 		}
+		// 	]);
+		// }
 	};
 
 	return (

@@ -17,13 +17,22 @@ import CircleButton from '../components/CircleButton';
 import { goalReward, Goal, goalData } from '../types/GoalTypes';
 import GoalCard from '../components/GoalCard';
 
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import * as actions from '../actions';
 
 const Goals = () => {
-	const goalData = useSelector((state) => state);
 	const dispatch = useDispatch();
+
+	const [ DATA, setDATA ] = useState<goalData>([
+		{
+			title: 'Daily Steps Goal',
+			data: []
+		},
+		{
+			title: 'Daily Sleep Goal',
+			data: []
+		}
+	]);
 
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
@@ -71,8 +80,26 @@ const Goals = () => {
 			rewards: newGoalRewards
 		};
 
-		dispatch(actions.ADD_GOAL(newGoal));
-		console.log(goalData);
+		if (isNewGoalTypeSteps) {
+			const newStepGoals: Goal[] = [ ...DATA[0].data, newGoal ];
+			setDATA([
+				{
+					title: 'Daily Steps Goal',
+					data: newStepGoals
+				},
+				{ ...DATA[1] }
+			]);
+		}
+		else {
+			const newSleepGoals: Goal[] = [ ...DATA[1].data, newGoal ];
+			setDATA([
+				{ ...DATA[0] },
+				{
+					title: 'Daily Sleep Goal',
+					data: newSleepGoals
+				}
+			]);
+		}
 
 		setGoal(); //reset the states for goals to init values
 		setModalVisible(false);
@@ -135,14 +162,15 @@ const Goals = () => {
 			</Modal>
 
 			<SectionList
-				sections={goalData.goalReducer}
+				sections={DATA}
 				keyExtractor={(item) => `${item.index}`}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => (
 					<GoalCard
-						DATA={goalData.goalReducer}
+						DATA={DATA}
 						openGoalModal={() => setModalVisible(true)}
 						setGoal={setGoal}
+						setDATA={setDATA}
 						index={item.index}
 						goalIsSteps={item.goalIsSteps}
 						title={item.title}
