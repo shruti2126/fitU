@@ -17,13 +17,30 @@ import CircleButton from '../components/CircleButton';
 import { goalReward, Goal, goalData } from '../types/GoalTypes';
 import GoalCard from '../components/GoalCard';
 
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import * as actions from '../actions';
 
+import type { RootState, AppDispatch } from '../App'
+import goalReducer from '../reducers/goalReducers';
+
+
 const Goals = () => {
-	const goalData = useSelector((state) => state);
-	const dispatch = useDispatch();
+	const goalData = useSelector((state) => state.goalReducer);
+	const dispatch = useDispatch<AppDispatch>();
+
+	const [ DATA, setDATA ] = useState<goalData>([
+		{
+			title: 'Daily Steps Goal',
+			data: []
+		},
+		{
+			title: 'Daily Sleep Goal',
+			data: []
+		}
+	]);
+
+	// console.log(goalData);
+	
 
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
@@ -35,7 +52,7 @@ const Goals = () => {
 		jewels: 0
 	});
 
-	const setGoal = (
+	const setGoalStates = (
 		isSteps: boolean = true,
 		title: string = '',
 		note: string = '',
@@ -56,6 +73,27 @@ const Goals = () => {
 		setNewGoalRewards(rewards);
 	};
 
+	const updateDATA = (goal: Goal): void => {
+		if(goal.goalIsSteps) {
+			setDATA([
+				{
+					title: 'Daily Steps Goal',
+					data: [...goalData[0].data]
+				},
+				{...goalData[1]}
+			])
+		}
+		else {
+			setDATA([
+				{...goalData[0]},
+				{
+					title: 'Daily Steps Goal',
+					data: [...goalData[1].data]
+				}
+			])
+		}
+	}
+
 	const createGoal = (): void => {
 		setNewGoalRewards({
 			coins: newGoalDifficulty * 2,
@@ -74,9 +112,44 @@ const Goals = () => {
 		dispatch(actions.ADD_GOAL(newGoal));
 		console.log(goalData);
 
-		setGoal(); //reset the states for goals to init values
+		updateDATA(newGoal)
+		setGoalStates(); //reset the states for goals to init values
 		setModalVisible(false);
 	};
+
+	const updateGoal = (index: number, goalIsSteps: boolean): void => {
+		let currentGoal;
+		if (goalIsSteps) currentGoal = goalData[0].data.find((goal: Goal) => goal.index == index);
+		else currentGoal = goalData[1].data.find((goal: Goal) => goal.index == index);
+		if (!currentGoal) {
+			alert('goal not found');
+			return;
+		}
+
+		setGoalStates(
+			currentGoal.goalIsSteps,
+			currentGoal.title,
+			currentGoal.note,
+			currentGoal.difficulty,
+			currentGoal.rewards
+		);
+
+		setModalVisible(true);
+		deleteGoal(index, goalIsSteps);
+	};
+
+	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
+		let currentGoal;
+		if (goalIsSteps) currentGoal = goalData[0].data.find((goal: Goal) => goal.index == index);
+		else currentGoal = goalData[1].data.find((goal: Goal) => goal.index == index);
+		if (!currentGoal) {
+			alert('goal not found');
+			return;
+		}
+
+		dispatch(actions.DELETE_GOAL(currentGoal));
+		updateDATA(currentGoal);
+	}
 
 	return (
 		<View style={styles.container}>
@@ -119,7 +192,7 @@ const Goals = () => {
 							<Pressable
 								style={styles.buttonModalClose}
 								onPress={() => {
-									setGoal();
+									setGoalStates();
 									setModalVisible(false);
 								}}
 							>
@@ -135,14 +208,15 @@ const Goals = () => {
 			</Modal>
 
 			<SectionList
-				sections={goalData.goalReducer}
+				sections={DATA}
 				keyExtractor={(item) => `${item.index}`}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => (
 					<GoalCard
-						DATA={goalData.goalReducer}
+						DATA={DATA}
 						openGoalModal={() => setModalVisible(true)}
-						setGoal={setGoal}
+						updateGoal={updateGoal}
+						deleteGoal={deleteGoal}
 						index={item.index}
 						goalIsSteps={item.goalIsSteps}
 						title={item.title}

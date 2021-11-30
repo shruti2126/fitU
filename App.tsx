@@ -18,6 +18,8 @@ const stack = createNativeStackNavigator();
 
 // Initialize redux store
 const store = createStore(allReducers);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export default function App() {
 	return (
