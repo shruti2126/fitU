@@ -9,6 +9,7 @@ type props = {
 	openGoalModal(): void;
 	updateGoal: Function;
 	deleteGoal: Function;
+	completeGoal: Function;
 	title: string;
 	note: string | undefined;
 	index: number;
@@ -20,6 +21,7 @@ export const GoalCard: React.FC<props> = ({
 	openGoalModal,
 	updateGoal,
 	deleteGoal,
+	completeGoal,
 	title,
 	note,
 	index,
@@ -40,6 +42,10 @@ export const GoalCard: React.FC<props> = ({
 				{/* deleteGoal(index, goalIsSteps) */}
 				<Pressable onPress={() => deleteGoal(index, goalIsSteps)}>
 					<Text style={styles.deleteButton}>Delete</Text>
+				</Pressable>
+
+				<Pressable onPress={() => completeGoal(index, goalIsSteps)}>
+					<Text style={styles.completeButton}>Complete</Text>
 				</Pressable>
 			</View>
 		</View>
@@ -64,10 +70,15 @@ const styles = StyleSheet.create({
 		marginRight: 20
 	},
 	deleteButton: {
-		color: 'red'
+		color: 'red',
+		marginRight: 20
 	},
 	goalCardFooter: {
 		flexDirection: 'row'
+	},
+	completeButton: {
+		color: '#A7E556',
+		marginRight: 20
 	}
 });
 

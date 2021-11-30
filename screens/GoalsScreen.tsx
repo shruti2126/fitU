@@ -26,6 +26,8 @@ import goalReducer from '../reducers/goalReducers';
 
 const Goals = () => {
 	const goalData = useSelector((state) => state.goalReducer);
+	const rewardsData = useSelector((state) => state.rewardsReducer);
+
 	const dispatch = useDispatch<AppDispatch>();
 
 	const [ DATA, setDATA ] = useState<goalData>([
@@ -97,30 +99,27 @@ const Goals = () => {
 	};
 
 	const updateDATA = (goal: Goal): void => {
-		if(goal.goalIsSteps) {
-			setDATA([
-				{
-					title: 'Daily Steps Goal',
-					data: [...goalData[0].data]
-				},
-				{...goalData[1]}
-			])
-		}
-		else {
-			setDATA([
-				{...goalData[0]},
-				{
-					title: 'Daily Steps Goal',
-					data: [...goalData[1].data]
-				}
-			])
-		}
+		setDATA([
+			{
+				title: 'Daily Steps Goal',
+				data: [...goalData[0].data]
+			},
+			{
+				title: 'Daily Steps Goal',
+				data: [...goalData[1].data]
+			}
+		])
 	}
 
-	const updateGoal = (index: number, goalIsSteps: boolean): void => {
+	const findGoal = (index: number, goalIsSteps: boolean): Goal => {
 		let currentGoal;
 		if (goalIsSteps) currentGoal = goalData[0].data.find((goal: Goal) => goal.index == index);
 		else currentGoal = goalData[1].data.find((goal: Goal) => goal.index == index);
+		return currentGoal;
+	}
+
+	const updateGoal = (index: number, goalIsSteps: boolean): void => {
+		let currentGoal = findGoal(index, goalIsSteps)
 		if (!currentGoal) {
 			alert('goal not found');
 			return;
@@ -139,9 +138,7 @@ const Goals = () => {
 	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
-		let currentGoal;
-		if (goalIsSteps) currentGoal = goalData[0].data.find((goal: Goal) => goal.index == index);
-		else currentGoal = goalData[1].data.find((goal: Goal) => goal.index == index);
+		let currentGoal = findGoal(index, goalIsSteps)
 		if (!currentGoal) {
 			alert('goal not found');
 			return;
@@ -150,6 +147,19 @@ const Goals = () => {
 		dispatch(actions.DELETE_GOAL(currentGoal));
 		updateDATA(currentGoal);
 	}
+
+	const completeGoal = (index: number, goalIsSteps: boolean): void => {
+		let currentGoal = findGoal(index, goalIsSteps)
+		if (!currentGoal) {
+			alert('goal not found');
+			return;
+		}
+
+		dispatch(actions.INCREASE_REWARDS({rewardType: "coins", amount: currentGoal.rewards.coins}))
+		dispatch(actions.DELETE_GOAL(currentGoal));
+		updateDATA(currentGoal);
+	}
+
 
 	return (
 		<View style={styles.container}>
@@ -217,6 +227,7 @@ const Goals = () => {
 						openGoalModal={() => setModalVisible(true)}
 						updateGoal={updateGoal}
 						deleteGoal={deleteGoal}
+						completeGoal={completeGoal}
 						index={item.index}
 						goalIsSteps={item.goalIsSteps}
 						title={item.title}

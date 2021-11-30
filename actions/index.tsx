@@ -1,5 +1,5 @@
 import * as actions from './actionTypes.js';
-import { Goal } from '../types/GoalTypes';
+import { Goal, goalReward } from '../types/GoalTypes';
 
 /**
  * Goal Actions
@@ -29,3 +29,10 @@ export const DELETE_GOAL = (goalToRemove: Goal) => {
 /**
  * Rewards Actions
  */
+
+export const INCREASE_REWARDS = (rewards: { rewardType: string; amount: number }) => {
+	return {
+		type: actions.INCREASE_REWARDS,
+		payload: rewards
+	};
+};

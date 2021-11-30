@@ -9,7 +9,7 @@ export type Goal = {
 	title: string;
 	note?: string;
 	difficulty?: number;
-	rewards?: goalReward;
+	rewards: goalReward;
 	reminder?: Date;
 };
 

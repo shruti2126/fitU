@@ -7,3 +7,5 @@ export const DELETE_GOAL = 'deleteGoal';
 /**
  * Rewards Actions Types
  */
+
+export const INCREASE_REWARDS = 'increaseRewards';
