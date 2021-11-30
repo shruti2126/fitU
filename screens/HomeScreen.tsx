@@ -1,15 +1,16 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { NavigationRouteContext, useNavigation } from '@react-navigation/core';
+import { NavigationRouteContext, useNavigation, Route} from '@react-navigation/core';
 import Card from '../components/Card';
 import ProfileCard from '../components/ProfileCard';
 
 type homeScreenProps = {
-	navigation: any;
+	route: Route<string>,
+	navigation: any,
 };
 
-const HomeScreen: React.FC<homeScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 	navigation = useNavigation();
 	const auth = getAuth();
 	const signOut = () => {
@@ -18,7 +19,7 @@ const HomeScreen: React.FC<homeScreenProps> = ({ navigation }) => {
 		});
 	};
 
-	console.log(auth);
+	const username = route.params.username;
 
 	return (
 		<ImageBackground source={require('../HomeScreenBackground.png')} style={styles.image}>
@@ -26,7 +27,7 @@ const HomeScreen: React.FC<homeScreenProps> = ({ navigation }) => {
 				<View style={styles.container}>
 					<View style={styles.title_header}>
 						<Text style={styles.title}>
-							Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
+							Welcome {username} !
 						</Text>
 					</View>
 					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />

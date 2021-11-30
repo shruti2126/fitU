@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
+import saveUserToFirestore from '../Hooks/saveUserToFirestore';
 
 type registerScreenProps = {
 	navigation: any;
@@ -28,8 +29,8 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
 			.then((userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				console.log('Registered and logged in with: ', user.email);
-				navigation.navigate('Home');
+				saveUserToFirestore(username, email);
+				navigation.navigate('Home', { username: username });
 				setEmail('');
 				setPassword('');
 				setUsername('');

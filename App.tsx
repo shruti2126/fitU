@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from './config/config';
+import getFirestore from "./config/config"
 import MainNavigator from './Routes/Navigator';
 
 import { createStore } from 'redux';
@@ -12,7 +13,7 @@ import { Provider } from 'react-redux';
 import allReducers from './reducers';
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const db = getFirestore;
 
 const stack = createNativeStackNavigator();
 

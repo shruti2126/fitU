@@ -11,6 +11,7 @@ import {
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
+import fetchUsername from '../Hooks/fetchUsername';
 
 type loginScreenProps = {
 	navigation: any;
@@ -22,19 +23,21 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 	navigation = useNavigation();
 	const auth = getAuth();
 
-	useEffect(() => {
-		auth.onAuthStateChanged((user) => {
-			if (user) {
-				navigation.navigate('Home');
-			}
-		});
-	});
+	// useEffect(() => {
+	// 	auth.onAuthStateChanged((user) => {
+	// 		if (user) {
+	// 			navigation.navigate('Home');
+	// 		}
+	// 	});
+	// });
 	const login = () => {
 		signInWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
+			.then(async (userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				console.log('logged in with: ', user.email);
+				var username = await fetchUsername(email);
+				if (username == null) console.log("couldn't fetch doc");
+				navigation.navigate('Home', { username: username });
 				setEmail('');
 				setPassword('');
 			})
