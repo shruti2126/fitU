@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, StyleSheet, Text, Pressable, Image, FlatList, ImageBackground, TouchableOpacity } from 'react-native'
-import {getAuth} from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 
 
-type StepProps = {
-    card_title?: string;
+type stepHighlightsProps = {
+    stepHighlightsCard_title?: string;
     nav_function?: () => void;
 };
- 
+
 
 const styles = StyleSheet.create({
     container: {
@@ -37,27 +37,31 @@ const styles = StyleSheet.create({
     text_body: {
         marginBottom: 2
     },
+
     image: {
         flex: 1,
         justifyContent: "center",
         alignContent: 'center',
         width: '100%',
         height: '100%',
-      }
+    }
 })
 
-const StepsCard: React.FC<StepProps> = ({ }) => {
 
-	return (
-		<View style={styles.container}>
-			<Text style={styles.text_title}>
-				Daily Average 5,573 steps{"\n"}
-                Nov 21-27 2021{"\n"}
-                *graph*
-				
-			</Text>
 
-		</View>
-	)
+const StepHighlightsCard: React.FC<stepHighlightsProps> = ({ }) => {
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.text_title}>
+                You walked less yesterday than the day before by 1,513 steps.{"\n"}
+                Sunday:   3,139 steps {"\n"}
+                Saturday: 4,652 steps
+            </Text>
+
+        </View>
+    )
 }
-export default StepsCard;
+
+
+export default StepHighlightsCard;

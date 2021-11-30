@@ -5,6 +5,8 @@ import {getAuth} from 'firebase/auth'
 import { NavigationRouteContext, useNavigation } from '@react-navigation/core'
 import Card from "../components/Card"
 import StepCard from "../components/StepCard"
+import StepHighlightsCard from '../components/StepsHighlightsCard'
+import AboutStepsCard from '../components/AboutStepsCard'
 
 type StepProps = {
     navigation: any;
@@ -28,32 +30,20 @@ const Step: React.FC<StepProps> = ({navigation}) => {
     return (
         <ImageBackground source={require("../tree.jpeg")} style={styles.image}>
       <View style={styles.container}>
-      
-        <StepCard>
-            <View style={styles.titleContainer}>
-            <Text>
-                Daily average: 4,608 steps!
+      <Text style={styles.heading}>
+			Steps	{"\n"}
+			</Text>
+	  <StepCard card_title={"Steps"} nav_function={() => navigation.navigate("Steps")}/>
+	  <Text style={styles.heading}>
+			Highlights	{"\n"}
+			</Text>
 
-            </Text>
-            <Image source={require('../stepimage.png')} />
-            </View>
-        </StepCard>
-        <StepCard>
-            <View style={styles.titleContainer}>
-            <Text>
-                Trends
-            </Text>
-            <Image source={require('../stepimage.png')} />
-            </View>
-        </StepCard>
-        <StepCard>
-            <View style={styles.titleContainer}>
-            <Text>
-                Highlights
-            </Text>
-            <Image source={require('../stepimage.png')} />
-            </View>
-        </StepCard>
+	  <StepHighlightsCard card_title={"Steps"} nav_function={() => navigation.navigate("Steps")}/>
+	  <Text style={styles.heading}>
+			About Steps	{"\n"}
+			</Text>
+
+	  <AboutStepsCard card_title={"Steps"} nav_function={() => navigation.navigate("Steps")}/>
 
         <TouchableOpacity
             onPress={signOut}
@@ -65,23 +55,7 @@ const Step: React.FC<StepProps> = ({navigation}) => {
       </ImageBackground>
     )
 
-    // return (
-    //   <ImageBackground source={require("../leg.jpeg")} style={styles.image}>
-    //     <View style={styles.square}></View>
-    //     <View style={styles.titleContainer}>
-    //       <Text style={styles.heading}>fitU</Text>
-    //     </View>
-    //     <View style={styles.container}>
-    //       <Text>Email: {auth.currentUser?.email}</Text>
-    //       <TouchableOpacity
-    //         onPress={signOut}
-    //         style={styles.button}
-    //       >
-    //         <Text style={styles.buttonText}>Sign out</Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //     </ImageBackground>
-    //   )
+    
     }
     
     export default Step;
@@ -91,7 +65,7 @@ const Step: React.FC<StepProps> = ({navigation}) => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#FFFFFF"
+        backgroundColor: 'lightskyblue'
       },
        button: {
         backgroundColor: '#0782F9',
@@ -124,7 +98,7 @@ const Step: React.FC<StepProps> = ({navigation}) => {
         marginBottom: 25
       },
       heading: {
-        fontSize: 100,
-        color: "#702963"
+        fontSize: 35,
+        color: 'white'
       },
     })
