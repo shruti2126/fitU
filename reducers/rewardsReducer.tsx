@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes.js';
 import { goalReward } from '../types/GoalTypes.js';
 
 const initialRewardsState: goalReward = {
-	coins: 0,
+	coins: 9,
 	jewels: 0
 };
 
@@ -14,14 +14,23 @@ const rewardsReducer = (
 		case actionTypes.INCREASE_REWARDS:
 			const payload = action.payload;
 
-			if (payload.rewardType === 'coins') state.coins += payload.amount;
-			else if (payload.rewardType === 'jewels') state.jewels += payload.amount;
+			if (payload.rewardType === 'coins') {
+				const coins = state.coins + payload.amount;
+				state = {
+					coins: coins,
+					jewels: state.jewels
+				};
+			}
+			else if (payload.rewardType === 'jewels') {
+				const jewels = state.jewels + payload.amount;
+				state = {
+					coins: state.coins,
+					jewels: jewels
+				};
+			}
 			else {
 				throw `Incorrect reward type: ${payload.rewardType} (must be either 'coins' or 'jewels')`;
 			}
-
-			console.log(state);
-
 			return state;
 
 		default:

@@ -1,16 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
-import { goalReward } from '../types/GoalTypes';
+import { connect } from 'react-redux';
 
-const rewardsCard = () => {
-	const rewardsReducer: goalReward = useSelector((state) => state.rewardsReducer);
+type RewardsProps = {
+	coins?: number;
+	jewels?: number;
+};
 
+const rewardsCard: React.FC<RewardsProps> = ({ coins, jewels }) => {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.textTitle}>Rewards</Text>
-			<Text style={styles.textBody}>Coins: {rewardsReducer.coins}</Text>
-			<Text style={styles.textBody}>Jewels: {rewardsReducer.jewels}</Text>
+			<Text style={styles.textBody}>Coins: {coins}</Text>
+			<Text style={styles.textBody}>Jewels: {jewels}</Text>
 		</View>
 	);
 };
@@ -39,4 +41,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default rewardsCard;
+const mapStateToProps = (state: any) => {
+	return {
+		coins: state.rewardsReducer.coins,
+		jewels: state.rewardsReducer.jewels
+	};
+};
+
+export default connect(mapStateToProps)(rewardsCard);

@@ -26,6 +26,7 @@ import goalReducer from '../reducers/goalReducers';
 
 const Goals = () => {
 	const goalData = useSelector((state) => state.goalReducer);
+	const rewardsReducer: goalReward = useSelector((state) => state.rewardsReducer);	
 	const dispatch = useDispatch<AppDispatch>();
 	const [DATA, setDATA] = useState(goalData);
 

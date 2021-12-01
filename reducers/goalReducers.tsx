@@ -22,7 +22,7 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 
 			// api call to update the firestore with the new goal
 			// console.log(newGoal);
-			console.log(state);
+			// console.log(state);
 			return state;
 
 		case actionTypes.DELETE_GOAL:

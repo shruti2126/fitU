@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { NavigationRouteContext, useNavigation } from '@react-navigation/core';
