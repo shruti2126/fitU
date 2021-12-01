@@ -19,22 +19,18 @@ const HomeScreen: React.FC<homeScreenProps> = ({ navigation }) => {
 		});
 	};
 
-	// console.log(rewardsData);
-	// console.log(rewards);
-
 	return (
 		<ImageBackground source={require('../HomeScreenBackground.png')} style={styles.image}>
 			<ScrollView>
 				<View style={styles.container}>
-					<RewardsCard />
 					<View style={styles.title_header}>
 						<Text style={styles.title}>
 							Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
 						</Text>
 					</View>
-					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
 
-					{/* {setRewards(rewardsData)} */}
+					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
+					<RewardsCard />
 
 					<View>
 						<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />

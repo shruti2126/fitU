@@ -27,21 +27,6 @@ import goalReducer from '../reducers/goalReducers';
 const Goals = () => {
 	const goalData = useSelector((state) => state.goalReducer);
 	const dispatch = useDispatch<AppDispatch>();
-
-	console.log(goalData);
-	
-
-	// const [ DATA, setDATA ] = useState<goalData>([
-	// 	{
-	// 		title: 'Daily Steps Goal',
-	// 		data: []
-	// 	},
-	// 	{
-	// 		title: 'Daily Sleep Goal',
-	// 		data: []
-	// 	}
-	// ]);
-
 	const [DATA, setDATA] = useState(goalData);
 
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
@@ -49,10 +34,6 @@ const Goals = () => {
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
-	// const [ newGoalRewards, setNewGoalRewards ] = useState<goalReward>({
-	// 	coins: newGoalDifficulty * 2,
-	// 	jewels: 0
-	// });
 
 	const setGoalStates = (
 		isSteps: boolean = true,
