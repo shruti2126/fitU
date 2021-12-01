@@ -20,6 +20,8 @@ const rewardsReducer = (
 				throw `Incorrect reward type: ${payload.rewardType} (must be either 'coins' or 'jewels')`;
 			}
 
+			console.log(state);
+
 			return state;
 
 		default:
