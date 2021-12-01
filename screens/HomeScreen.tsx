@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { NavigationRouteContext, useNavigation } from '@react-navigation/core';
 import Card from '../components/Card';
 import ProfileCard from '../components/ProfileCard';
-import { useSelector } from 'react-redux';
+import RewardsCard from '../components/RewardsCard';
 
 type homeScreenProps = {
 	navigation: any;
@@ -19,22 +19,23 @@ const HomeScreen: React.FC<homeScreenProps> = ({ navigation }) => {
 		});
 	};
 
-	const rewardsData = useSelector((state) => state);
-	console.log(rewardsData);
+	// console.log(rewardsData);
+	// console.log(rewards);
 
 	return (
 		<ImageBackground source={require('../HomeScreenBackground.png')} style={styles.image}>
 			<ScrollView>
 				<View style={styles.container}>
+					<RewardsCard />
 					<View style={styles.title_header}>
 						<Text style={styles.title}>
 							Welcome {auth.currentUser.displayName ? auth.currentUser.displayName : 'Couch Potato'}!
 						</Text>
 					</View>
 					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
-					<View>
-						<Text>Coins: {rewardsData.rewardsReducer.coins}</Text>
-					</View>
+
+					{/* {setRewards(rewardsData)} */}
+
 					<View>
 						<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />
 						<Card card_title={'Sleep'} nav_function={() => navigation.navigate('Sleep')} />

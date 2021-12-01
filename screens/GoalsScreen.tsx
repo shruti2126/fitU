@@ -26,7 +26,6 @@ import goalReducer from '../reducers/goalReducers';
 
 const Goals = () => {
 	const goalData = useSelector((state) => state.goalReducer);
-	const rewardsData = useSelector((state) => state.rewardsReducer);
 	const dispatch = useDispatch<AppDispatch>();
 
 	console.log(goalData);
@@ -167,11 +166,6 @@ const Goals = () => {
 
 	return (
 		<View style={styles.container}>
-
-
-			<View>
-				<Text>Coins: {rewardsData.coins}</Text>
-			</View>
 			<Modal
 				transparent={false}
 				visible={modalVisible}
