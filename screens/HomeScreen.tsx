@@ -1,13 +1,14 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import { getAuth } from 'firebase/auth';
-import { NavigationRouteContext, useNavigation, Route} from '@react-navigation/core';
+import { NavigationRouteContext, useNavigation, Route } from '@react-navigation/core';
 import Card from '../components/Card';
 import ProfileCard from '../components/ProfileCard';
+import RewardsCard from '../components/RewardsCard';
 
 type homeScreenProps = {
-	route: Route<string>,
-	navigation: any,
+	route: Route<string>;
+	navigation: any;
 };
 
 const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
@@ -26,12 +27,13 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 			<ScrollView>
 				<View style={styles.container}>
 					<View style={styles.title_header}>
-						<Text style={styles.title}>
-							Welcome {username} !
-						</Text>
+						<Text style={styles.title}>Welcome {username} !</Text>
 					</View>
+
 					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
-					<View style={styles.sector_container}>
+					<RewardsCard />
+
+					<View>
 						<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />
 						<Card card_title={'Sleep'} nav_function={() => navigation.navigate('Sleep')} />
 					</View>
@@ -42,24 +44,6 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 			</ScrollView>
 		</ImageBackground>
 	);
-
-	// return (
-	//   <ImageBackground source={require("../leg.jpeg")} style={styles.image}>
-	//     <View style={styles.square}></View>
-	//     <View style={styles.titleContainer}>
-	//       <Text style={styles.heading}>fitU</Text>
-	//     </View>
-	//     <View style={styles.container}>
-	//       <Text>Email: {auth.currentUser?.email}</Text>
-	//       <TouchableOpacity
-	//         onPress={signOut}
-	//         style={styles.button}
-	//       >
-	//         <Text style={styles.buttonText}>Sign out</Text>
-	//       </TouchableOpacity>
-	//     </View>
-	//     </ImageBackground>
-	//   )
 };
 
 export default HomeScreen;
@@ -68,11 +52,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'space-between',
-		alignItems: 'center',
+		alignItems: 'center'
 		// backgroundColor: '#FFFFFF'
 		// backgroundColor: 'aliceblue'
 	},
-	sector_container: {},
 	title: {
 		color: 'white',
 		fontWeight: '700',
@@ -80,14 +63,14 @@ const styles = StyleSheet.create({
 	},
 	title_header: {
 		textAlign: 'center',
-		marginTop: 25,
+		marginTop: 25
 	},
 	row: {
 		flex: 1,
 		justifyContent: 'space-between',
 		// alignItems: 'center',
 		alignContent: 'space-between',
-		flexDirection: 'row',
+		flexDirection: 'row'
 		// backgroundColor: '#FFFFFF'
 		// backgroundColor: 'aliceblue'
 	},
@@ -109,7 +92,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignContent: 'center',
 		width: '100%',
-		height: '100%',
+		height: '100%'
 		// blurRadius: 50
 	}
 	// image: {

@@ -28,7 +28,6 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 		case actionTypes.DELETE_GOAL:
 			// console.log(action.payload);
 			const payload: Goal = action.payload;
-			console.log(state);
 			console.log(payload);
 
 			if (payload.goalIsSteps) state[0].data = state[0].data.filter((goal) => goal.index != payload.index);
