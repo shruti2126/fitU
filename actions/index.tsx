@@ -20,6 +20,13 @@ export const UPDATE_GOAL = (goal: Goal) => {
 	};
 };
 
+// export const UPDATE_GOAL = (goalToUpdate: Goal) => {
+// 	return {
+// 		type: goalActions.UPDATE_GOAL,
+// 		payload: goalToUpdate
+// 	};
+// };
+
 export const DELETE_GOAL = (goalToRemove: Goal) => {
 	return {
 		type: goalActions.DELETE_GOAL,
