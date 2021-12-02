@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes.js';
 import { goalReward } from '../types/GoalTypes.js';
 
 const initialRewardsState: goalReward = {
-	coins: 9,
+	coins: 0,
 	jewels: 0
 };
 

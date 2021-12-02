@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Row } from 'react-bootstrap';
 import {
 	StyleSheet,
 	Text,
@@ -16,22 +17,18 @@ import CircleButton from '../components/CircleButton';
 import { goalReward, Goal, goalData } from '../types/GoalTypes';
 import GoalCard from '../components/GoalCard';
 
-import {useDispatch, useSelector, connect } from 'react-redux'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import * as actions from '../actions';
 
-import type {AppDispatch } from '../App'
+import type { RootState, AppDispatch } from '../App'
+import goalReducer from '../reducers/goalReducers';
 
-type goalsScreenProps = {
-	goalsData: any
-}
 
-const Goals: React.FC<goalsScreenProps> = ({goalsData}) => {
-
-	console.log(goalsData);
-
-	// const goalData = useSelector((state) => state.goalReducer);
+const Goals = () => {
+	const goalData = useSelector((state) => state.goalReducer);
+	const rewardsReducer: goalReward = useSelector((state) => state.rewardsReducer);	
 	const dispatch = useDispatch<AppDispatch>();
-	// const [DATA, setDATA] = useState<goalData>(goalData);
+	const [DATA, setDATA] = useState(goalData);
 
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
@@ -57,9 +54,14 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData}) => {
 		setNewGoalTitle(title);
 		setNewGoalNote(note);
 		setNewGoalDifficulty(difficulty);
+		// setNewGoalRewards(rewards);
 	};
 
 	const createGoal = (): void => {
+		// setNewGoalRewards();
+
+		console.log(newGoalDifficulty);
+		
 
 		const newGoal: Goal = {
 			index: new Date().getTime(),
@@ -74,6 +76,7 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData}) => {
 		};
 
 		dispatch(actions.ADD_GOAL(newGoal));
+		console.log(goalData);
 
 		updateDATA(newGoal)
 		setGoalStates(); //reset the states for goals to init values
@@ -81,22 +84,22 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData}) => {
 	};
 
 	const updateDATA = (goal: Goal): void => {
-		// setDATA([
-		// 	{
-		// 		title: 'Daily Steps Goal',
-		// 		data: [...goalData[0].data]
-		// 	},
-		// 	{
-		// 		title: 'Daily Steps Goal',
-		// 		data: [...goalData[1].data]
-		// 	}
-		// ])
+		setDATA([
+			{
+				title: 'Daily Steps Goal',
+				data: [...goalData[0].data]
+			},
+			{
+				title: 'Daily Steps Goal',
+				data: [...goalData[1].data]
+			}
+		])
 	}
 
 	const findGoal = (index: number, goalIsSteps: boolean): Goal => {
 		let currentGoal;
-		if (goalIsSteps) currentGoal = goalsData[0].data.find((goal: Goal) => goal.index == index);
-		else currentGoal = goalsData[1].data.find((goal: Goal) => goal.index == index);
+		if (goalIsSteps) currentGoal = goalData[0].data.find((goal: Goal) => goal.index == index);
+		else currentGoal = goalData[1].data.find((goal: Goal) => goal.index == index);
 		return currentGoal;
 	}
 
@@ -200,12 +203,12 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData}) => {
 			</Modal>
 
 			<SectionList
-				sections={goalsData}
+				sections={DATA}
 				keyExtractor={(item) => `${item.index}`}
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => (
 					<GoalCard
-						DATA={goalsData}
+						DATA={DATA}
 						openGoalModal={() => setModalVisible(true)}
 						updateGoal={updateGoal}
 						deleteGoal={deleteGoal}
@@ -319,10 +322,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-const mapStateToProps = (state: any) => {
-	return {
-		goalsData: state.goalReducer
-	}
-}
-
-export default connect(mapStateToProps)(Goals);
+export default Goals;
