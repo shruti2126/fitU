@@ -16,21 +16,17 @@ import CircleButton from '../components/CircleButton';
 import { goalReward, Goal, goalData } from '../types/GoalTypes';
 import GoalCard from '../components/GoalCard';
 
-import {connect } from 'react-redux'
+import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import type {AppDispatch } from '../App'
-
 type goalsScreenProps = {
-	goalsData: any,
-	ADD_GOAL: Function,
-	DELETE_GOAL: Function,
-	INCREASE_REWARDS: Function
+	goalsData: any;
+	ADD_GOAL: Function;
+	DELETE_GOAL: Function;
+	INCREASE_REWARDS: Function;
+};
 
-}
-
-const Goals: React.FC<goalsScreenProps> = ({goalsData, ADD_GOAL, DELETE_GOAL, INCREASE_REWARDS}) => {
-
+const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, INCREASE_REWARDS }) => {
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
@@ -58,7 +54,6 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData, ADD_GOAL, DELETE_GOAL, IN
 	};
 
 	const createGoal = (): void => {
-
 		const newGoal: Goal = {
 			index: new Date().getTime(),
 			goalIsSteps: isNewGoalTypeSteps,
@@ -81,10 +76,10 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData, ADD_GOAL, DELETE_GOAL, IN
 		if (goalIsSteps) currentGoal = goalsData[0].data.find((goal: Goal) => goal.index == index);
 		else currentGoal = goalsData[1].data.find((goal: Goal) => goal.index == index);
 		return currentGoal;
-	}
+	};
 
 	const updateGoal = (index: number, goalIsSteps: boolean): void => {
-		let currentGoal = findGoal(index, goalIsSteps)
+		let currentGoal = findGoal(index, goalIsSteps);
 		if (!currentGoal) {
 			alert('goal not found');
 			return;
@@ -103,26 +98,25 @@ const Goals: React.FC<goalsScreenProps> = ({goalsData, ADD_GOAL, DELETE_GOAL, IN
 	};
 
 	const deleteGoal = (index: number, goalIsSteps: boolean): void => {
-		let currentGoal = findGoal(index, goalIsSteps)
+		let currentGoal = findGoal(index, goalIsSteps);
 		if (!currentGoal) {
 			alert('goal not found');
 			return;
 		}
 
 		DELETE_GOAL(currentGoal);
-	}
+	};
 
 	const completeGoal = (index: number, goalIsSteps: boolean): void => {
-		let currentGoal = findGoal(index, goalIsSteps)
+		let currentGoal = findGoal(index, goalIsSteps);
 		if (!currentGoal) {
 			alert('goal not found');
 			return;
 		}
 
-		INCREASE_REWARDS({rewardType: "coins", amount: currentGoal.rewards.coins})
+		INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins });
 		DELETE_GOAL(currentGoal);
-	}
-
+	};
 
 	return (
 		<View style={styles.container}>
@@ -303,18 +297,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: any) => {
 	return {
 		goalsData: state.goalReducer
-	}
-}
+	};
+};
 
 const mapDispatchToProps = (dispatch: any) => {
 	return {
 		ADD_GOAL: (newGoal: Goal) => dispatch(actions.ADD_GOAL(newGoal)),
 		DELETE_GOAL: (currentGoal: Goal) => dispatch(actions.DELETE_GOAL(currentGoal)),
-		INCREASE_REWARDS: (rewards: {
-			rewardType: string,
-			amount: number
-		}) => dispatch(actions.INCREASE_REWARDS(rewards))
-	}
-}
+		INCREASE_REWARDS: (rewards: { rewardType: string; amount: number }) =>
+			dispatch(actions.INCREASE_REWARDS(rewards))
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Goals);
