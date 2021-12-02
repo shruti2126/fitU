@@ -30,8 +30,22 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 			const payload: Goal = action.payload;
 			console.log(payload);
 
-			if (payload.goalIsSteps) state[0].data = state[0].data.filter((goal) => goal.index != payload.index);
-			else state[1].data = state[0].data.filter((goal) => goal.index != payload.index);
+			const newState: goalData = [
+				{
+					title: 'Daily Steps Goal',
+					data: [ ...state[0].data ]
+				},
+				{
+					title: 'Daily Sleep Goal',
+					data: [ ...state[1].data ]
+				}
+			];
+
+			if (payload.goalIsSteps) newState[0].data = state[0].data.filter((goal) => goal.index != payload.index);
+			else newState[1].data = state[1].data.filter((goal) => goal.index != payload.index);
+
+			state = newState;
+			return state;
 
 		default:
 			return state;
