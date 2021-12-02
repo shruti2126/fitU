@@ -1,4 +1,5 @@
-import * as actions from './actionTypes.js';
+import * as goalActions from './goalActionTypes.js';
+import * as rewardsActions from './rewardActionTypes';
 import { Goal, goalReward } from '../types/GoalTypes';
 
 /**
@@ -7,21 +8,21 @@ import { Goal, goalReward } from '../types/GoalTypes';
 
 export const ADD_GOAL = (goal: Goal) => {
 	return {
-		type: actions.ADD_GOAL,
+		type: goalActions.ADD_GOAL,
 		payload: goal
 	};
 };
 
 export const UPDATE_GOAL = (goal: Goal) => {
 	return {
-		type: actions.ADD_GOAL,
+		type: goalActions.ADD_GOAL,
 		payload: goal
 	};
 };
 
 export const DELETE_GOAL = (goalToRemove: Goal) => {
 	return {
-		type: actions.DELETE_GOAL,
+		type: goalActions.DELETE_GOAL,
 		payload: goalToRemove
 	};
 };
@@ -32,7 +33,7 @@ export const DELETE_GOAL = (goalToRemove: Goal) => {
 
 export const INCREASE_REWARDS = (rewards: { rewardType: string; amount: number }) => {
 	return {
-		type: actions.INCREASE_REWARDS,
+		type: rewardsActions.INCREASE_REWARDS,
 		payload: rewards
 	};
 };

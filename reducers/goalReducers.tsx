@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes.js';
+import * as goalActionTypes from '../actions/goalActionTypes.js';
 import { goalData, Goal } from '../types/GoalTypes';
 
 const initialGoalState: goalData = [
@@ -14,7 +14,7 @@ const initialGoalState: goalData = [
 
 const goalReducer = (state: goalData = initialGoalState, action: { type: string; payload: Goal }): goalData => {
 	switch (action.type) {
-		case actionTypes.ADD_GOAL:
+		case goalActionTypes.ADD_GOAL:
 			const newGoal = action.payload;
 
 			if (newGoal.goalIsSteps) state[0].data.push(newGoal);
@@ -25,7 +25,7 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 			// console.log(state);
 			return state;
 
-		case actionTypes.DELETE_GOAL:
+		case goalActionTypes.DELETE_GOAL:
 			// console.log(action.payload);
 			const payload: Goal = action.payload;
 			console.log(payload);

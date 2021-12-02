@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes.js';
+import * as rewardActionTypes from '../actions/rewardActionTypes';
 import { goalReward } from '../types/GoalTypes.js';
 
 const initialRewardsState: goalReward = {
@@ -11,7 +11,7 @@ const rewardsReducer = (
 	action: { type: string; payload: { rewardType: string; amount: number } }
 ) => {
 	switch (action.type) {
-		case actionTypes.INCREASE_REWARDS:
+		case rewardActionTypes.INCREASE_REWARDS:
 			const payload = action.payload;
 
 			if (payload.rewardType === 'coins') {
