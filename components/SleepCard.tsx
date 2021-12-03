@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { goalData } from '../types/GoalTypes';
 
 type SleepCardProps = {
-	goalReducer?: goalData;
+	goalReducer: goalData;
 };
 
 const SleepCard: React.FC<SleepCardProps> = ({ goalReducer }) => {

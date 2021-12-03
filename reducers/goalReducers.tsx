@@ -31,19 +31,9 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 			if (newGoal.goalIsSteps) state[0].data.push(newGoal);
 			else state[1].data.push(newGoal);
 
+			console.log(state);
+
 			return state;
-
-		// case goalActionTypes.UPDATE_GOAL:
-		// 	// console.log(action.payload);
-		// 	const updatedGoal: Goal = action.payload;
-
-		// 	if (updatedGoal.goalIsSteps) {
-		// 		newState[0].data = state[0].data.filter((goal) => goal.index != payload.index);
-		// 	}
-		// 	else newState[1].data = state[1].data.filter((goal) => goal.index != payload.index);
-
-		// 	state = newState;
-		// 	return state;
 
 		case goalActionTypes.DELETE_GOAL:
 			// console.log(action.payload);

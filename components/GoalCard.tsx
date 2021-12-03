@@ -5,34 +5,34 @@ import * as actions from '../actions';
 import { useDispatch } from 'react-redux';
 
 type props = {
-	DATA: goalData;
-	openGoalModal(): void;
 	updateGoal: Function;
 	deleteGoal: Function;
 	completeGoal: Function;
+	index: number;
+	isMainGoal: boolean;
+	goalIsSteps: boolean;
 	title: string;
 	note: string | undefined;
-	index: number;
-	goalIsSteps: boolean;
 };
 
 export const GoalCard: React.FC<props> = ({
-	DATA,
-	openGoalModal,
 	updateGoal,
 	deleteGoal,
 	completeGoal,
-	title,
-	note,
 	index,
-	goalIsSteps
+	isMainGoal,
+	goalIsSteps,
+	title,
+	note
 }) => {
-	const dispatch = useDispatch();
+	// console.log(isMainGoal);
+	// console.log(title);
 
 	return (
-		<View style={styles.goalsContainer}>
+		<View style={[ isMainGoal ? styles.mainGoalContainer : styles.goalsContainer ]}>
 			<Text style={styles.goalsTitle}>{title}</Text>
 			<Text>{note}</Text>
+			<Text>Main Goal? {isMainGoal ? 'Yes' : 'No'}</Text>
 
 			<View style={styles.goalCardFooter}>
 				<Pressable onPress={() => updateGoal(index, goalIsSteps)}>
@@ -56,6 +56,13 @@ const styles = StyleSheet.create({
 	goalsContainer: {
 		marginLeft: 10,
 		backgroundColor: '#FFFFFF',
+		borderRadius: 10,
+		paddingLeft: 15,
+		marginBottom: 7
+	},
+	mainGoalContainer: {
+		marginLeft: 10,
+		backgroundColor: '#f194ff',
 		borderRadius: 10,
 		paddingLeft: 15,
 		marginBottom: 7

@@ -9,7 +9,8 @@ import {
 	Alert,
 	Pressable,
 	TextInput,
-	Button
+	Button,
+	Switch
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
@@ -29,9 +30,12 @@ type goalsScreenProps = {
 const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, INCREASE_REWARDS }) => {
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
+	// const [ isMainGoal, setIsMainGoal ] = useState(false);
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
+
+	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -57,6 +61,7 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 		const newGoal: Goal = {
 			index: new Date().getTime(),
 			goalIsSteps: isNewGoalTypeSteps,
+			isMainGoal: isEnabled,
 			title: newGoalTitle,
 			note: newGoalNote,
 			difficulty: newGoalDifficulty,
@@ -65,6 +70,8 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 				jewels: 0
 			}
 		};
+
+		// console.log(newGoal);
 
 		ADD_GOAL(newGoal);
 		setGoalStates(); //reset the states for goals to init values
@@ -138,6 +145,20 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 							<Button title="Sleep" onPress={() => setIsNewGoalTypeSteps(false)} />
 						</View>
 
+						<View style={styles.mainGoal}>
+							<Text style={styles.modalText}>Set main goal?</Text>
+							<Switch
+								style={styles.mainGoalSwitch}
+								trackColor={{ false: '#767577', true: '#81b0ff' }}
+								thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+								ios_backgroundColor="#3e3e3e"
+								onValueChange={() => {
+									setIsEnabled((previousState) => !previousState);
+								}}
+								value={isEnabled}
+							/>
+						</View>
+
 						<Text style={styles.modalText}>Title</Text>
 						<TextInput style={styles.textInput} onChangeText={setNewGoalTitle} value={newGoalTitle} />
 
@@ -180,12 +201,11 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 				renderSectionHeader={({ section: { title } }) => <Text style={styles.goalHeader}>{title}</Text>}
 				renderItem={({ item }) => (
 					<GoalCard
-						DATA={goalsData}
-						openGoalModal={() => setModalVisible(true)}
 						updateGoal={updateGoal}
 						deleteGoal={deleteGoal}
 						completeGoal={completeGoal}
 						index={item.index}
+						isMainGoal={item.isMainGoal}
 						goalIsSteps={item.goalIsSteps}
 						title={item.title}
 						note={item.note}
@@ -279,6 +299,14 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 		borderWidth: 1,
 		padding: 10
+	},
+	mainGoal: {
+		flexDirection: 'row'
+	},
+	mainGoalSwitch: {
+		// justifyContent: 'flex-end'
+		// alignContent: 'space-between'
+		marginLeft: 60
 	},
 	goalType: {
 		flexDirection: 'row',
