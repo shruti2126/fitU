@@ -30,15 +30,16 @@ type goalsScreenProps = {
 const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, INCREASE_REWARDS }) => {
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
-	// const [ isMainGoal, setIsMainGoal ] = useState(false);
 	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
 	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
+	console.log(isEnabled);
 
 	const setGoalStates = (
 		isSteps: boolean = true,
+		isSwitchEnabled: boolean = false,
 		title: string = '',
 		note: string = '',
 		difficulty: number = 1,
@@ -52,9 +53,33 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 		}
 
 		setIsNewGoalTypeSteps(isSteps);
+		setIsEnabled(isSwitchEnabled);
 		setNewGoalTitle(title);
 		setNewGoalNote(note);
 		setNewGoalDifficulty(difficulty);
+	};
+
+	const toggleSwitch = (): void => {
+		if (isNewGoalTypeSteps) {
+			goalsData[0].data.forEach((goal: Goal) => {
+				if (goal.isMainGoal) {
+					alert('Steps main Goal already eixists');
+					setIsEnabled(false);
+					return;
+				}
+			});
+		}
+		else {
+			goalsData[1].data.forEach((goal: Goal) => {
+				if (goal.isMainGoal) {
+					alert('Steps main Goal already eixists');
+					setIsEnabled(false);
+					return;
+				}
+			});
+		}
+
+		setIsEnabled((previousState) => !previousState);
 	};
 
 	const createGoal = (): void => {
@@ -72,7 +97,6 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 		};
 
 		// console.log(newGoal);
-
 		ADD_GOAL(newGoal);
 		setGoalStates(); //reset the states for goals to init values
 		setModalVisible(false);
@@ -94,6 +118,7 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 
 		setGoalStates(
 			currentGoal.goalIsSteps,
+			currentGoal.isMainGoal,
 			currentGoal.title,
 			currentGoal.note,
 			currentGoal.difficulty,
@@ -152,9 +177,7 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 								trackColor={{ false: '#767577', true: '#81b0ff' }}
 								thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
 								ios_backgroundColor="#3e3e3e"
-								onValueChange={() => {
-									setIsEnabled((previousState) => !previousState);
-								}}
+								onValueChange={() => toggleSwitch()}
 								value={isEnabled}
 							/>
 						</View>
