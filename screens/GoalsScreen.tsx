@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 
-import { goalReward, Goal, goalData } from '../types/GoalTypes';
+import { goalReward, Goal } from '../types/GoalTypes';
 import GoalCard from '../components/GoalCard';
 
 import { connect } from 'react-redux';
@@ -79,7 +79,39 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 		return doesExist;
 	};
 
+	const toggleSwitch = (): void => {
+		const isExist: boolean = doesMainGoalExist();
+		console.log(isExist);
+
+		if (isExist && !isEnabled) {
+			setIsEnabled(false);
+			return;
+		}
+		if (!isExist && isEnabled) {
+			setIsEnabled(false);
+			return;
+		}
+		else if (!isExist) {
+			setIsEnabled(true);
+			return;
+		}
+	};
+
 	const createGoal = (): void => {
+		let newRewards: goalReward;
+		if (isEnabled) {
+			newRewards = {
+				coins: 0,
+				jewels: newGoalDifficulty
+			};
+		}
+		else {
+			newRewards = {
+				coins: newGoalDifficulty * 2,
+				jewels: 0
+			};
+		}
+
 		const newGoal: Goal = {
 			index: new Date().getTime(),
 			goalIsSteps: isNewGoalTypeSteps,
@@ -87,10 +119,7 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 			title: newGoalTitle,
 			note: newGoalNote,
 			difficulty: newGoalDifficulty,
-			rewards: {
-				coins: newGoalDifficulty * 2,
-				jewels: 0
-			}
+			rewards: newRewards
 		};
 
 		// console.log(newGoal);
@@ -143,7 +172,8 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 			return;
 		}
 
-		INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins });
+		if (currentGoal.isMainGoal) INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels });
+		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins });
 		DELETE_GOAL(currentGoal);
 	};
 
@@ -174,23 +204,7 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 								trackColor={{ false: '#767577', true: '#81b0ff' }}
 								thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
 								ios_backgroundColor="#3e3e3e"
-								onValueChange={() => {
-									const isExist: boolean = doesMainGoalExist();
-									console.log(isExist);
-
-									if (isExist && !isEnabled) {
-										setIsEnabled(false);
-										return;
-									}
-									if (!isExist && isEnabled) {
-										setIsEnabled(false);
-										return;
-									}
-									else if (!isExist) {
-										setIsEnabled(true);
-										return;
-									}
-								}}
+								onValueChange={() => toggleSwitch()}
 								value={isEnabled}
 							/>
 						</View>
