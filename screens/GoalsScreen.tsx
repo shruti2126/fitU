@@ -35,7 +35,6 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
 	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
-	console.log(isEnabled);
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -59,27 +58,25 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 		setNewGoalDifficulty(difficulty);
 	};
 
-	const toggleSwitch = (): void => {
+	const doesMainGoalExist = (): boolean => {
+		let doesExist = false;
 		if (isNewGoalTypeSteps) {
 			goalsData[0].data.forEach((goal: Goal) => {
 				if (goal.isMainGoal) {
-					alert('Steps main Goal already eixists');
-					setIsEnabled(false);
-					return;
+					alert('Steps main Goal already exists');
+					doesExist = true;
 				}
 			});
 		}
 		else {
 			goalsData[1].data.forEach((goal: Goal) => {
 				if (goal.isMainGoal) {
-					alert('Steps main Goal already eixists');
-					setIsEnabled(false);
-					return;
+					alert('Sleep main Goal already exists');
+					doesExist = true;
 				}
 			});
 		}
-
-		setIsEnabled((previousState) => !previousState);
+		return doesExist;
 	};
 
 	const createGoal = (): void => {
@@ -177,7 +174,23 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 								trackColor={{ false: '#767577', true: '#81b0ff' }}
 								thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
 								ios_backgroundColor="#3e3e3e"
-								onValueChange={() => toggleSwitch()}
+								onValueChange={() => {
+									const isExist: boolean = doesMainGoalExist();
+									console.log(isExist);
+
+									if (isExist && !isEnabled) {
+										setIsEnabled(false);
+										return;
+									}
+									if (!isExist && isEnabled) {
+										setIsEnabled(false);
+										return;
+									}
+									else if (!isExist) {
+										setIsEnabled(true);
+										return;
+									}
+								}}
 								value={isEnabled}
 							/>
 						</View>
