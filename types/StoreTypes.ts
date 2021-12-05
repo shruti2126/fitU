@@ -1,7 +1,7 @@
 export type ItemEffect = {
     type: string,
     effect: any
-}
+} | undefined;
 
 export type StoreItem = {
     id: number | string,

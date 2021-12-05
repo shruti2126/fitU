@@ -1,5 +1,6 @@
 import * as rewardActionTypes from '../actions/rewardActionTypes';
 import { goalReward } from '../types/GoalTypes.js';
+import { ItemEffect } from '../types/StoreTypes';
 
 const initialRewardsState: goalReward = {
 	coins: 0,
@@ -8,11 +9,22 @@ const initialRewardsState: goalReward = {
 
 const rewardsReducer = (
 	state: goalReward = initialRewardsState,
-	action: { type: string; payload: { rewardType: string; amount: number } }
+	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect } }
 ) => {
 	switch (action.type) {
 		case rewardActionTypes.INCREASE_REWARDS:
 			const payload = action.payload;
+
+			// let newAmount;
+			// if (!payload.effect) {
+			// 	switch (payload.effect) {
+			// 		case 'increaseRewards':
+			// 			newAmount = payload.effect.effect(amount);
+			// 	}
+			// }
+			payload.amount = payload.effect?.effect(payload.amount)
+			console.log(payload.amount);
+			console.log(payload);
 
 			if (payload.rewardType === 'coins') {
 				const coins = state.coins + payload.amount;
