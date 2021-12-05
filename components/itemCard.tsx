@@ -8,8 +8,6 @@ type itemCardProps = {
 };
 
 const ItemCard: React.FC<itemCardProps> = ({ item, BUY_ITEM }) => {
-	console.log(item);
-
 	return (
 		<View style={styles.item}>
 			<Text style={styles.title}>{item.name}</Text>
