@@ -1,29 +1,22 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import * as actions from '../actions';
 import ItemCard from '../components/itemCard';
+import { StoreItem } from '../types/StoreTypes';
 
 type storeScreenProps = {
 	storeReducer: any;
+	BUY_ITEM: Function;
 };
 
-const StoreScreen: React.FC<storeScreenProps> = ({ storeReducer }) => {
+const StoreScreen: React.FC<storeScreenProps> = ({ storeReducer, BUY_ITEM }) => {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.storeHeader}>Welcome to the Store!</Text>
 			<FlatList
 				data={storeReducer}
-				renderItem={({ item }) => (
-					<ItemCard
-						id={item.id}
-						name={item.name}
-						description={item.description}
-						coins={item.coins}
-						jewels={item.jewels}
-						isBought={item.isBought}
-						effect={item.effect}
-					/>
-				)}
+				renderItem={({ item }) => <ItemCard item={item} BUY_ITEM={BUY_ITEM} />}
 				keyExtractor={(item) => item.id}
 			/>
 		</View>
@@ -53,4 +46,10 @@ const mapStateToProps = (state: any): {} => {
 	};
 };
 
-export default connect(mapStateToProps)(StoreScreen);
+const mapDispatchToProps = (dispatch: any): {} => {
+	return {
+		BUY_ITEM: (item: StoreItem) => dispatch(actions.BUY_ITEM(item))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StoreScreen);

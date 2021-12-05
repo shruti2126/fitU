@@ -1,10 +1,11 @@
 export type StoreItem = {
-    id: number,
+    id: number | string,
     name: string,
     description: string,
     coins: number,
     jewels: number,
     isBought: boolean,
+    isActive: boolean,
     effect: any
 }
 

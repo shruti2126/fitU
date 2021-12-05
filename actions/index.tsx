@@ -1,6 +1,8 @@
 import * as goalActions from './goalActionTypes.js';
 import * as rewardsActions from './rewardActionTypes';
-import { Goal, goalReward } from '../types/GoalTypes';
+import * as storeActions from './storeActionTypes';
+import { Goal } from '../types/GoalTypes';
+import { StoreItem } from '../types/StoreTypes';
 
 /**
  * Goal Actions
@@ -20,13 +22,6 @@ export const UPDATE_GOAL = (goal: Goal) => {
 	};
 };
 
-// export const UPDATE_GOAL = (goalToUpdate: Goal) => {
-// 	return {
-// 		type: goalActions.UPDATE_GOAL,
-// 		payload: goalToUpdate
-// 	};
-// };
-
 export const DELETE_GOAL = (goalToRemove: Goal) => {
 	return {
 		type: goalActions.DELETE_GOAL,
@@ -42,5 +37,16 @@ export const INCREASE_REWARDS = (rewards: { rewardType: string; amount: number }
 	return {
 		type: rewardsActions.INCREASE_REWARDS,
 		payload: rewards
+	};
+};
+
+/**
+ * Shop Actions
+ */
+
+export const BUY_ITEM = (item: StoreItem) => {
+	return {
+		type: storeActions.BUY_ITEM,
+		payload: item
 	};
 };
