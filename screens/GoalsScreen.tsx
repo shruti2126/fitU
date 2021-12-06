@@ -28,13 +28,13 @@ type goalsScreenProps = {
 };
 
 const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, INCREASE_REWARDS }) => {
-	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
-	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
-	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
-	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
-	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
+	const [isNewGoalTypeSteps, setIsNewGoalTypeSteps] = useState<boolean>(true);
+	const [newGoalTitle, setNewGoalTitle] = useState<string>('');
+	const [newGoalNote, setNewGoalNote] = useState<string>('');
+	const [newGoalDifficulty, setNewGoalDifficulty] = useState<number>(1);
 
-	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
+	const [isEnabled, setIsEnabled] = useState(false); // isMainGoal attribute
 
 	const setGoalStates = (
 		isSteps: boolean = true,

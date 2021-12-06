@@ -17,19 +17,14 @@ type loginScreenProps = {
 	navigation: any;
 };
 
+
+
 const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
-	const [ email, setEmail ] = useState<string>('');
-	const [ password, setPassword ] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	navigation = useNavigation();
 	const auth = getAuth();
 
-	// useEffect(() => {
-	// 	auth.onAuthStateChanged((user) => {
-	// 		if (user) {
-	// 			navigation.navigate('Home');
-	// 		}
-	// 	});
-	// });
 	const login = () => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then(async (userCredential) => {
@@ -40,6 +35,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 				navigation.navigate('Home', { username: username });
 				setEmail('');
 				setPassword('');
+
 			})
 			.catch((error) => {
 				alert(error.message);
@@ -75,7 +71,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 						onPress={() => {
 							navigation.navigate('Register');
 						}}
-						style={[ styles.registerButton, styles.buttonOutline ]}
+						style={[styles.registerButton, styles.buttonOutline]}
 					>
 						<Text style={styles.buttonOutlineText}>Register</Text>
 					</TouchableOpacity>

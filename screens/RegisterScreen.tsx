@@ -11,15 +11,25 @@ import {
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import saveUserToFirestore from '../Hooks/saveUserToFirestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type registerScreenProps = {
 	navigation: any;
 };
 
+const storeData = async (key: string, value: Object) => {
+	try {
+		await AsyncStorage.setItem(key, JSON.stringify(value))
+	} catch (e) {
+		// saving error
+		console.log("error saving data")
+	}
+}
+
 const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
-	const [ username, setUsername ] = useState<string>('');
-	const [ email, setEmail ] = useState<string>('');
-	const [ password, setPassword ] = useState<string>('');
+	const [username, setUsername] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 
 	navigation = useNavigation();
 	const auth = getAuth();
@@ -34,6 +44,8 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
 				setEmail('');
 				setPassword('');
 				setUsername('');
+				const obj = { email: email, username: username }
+				storeData("userInfo", obj)
 			})
 			.catch((error) => {
 				alert(error.message);
@@ -65,7 +77,7 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
 					/>
 				</View>
 				<View style={styles.buttonContainer}>
-					<TouchableOpacity onPress={signUp} style={[ styles.button, styles.buttonOutline ]}>
+					<TouchableOpacity onPress={signUp} style={[styles.button, styles.buttonOutline]}>
 						<Text style={styles.buttonOutlineText}>Register</Text>
 					</TouchableOpacity>
 				</View>
