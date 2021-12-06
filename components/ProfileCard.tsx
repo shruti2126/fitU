@@ -22,16 +22,15 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 				<Text style={styles.progressBody}>Hours Slept Last night: </Text>
 			</View>
 
-			<Text style={[ styles.textTitle, { marginTop: 140 } ]}>Daily Goals</Text>
+			{/* <Text style={[ styles.textTitle, { marginTop: 140 } ]}>Daily Goals</Text>
 
 			<View style={styles.dailyGoal}>
-				{/* <FlatList data={DATA} renderItem={renderItem} keyExtractor={(item) => item.id} /> */}
 				<Text style={styles.progressBody}>Goal 2 </Text>
 				<Text style={styles.progressBody}>Goal 1 </Text>
 				<Text style={styles.progressBody}>Goal 3 </Text>
-			</View>
+			</View> */}
 			<View style={styles.goalButton}>
-				<Button title="View more goals" onPress={goal_navigation} color="#f194ff" />
+				<Button title="View goals" onPress={goal_navigation} color="#f194ff" />
 			</View>
 			{/* <Pressable style={styles.text_body} onPress={goal_navigation}>
 				<Text style={styles.toGoals}> Click to Goals </Text>
@@ -45,7 +44,8 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: 'oldlace',
 		borderRadius: 20,
-		height: 500,
+		// height: 500,
+		height: 170,
 		width: 350,
 		margin: 10,
 		paddingLeft: 15,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 		paddingTop: 5
 	},
 	goalButton: {
-		marginTop: 80
+		marginTop: 20
 	},
 	progress: {
 		marginTop: 10

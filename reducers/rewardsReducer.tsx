@@ -22,9 +22,11 @@ const rewardsReducer = (
 			// 			newAmount = payload.effect.effect(amount);
 			// 	}
 			// }
-			payload.amount = payload.effect?.effect(payload.amount)
-			console.log(payload.amount);
-			console.log(payload);
+
+			if (payload.effect !== undefined) {
+				payload.amount = payload.effect?.effect(payload.amount)	
+			}
+			
 
 			if (payload.rewardType === 'coins') {
 				const coins = state.coins + payload.amount;
