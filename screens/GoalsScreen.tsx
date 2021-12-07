@@ -128,6 +128,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 			};
 		}
 
+		//check is for updating a goal, the cancel will call createGoal with the previous goal values
+		//passed as the newGoal argument.  otherwise we will create a goal based on the current states
 		if (!newGoal)
 			newGoal = {
 				index: new Date().getTime(),
@@ -139,7 +141,6 @@ const Goals: React.FC<goalsScreenProps> = ({
 				rewards: newRewards
 			};
 
-		// console.log(newGoal);
 		ADD_GOAL(newGoal);
 		setGoalStates(); //reset the states for goals to init values
 		setModalVisible(false);
