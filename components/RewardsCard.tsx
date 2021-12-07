@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { connect } from 'react-redux';
 
 type RewardsProps = {
@@ -8,11 +9,17 @@ type RewardsProps = {
 };
 
 const rewardsCard: React.FC<RewardsProps> = ({ coins, jewels }) => {
+	const navigation = useNavigation();
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.textTitle}>Rewards</Text>
 			<Text style={styles.textBody}>Coins: {coins}</Text>
 			<Text style={styles.textBody}>Jewels: {jewels}</Text>
+
+			<View style={styles.storeButton}>
+				<Button title="Visit Store" onPress={() => navigation.navigate('Store')} color="#f194ff" />
+			</View>
 		</View>
 	);
 };
@@ -22,7 +29,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: 'oldlace',
 		borderRadius: 20,
-		height: 100,
+		height: 160,
 		width: 350,
 		margin: 10,
 		paddingLeft: 15,
@@ -38,6 +45,10 @@ const styles = StyleSheet.create({
 	textBody: {
 		fontSize: 18,
 		marginBottom: 5
+	},
+
+	storeButton: {
+		marginTop: 20
 	}
 });
 

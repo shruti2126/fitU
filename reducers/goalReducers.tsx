@@ -1,11 +1,10 @@
 import * as goalActionTypes from '../actions/goalActionTypes';
-import deleteGoalFromFirestore from "../Hooks/deleteGoalFromFirestore";
+import deleteGoalFromFirestore from '../Hooks/deleteGoalFromFirestore';
 import fetchStepGoals from '../Hooks/fetchStepGoals';
 import fetchSleepGoals from '../Hooks/fetchSleepGoals';
 import saveGoalsToFirestore from '../Hooks/saveGoalsToFirestore';
 import { goalData, Goal } from '../types/GoalTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Goals from '../screens/GoalsScreen copy';
 
 
 const initialGoalState: goalData = [
@@ -19,10 +18,9 @@ const initialGoalState: goalData = [
 	}
 ];
 
-
 const getData = async () => {
 	try {
-		const jsonValue = await AsyncStorage.getItem("userInfo")
+		const jsonValue = await AsyncStorage.getItem('userInfo');
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
 		// error reading value
@@ -61,15 +59,14 @@ const data = getData().then(async data => {
 
 
 const goalReducer = (state: goalData = initialGoalState, action: { type: string; payload: Goal }): goalData => {
-
 	const newState: goalData = [
 		{
 			title: 'Daily Steps Goal',
-			data: [...state[0].data]
+			data: [ ...state[0].data ]
 		},
 		{
 			title: 'Daily Sleep Goal',
-			data: [...state[1].data]
+			data: [ ...state[1].data ]
 		}
 	];
 
@@ -81,15 +78,14 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 			else state[1].data.push(newGoal);
 
 			console.log(state);
-			saveGoalsToFirestore(newGoal)
+			saveGoalsToFirestore(newGoal);
 
 			return state;
 
 		case goalActionTypes.DELETE_GOAL:
-
 			const goalToDelete: Goal = action.payload;
 
-			deleteGoalFromFirestore(goalToDelete)
+			deleteGoalFromFirestore(goalToDelete);
 
 			if (goalToDelete.goalIsSteps)
 				newState[0].data = state[0].data.filter((goal) => goal.index != goalToDelete.index);

@@ -19,22 +19,32 @@ import GoalCard from '../components/GoalCard';
 
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { ItemEffect, StoreItem } from '../types/StoreTypes';
 
 type goalsScreenProps = {
 	goalsData: any;
+	inventory: any;
 	ADD_GOAL: Function;
 	DELETE_GOAL: Function;
 	INCREASE_REWARDS: Function;
+	ADD_INVENTORY_ITEM: Function;
 };
 
-const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, INCREASE_REWARDS }) => {
-	const [modalVisible, setModalVisible] = useState<boolean>(false);
-	const [isNewGoalTypeSteps, setIsNewGoalTypeSteps] = useState<boolean>(true);
-	const [newGoalTitle, setNewGoalTitle] = useState<string>('');
-	const [newGoalNote, setNewGoalNote] = useState<string>('');
-	const [newGoalDifficulty, setNewGoalDifficulty] = useState<number>(1);
+const Goals: React.FC<goalsScreenProps> = ({
+	goalsData,
+	inventory,
+	ADD_GOAL,
+	DELETE_GOAL,
+	INCREASE_REWARDS,
+	ADD_INVENTORY_ITEM
+}) => {
+	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
+	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
+	const [ newGoalTitle, setNewGoalTitle ] = useState<string>('');
+	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
+	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
-	const [isEnabled, setIsEnabled] = useState(false); // isMainGoal attribute
+	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -124,6 +134,7 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 
 		// console.log(newGoal);
 		ADD_GOAL(newGoal);
+
 		setGoalStates(); //reset the states for goals to init values
 		setModalVisible(false);
 	};
@@ -172,8 +183,17 @@ const Goals: React.FC<goalsScreenProps> = ({ goalsData, ADD_GOAL, DELETE_GOAL, I
 			return;
 		}
 
-		if (currentGoal.isMainGoal) INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels });
-		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins });
+		let effect: ItemEffect = undefined;
+		inventory.forEach((item: StoreItem) => {
+			// if (item.effect.type === 'increaseRewards')
+			effect = item.effect;
+		});
+		console.log('test');
+		console.log(effect);
+
+		if (currentGoal.isMainGoal)
+			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, effect: effect });
+		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, effect: effect });
 		DELETE_GOAL(currentGoal);
 	};
 
@@ -374,7 +394,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state: any) => {
 	return {
-		goalsData: state.goalReducer
+		goalsData: state.goalReducer,
+		inventory: state.inventoryReducer
 	};
 };
 
@@ -382,8 +403,9 @@ const mapDispatchToProps = (dispatch: any) => {
 	return {
 		ADD_GOAL: (newGoal: Goal) => dispatch(actions.ADD_GOAL(newGoal)),
 		DELETE_GOAL: (currentGoal: Goal) => dispatch(actions.DELETE_GOAL(currentGoal)),
-		INCREASE_REWARDS: (rewards: { rewardType: string; amount: number }) =>
-			dispatch(actions.INCREASE_REWARDS(rewards))
+		INCREASE_REWARDS: (rewards: { rewardType: string; amount: number; effect: ItemEffect }) =>
+			dispatch(actions.INCREASE_REWARDS(rewards)),
+		ADD_INVENTORY_ITEM: (item: StoreItem) => dispatch(actions.ADD_ITEM(item))
 	};
 };
 
