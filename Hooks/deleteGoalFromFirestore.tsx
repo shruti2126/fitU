@@ -1,20 +1,36 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { doc, deleteDoc } from "firebase/firestore";
-import db from "../App";
+import { arrayRemove, doc, getDoc, updateDoc } from "firebase/firestore";
+
 import { Goal } from "../types/GoalTypes"
 import { getAuth } from '@firebase/auth';
+import getFirestore from "../config/config";
 
+const db = getFirestore;
 let auth = getAuth();
 export default async function deleteGoalFromFirestore(goal: Goal) {
 
+    var collectionName = ""
     if (goal.goalIsSteps) {
-        await deleteDoc(doc(db, "steps_goals", auth.currentUser?.email));
+        collectionName = "steps_goals"
     } else {
-        await deleteDoc(doc(db, "sleep_goals", auth.currentUser?.email));
+        collectionName = "sleep_goals"
+    }
+
+    const docRef = doc(db, collectionName, auth.currentUser?.email);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        if (goal.isMainGoal) {
+            await updateDoc(docRef, {
+                MainGoal: []
+            })
+        } else {
+            await updateDoc(docRef, {
+                goals: arrayRemove(goal)
+            });
+            console.log("after deleting goal = ", docSnap.data());
+        }
     }
 
 }
-
-const styles = StyleSheet.create({})
-

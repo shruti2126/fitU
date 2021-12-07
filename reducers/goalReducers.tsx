@@ -5,6 +5,7 @@ import fetchSleepGoals from '../Hooks/fetchSleepGoals';
 import saveGoalsToFirestore from '../Hooks/saveGoalsToFirestore';
 import { goalData, Goal } from '../types/GoalTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Goals from '../screens/GoalsScreen copy';
 
 
 const initialGoalState: goalData = [
@@ -25,24 +26,39 @@ const getData = async () => {
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
 		// error reading value
+		console.log("there was an error = ", e)
 	}
 }
 
 const data = getData().then(async data => {
-	const sleep_goals = await fetchSleepGoals(data.email)
-	const steps_goals = await fetchStepGoals(data.email)
+	if (data != null) {
+		const sleep_goals = await fetchSleepGoals(data.email)
+		const steps_goals = await fetchStepGoals(data.email)
 
-	steps_goals.goals.forEach(goal => {
-		initialGoalState[0].data.push(goal)
-	});
-	initialGoalState[0].data.push(steps_goals.MainGoal)
-
-	sleep_goals.goals.forEach(goal => {
-		initialGoalState[1].data.push(goal)
-	});
-	initialGoalState[1].data.push(sleep_goals.MainGoal)
-	console.log("initial goal state = ", initialGoalState)
+		if (steps_goals != undefined) {
+			if(steps_goals?.goals != undefined && steps_goals.goals.length != 0){
+				steps_goals.goals.forEach(goal => {
+					initialGoalState[0].data.push(goal)
+				});
+			}
+			if (steps_goals.MainGoal != undefined && steps_goals.MainGoal.length != 0) initialGoalState[0].data.push(steps_goals.MainGoal)
+		}
+	
+		if (sleep_goals != undefined) {
+			if(sleep_goals?.goals != undefined){
+				sleep_goals?.goals.forEach(goal => {
+					initialGoalState[1].data.push(goal)
+				});
+			}
+			if(sleep_goals?.MainGoal != undefined && sleep_goals?.MainGoal.length != 0) {
+				initialGoalState[1].data.push(sleep_goals?.MainGoal)
+			}
+		}
+		console.log(initialGoalState)
+	}
+	
 })
+
 
 const goalReducer = (state: goalData = initialGoalState, action: { type: string; payload: Goal }): goalData => {
 
@@ -57,7 +73,6 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 		}
 	];
 
-	console.log("current state = ", state)
 	switch (action.type) {
 		case goalActionTypes.ADD_GOAL:
 			const newGoal = action.payload;

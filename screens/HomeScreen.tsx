@@ -52,9 +52,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
 		// backgroundColor: '#FFFFFF'
 		// backgroundColor: 'aliceblue'
+		backgroundColor: 'rgba( 0, 0, 0, 0.6 )'
 	},
 	title: {
 		color: 'white',

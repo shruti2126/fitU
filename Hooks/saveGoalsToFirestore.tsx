@@ -27,7 +27,7 @@ export default async function saveGoalsToFirestore(goal: Goal) {
     if (docSnap.exists()) {
         if (goal.isMainGoal) {
             await updateDoc(docRef, {
-                MainGoal: arrayUnion(goal)
+                MainGoal: goal
             })
         } else {
             await updateDoc(docRef, {
