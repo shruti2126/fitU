@@ -45,7 +45,12 @@ const Goals: React.FC<goalsScreenProps> = ({
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
 	const [ isEnabled, setIsEnabled ] = useState<boolean>(false); // isMainGoal attribute
-	const [ isUpdating, setIsUpdating ] = useState<boolean>(false);
+	const [ isUpdating, setIsUpdating ] = useState<{
+		updating: boolean;
+		prevGoal?: Goal; //used to restore the previous goal values while updating a goal
+	}>({
+		updating: false
+	});
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -108,7 +113,7 @@ const Goals: React.FC<goalsScreenProps> = ({
 		}
 	};
 
-	const createGoal = (): void => {
+	const createGoal = (newGoal: Goal = null): void => {
 		let newRewards: goalReward;
 		if (isEnabled) {
 			newRewards = {
@@ -123,15 +128,16 @@ const Goals: React.FC<goalsScreenProps> = ({
 			};
 		}
 
-		const newGoal: Goal = {
-			index: new Date().getTime(),
-			goalIsSteps: isNewGoalTypeSteps,
-			isMainGoal: isEnabled,
-			title: newGoalTitle,
-			note: newGoalNote,
-			difficulty: newGoalDifficulty,
-			rewards: newRewards
-		};
+		if (!newGoal)
+			newGoal = {
+				index: new Date().getTime(),
+				goalIsSteps: isNewGoalTypeSteps,
+				isMainGoal: isEnabled,
+				title: newGoalTitle,
+				note: newGoalNote,
+				difficulty: newGoalDifficulty,
+				rewards: newRewards
+			};
 
 		// console.log(newGoal);
 		ADD_GOAL(newGoal);
@@ -153,8 +159,10 @@ const Goals: React.FC<goalsScreenProps> = ({
 			return;
 		}
 
-		console.log('hi');
-		setIsUpdating(true);
+		setIsUpdating({
+			updating: true,
+			prevGoal: currentGoal
+		});
 		setGoalStates(
 			currentGoal.goalIsSteps,
 			currentGoal.isMainGoal,
@@ -164,6 +172,7 @@ const Goals: React.FC<goalsScreenProps> = ({
 			currentGoal.rewards
 		);
 		setModalVisible(true);
+		console.log('hi');
 		deleteGoal(index, goalIsSteps);
 	};
 
@@ -255,9 +264,9 @@ const Goals: React.FC<goalsScreenProps> = ({
 
 									console.log(isUpdating);
 
-									if (isUpdating) {
-										createGoal();
-										setIsUpdating(false);
+									if (isUpdating.updating) {
+										createGoal(isUpdating.prevGoal);
+										setIsUpdating({ updating: false });
 									}
 									setGoalStates();
 									setModalVisible(false);
