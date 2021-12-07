@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import * as rewardActionTypes from '../actions/rewardActionTypes';
 import { goalReward } from '../types/GoalTypes.js';
 import { ItemEffect } from '../types/StoreTypes';
@@ -9,7 +10,7 @@ const initialRewardsState: goalReward = {
 
 const rewardsReducer = (
 	state: goalReward = initialRewardsState,
-	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect } }
+	action: { type: string; payload: { rewardType: string; amount: number; inventory: any } }
 ) => {
 	switch (action.type) {
 		case rewardActionTypes.INCREASE_REWARDS:
@@ -23,10 +24,11 @@ const rewardsReducer = (
 			// 	}
 			// }
 
-			if (payload.effect !== undefined) {
-				payload.amount = payload.effect?.effect(payload.amount)	
-			}
-			
+			console.log(payload.inventory);
+
+			// if (payload.effect !== undefined) {
+			// 	payload.amount = payload.effect?.effect(payload.amount)
+			// }
 
 			if (payload.rewardType === 'coins') {
 				const coins = state.coins + payload.amount;

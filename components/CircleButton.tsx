@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 const CircleButton = (props) => {
 	return (
@@ -16,10 +17,42 @@ const CircleButton = (props) => {
 			}}
 			onPress={props.onPress}
 		>
-			<Image source={props.source} />
+			{/* <AntDesign name="pluscircleo" size={60} color="black" style={styles.plus} /> */}
+			<AntDesign name="plus" size={50} color="white" />
+			{/* <View style={styles.plusContainer}>
+				<View style={styles.vertical} />
+				<View style={styles.horizontal} />
+			</View> */}
+			{/* <Image source={props.source} /> */}
 		</TouchableOpacity>
 	);
 };
+
+const styles = StyleSheet.create({
+	plusContainer: {
+		flex: 1
+		// position: 'absolute'
+	},
+	vertical: {
+		// flex: 1,
+		marginTop: 5,
+		marginLeft: 20,
+		height: 50,
+		width: 7,
+		backgroundColor: 'white'
+	},
+	horizontal: {
+		// flex: 1,
+		// marginBottom: 20,
+		// paddingTop: 20,
+		height: 7,
+		width: 50,
+		backgroundColor: 'white'
+	},
+	plus: {
+		marginBottom: 10
+	}
+});
 
 export default CircleButton;
 

@@ -26,23 +26,26 @@ const getData = async () => {
 	}
 };
 
-const data = getData().then(async (data) => {
-	console.log(data);
+// const data = getData().then(async (data) => {
+// 	if (data !== null) {
+// 		const steps_goals = await fetchStepGoals(data.email);
+// 		const sleep_goals = await fetchSleepGoals(data.email);
 
-	if (data !== null) {
-		const sleep_goals = await fetchSleepGoals(data.email);
-		const steps_goals = await fetchStepGoals(data.email);
-		steps_goals.goals.forEach((goal) => {
-			initialGoalState[0].data.push(goal);
-		});
-		initialGoalState[0].data.push(steps_goals.MainGoal);
-		sleep_goals.goals.forEach((goal) => {
-			initialGoalState[1].data.push(goal);
-		});
-		initialGoalState[1].data.push(sleep_goals.MainGoal);
-		console.log('initial goal state = ', initialGoalState);
-	}
-});
+// 		console.log(steps_goals);
+// 		console.log(sleep_goals);
+
+// 		steps_goals.goals.forEach((goal) => {
+// 			initialGoalState[0].data.push(goal);
+// 		});
+// 		initialGoalState[0].data.push(steps_goals.MainGoal);
+
+// 		// sleep_goals.goals.forEach((goal) => {
+// 		// 	initialGoalState[1].data.push(goal);
+// 		// });
+// 		// initialGoalState[1].data.push(sleep_goals.MainGoal);
+// 		console.log('initial goal state = ', initialGoalState);
+// 	}
+// });
 
 const goalReducer = (state: goalData = initialGoalState, action: { type: string; payload: Goal }): goalData => {
 	const newState: goalData = [

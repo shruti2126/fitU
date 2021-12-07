@@ -44,7 +44,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
-	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
+	const [ isEnabled, setIsEnabled ] = useState<boolean>(false); // isMainGoal attribute
+	const [ isUpdating, setIsUpdating ] = useState<boolean>(false);
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -134,7 +135,6 @@ const Goals: React.FC<goalsScreenProps> = ({
 
 		// console.log(newGoal);
 		ADD_GOAL(newGoal);
-
 		setGoalStates(); //reset the states for goals to init values
 		setModalVisible(false);
 	};
@@ -153,6 +153,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 			return;
 		}
 
+		console.log('hi');
+		setIsUpdating(true);
 		setGoalStates(
 			currentGoal.goalIsSteps,
 			currentGoal.isMainGoal,
@@ -161,7 +163,6 @@ const Goals: React.FC<goalsScreenProps> = ({
 			currentGoal.difficulty,
 			currentGoal.rewards
 		);
-
 		setModalVisible(true);
 		deleteGoal(index, goalIsSteps);
 	};
@@ -183,17 +184,17 @@ const Goals: React.FC<goalsScreenProps> = ({
 			return;
 		}
 
-		let effect: ItemEffect = undefined;
-		inventory.forEach((item: StoreItem) => {
-			// if (item.effect.type === 'increaseRewards')
-			effect = item.effect;
-		});
-		console.log('test');
-		console.log(effect);
+		// let effect: ItemEffect = undefined;
+		// inventory.forEach((item: StoreItem) => {
+		// 	// if (item.effect.type === 'increaseRewards')
+		// 	effect = item.effect;
+		// });
+		// console.log('test');
+		// console.log(effect);
 
 		if (currentGoal.isMainGoal)
-			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, effect: effect });
-		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, effect: effect });
+			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, inventory: inventory });
+		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, inventory: inventory });
 		DELETE_GOAL(currentGoal);
 	};
 
@@ -250,6 +251,14 @@ const Goals: React.FC<goalsScreenProps> = ({
 							<Pressable
 								style={styles.buttonModalClose}
 								onPress={() => {
+									console.log(goalsData);
+
+									console.log(isUpdating);
+
+									if (isUpdating) {
+										createGoal();
+										setIsUpdating(false);
+									}
 									setGoalStates();
 									setModalVisible(false);
 								}}
