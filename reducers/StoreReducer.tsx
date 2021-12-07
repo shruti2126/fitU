@@ -25,13 +25,16 @@ const initialStoreState: Store = [
 		isBought: false,
 		isActive: false,
 		effect: {
-			type: 'increaseRewards',
-			effect: (rewardAmount: number) => rewardAmount + 5
+			type: 'singleUseIncreaseRewards',
+			effect: (jewels: number) => jewels + 5
 		}
 	}
 ];
 
-const storeReducer = (state: Store = initialStoreState, action: { type: string; payload: StoreItem }): Store => {
+const storeReducer = (
+	state: Store = initialStoreState,
+	action: { type: string; payload: StoreItem; rewards: any }
+): Store => {
 	switch (action.type) {
 		case shopActionTypes.BUY_ITEM:
 			const payload: StoreItem = action.payload;

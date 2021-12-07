@@ -28,10 +28,16 @@ const rewardsReducer = (
 
 			let newAmount = payload.amount;
 			payload.inventory.forEach((item: StoreItem) => {
-				switch (item.effect?.type) {
-					case 'increaseRewards':
-						newAmount = item.effect.effect(payload.amount);
+
+				if(item.isActive) {
+					switch (item.effect?.type) {
+						case 'increaseRewards':
+							newAmount = item.effect.effect(payload.amount);
+						// case 'singleUseIncreaseRewards':
+					}
+
 				}
+
 			});
 
 			// if (payload.effect !== undefined) {
