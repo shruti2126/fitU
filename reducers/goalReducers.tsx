@@ -6,6 +6,7 @@ import saveGoalsToFirestore from '../Hooks/saveGoalsToFirestore';
 import { goalData, Goal } from '../types/GoalTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const initialGoalState: goalData = [
 	{
 		title: 'Daily Steps Goal',
@@ -23,29 +24,39 @@ const getData = async () => {
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
 		// error reading value
+		console.log("there was an error = ", e)
 	}
-};
+}
 
-// const data = getData().then(async (data) => {
-// 	if (data !== null) {
-// 		const steps_goals = await fetchStepGoals(data.email);
-// 		const sleep_goals = await fetchSleepGoals(data.email);
+const data = getData().then(async data => {
+	if (data != null) {
+		const sleep_goals = await fetchSleepGoals(data.email)
+		const steps_goals = await fetchStepGoals(data.email)
 
-// 		console.log(steps_goals);
-// 		console.log(sleep_goals);
+		if (steps_goals != undefined) {
+			if(steps_goals?.goals != undefined && steps_goals.goals.length != 0){
+				steps_goals.goals.forEach(goal => {
+					initialGoalState[0].data.push(goal)
+				});
+			}
+			if (steps_goals.MainGoal != undefined && steps_goals.MainGoal.length != 0) initialGoalState[0].data.push(steps_goals.MainGoal)
+		}
+	
+		if (sleep_goals != undefined) {
+			if(sleep_goals?.goals != undefined){
+				sleep_goals?.goals.forEach(goal => {
+					initialGoalState[1].data.push(goal)
+				});
+			}
+			if(sleep_goals?.MainGoal != undefined && sleep_goals?.MainGoal.length != 0) {
+				initialGoalState[1].data.push(sleep_goals?.MainGoal)
+			}
+		}
+		console.log(initialGoalState)
+	}
+	
+})
 
-// 		steps_goals.goals.forEach((goal) => {
-// 			initialGoalState[0].data.push(goal);
-// 		});
-// 		initialGoalState[0].data.push(steps_goals.MainGoal);
-
-// 		// sleep_goals.goals.forEach((goal) => {
-// 		// 	initialGoalState[1].data.push(goal);
-// 		// });
-// 		// initialGoalState[1].data.push(sleep_goals.MainGoal);
-// 		console.log('initial goal state = ', initialGoalState);
-// 	}
-// });
 
 const goalReducer = (state: goalData = initialGoalState, action: { type: string; payload: Goal }): goalData => {
 	const newState: goalData = [

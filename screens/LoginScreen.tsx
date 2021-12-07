@@ -44,7 +44,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 	//https://i.stack.imgur.com/cEz3G.jpg
 	//const image = {uri: "Desktop/capstone/fitU/05922414-04D4-47E7-98EF-76C789A404B4.jpeg"};
 	return (
-		<ImageBackground source={require('../tree.jpeg')} style={styles.image}>
+		<ImageBackground source={require('../LoginBackground.jpeg')} style={styles.image}>
 			<KeyboardAvoidingView style={styles.container} behavior="padding">
 				<View style={styles.titleContainer}>
 					<Text style={styles.heading}>fitU</Text>
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		backgroundColor: 'rgba( 0, 0, 0, 0.6 )'
 	},
 	inputContainer: {
 		width: '50%'
@@ -133,7 +134,8 @@ const styles = StyleSheet.create({
 		fontSize: 16
 	},
 	text: {
-		marginTop: 10
+		marginTop: 10,
+		color: 'white'
 	},
 	titleContainer: {
 		width: '60%',
@@ -144,15 +146,15 @@ const styles = StyleSheet.create({
 	},
 	heading: {
 		fontSize: 100,
-		color: '#702963'
+		color: '#ecb7bf'
 	},
 	image: {
 		flex: 1,
 		justifyContent: 'center',
 		alignContent: 'center',
 		width: '100%',
-		height: '100%'
-		//blurRadius: 50
+		height: '100%',
+
 	}
 });
 
