@@ -1,20 +1,23 @@
 import { useSelector } from 'react-redux';
 import * as rewardActionTypes from '../actions/rewardActionTypes';
 import { goalReward } from '../types/GoalTypes.js';
-import { StoreItem } from '../types/StoreTypes';
+import { Store, StoreItem } from '../types/StoreTypes';
 
 const initialRewardsState: goalReward = {
 	coins: 0,
 	jewels: 0
 };
 
+type increaseRewards = { rewardType: string; amount: number; inventory: any }
+type decreaseRewards = StoreItem
+
 const rewardsReducer = (
 	state: goalReward = initialRewardsState,
-	action: { type: string; payload: { rewardType: string; amount: number; inventory: any } }
+	action: { type: string; payload: increaseRewards | decreaseRewards }
 ) => {
+	const payload = action.payload;
 	switch (action.type) {
 		case rewardActionTypes.INCREASE_REWARDS:
-			const payload = action.payload;
 
 			// let newAmount;
 			// if (!payload.effect) {
@@ -28,7 +31,8 @@ const rewardsReducer = (
 
 			let newAmount = payload.amount;
 			payload.inventory.forEach((item: StoreItem) => {
-
+				console.log(item);
+				
 				if(item.isActive) {
 					switch (item.effect?.type) {
 						case 'increaseRewards':
@@ -62,6 +66,17 @@ const rewardsReducer = (
 				throw `Incorrect reward type: ${payload.rewardType} (must be either 'coins' or 'jewels')`;
 			}
 			return state;
+
+		case rewardActionTypes.DECREASE_REWARDS:
+			console.log(payload);
+			console.log('hi');
+			
+			state = {
+				coins: state.coins - payload.coins,
+				jewels: state.jewels - payload.jewels
+			}
+			return state;
+
 
 		default:
 			return state;

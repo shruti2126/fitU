@@ -10,9 +10,16 @@ type storeScreenProps = {
 	rewardsReducer: any;
 	BUY_ITEM: Function;
 	ADD_INVENTORY_ITEM: Function;
+	DECREASE_REWARD: Function;
 };
 
-const StoreScreen: React.FC<storeScreenProps> = ({ storeReducer, rewardsReducer, BUY_ITEM, ADD_INVENTORY_ITEM }) => {
+const StoreScreen: React.FC<storeScreenProps> = ({
+	storeReducer,
+	rewardsReducer,
+	BUY_ITEM,
+	ADD_INVENTORY_ITEM,
+	DECREASE_REWARD
+}) => {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.storeHeader}>Welcome to the Store!</Text>
@@ -22,8 +29,8 @@ const StoreScreen: React.FC<storeScreenProps> = ({ storeReducer, rewardsReducer,
 					<ItemCard
 						item={item}
 						BUY_ITEM={(itemToBuy: StoreItem) => {
-							console.log(rewardsReducer);
-							console.log(itemToBuy);
+							// console.log(rewardsReducer);
+							// console.log(itemToBuy);
 
 							if (rewardsReducer.coins < itemToBuy.coins && rewardsReducer.jewels < itemToBuy.jewels) {
 								alert('Not enough coins and Jewels');
@@ -39,6 +46,7 @@ const StoreScreen: React.FC<storeScreenProps> = ({ storeReducer, rewardsReducer,
 							}
 							else {
 								BUY_ITEM(itemToBuy);
+								DECREASE_REWARD(itemToBuy);
 								ADD_INVENTORY_ITEM(itemToBuy);
 							}
 						}}
@@ -77,7 +85,8 @@ const mapStateToProps = (state: any): {} => {
 const mapDispatchToProps = (dispatch: any): {} => {
 	return {
 		BUY_ITEM: (item: StoreItem) => dispatch(actions.BUY_ITEM(item)),
-		ADD_INVENTORY_ITEM: (item: StoreItem) => dispatch(actions.ADD_ITEM(item))
+		ADD_INVENTORY_ITEM: (item: StoreItem) => dispatch(actions.ADD_ITEM(item)),
+		DECREASE_REWARD: (item: StoreItem) => dispatch(actions.DECREASE_REWARDS(item))
 	};
 };
 
