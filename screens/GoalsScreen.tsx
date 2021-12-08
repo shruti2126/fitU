@@ -203,13 +203,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 		// console.log(effect);
 
 		if (currentGoal.isMainGoal)
-<<<<<<< HEAD
-			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, effect: effect});
-		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, effect: effect});
-=======
 			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, inventory: inventory });
 		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, inventory: inventory });
->>>>>>> 6082268299af9d50d32b4634f2c47bd85c303fed
 		DELETE_GOAL(currentGoal);
 	};
 

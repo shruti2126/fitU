@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
 import * as rewardActionTypes from '../actions/rewardActionTypes';
 import updateRewards from '../Hooks/updateRewards';
 import { goalReward, Goal } from '../types/GoalTypes.js';
 import { ItemEffect } from '../types/StoreTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchRewards from '../Hooks/fetchRewards';
-import { goalReward } from '../types/GoalTypes.js';
 import { Store, StoreItem } from '../types/StoreTypes';
 
 const initialRewardsState: goalReward = {
