@@ -28,7 +28,6 @@ const data = getData().then(async data => {
 			initialRewardsState.coins = rewards.coins
 			initialRewardsState.jewels = rewards.jewels
 		}
-		
 	}
 	
 })
