@@ -192,8 +192,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 		console.log(effect);
 
 		if (currentGoal.isMainGoal)
-			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, effect: effect });
-		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, effect: effect });
+			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, effect: effect});
+		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, effect: effect});
 		DELETE_GOAL(currentGoal);
 	};
 

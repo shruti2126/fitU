@@ -1,15 +1,41 @@
 import * as rewardActionTypes from '../actions/rewardActionTypes';
-import { goalReward } from '../types/GoalTypes.js';
+import updateRewards from '../Hooks/updateRewards';
+import { goalReward, Goal } from '../types/GoalTypes.js';
 import { ItemEffect } from '../types/StoreTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import fetchRewards from '../Hooks/fetchRewards';
 
 const initialRewardsState: goalReward = {
 	coins: 0,
 	jewels: 0
 };
 
+const getData = async () => {
+	try {
+		const jsonValue = await AsyncStorage.getItem('userInfo');
+		return jsonValue != null ? JSON.parse(jsonValue) : null;
+	} catch (e) {
+		// error reading value
+		console.log("there was an error = ", e)
+	}
+}
+
+const data = getData().then(async data => {
+	if (data != null) {
+		const rewards = await fetchRewards(data.email)
+		console.log("REWARDS = ", rewards)
+		if(rewards != undefined) {
+			initialRewardsState.coins = rewards.coins
+			initialRewardsState.jewels = rewards.jewels
+		}
+		
+	}
+	
+})
+
 const rewardsReducer = (
 	state: goalReward = initialRewardsState,
-	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect } }
+	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect, goal: Goal } }
 ) => {
 	switch (action.type) {
 		case rewardActionTypes.INCREASE_REWARDS:
@@ -45,6 +71,7 @@ const rewardsReducer = (
 			else {
 				throw `Incorrect reward type: ${payload.rewardType} (must be either 'coins' or 'jewels')`;
 			}
+			updateRewards(state)
 			return state;
 
 		default:

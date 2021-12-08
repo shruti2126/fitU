@@ -23,7 +23,7 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 	const username = route.params.username;
 
 	return (
-		<ImageBackground source={require('../HomeScreenBackground.png')} style={styles.image}>
+		<ImageBackground source={require('../LoginBackground.jpeg')} style={styles.image}>
 			<ScrollView>
 				<View style={styles.container}>
 					<View style={styles.title_header}>
