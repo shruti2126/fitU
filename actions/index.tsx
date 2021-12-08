@@ -41,6 +41,13 @@ export const INCREASE_REWARDS = (rewards: { rewardType: string; amount: number }
 	};
 };
 
+export const DECREASE_REWARDS = (item: StoreItem) => {
+	return {
+		type: rewardsActions.DECREASE_REWARDS,
+		payload: item
+	};
+};
+
 /**
  * Shop Actions
  */

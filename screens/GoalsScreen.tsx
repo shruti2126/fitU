@@ -44,7 +44,13 @@ const Goals: React.FC<goalsScreenProps> = ({
 	const [ newGoalNote, setNewGoalNote ] = useState<string>('');
 	const [ newGoalDifficulty, setNewGoalDifficulty ] = useState<number>(1);
 
-	const [ isEnabled, setIsEnabled ] = useState(false); // isMainGoal attribute
+	const [ isEnabled, setIsEnabled ] = useState<boolean>(false); // isMainGoal attribute
+	const [ isUpdating, setIsUpdating ] = useState<{
+		updating: boolean;
+		prevGoal?: Goal; //used to restore the previous goal values while updating a goal
+	}>({
+		updating: false
+	});
 
 	const setGoalStates = (
 		isSteps: boolean = true,
@@ -107,7 +113,7 @@ const Goals: React.FC<goalsScreenProps> = ({
 		}
 	};
 
-	const createGoal = (): void => {
+	const createGoal = (newGoal: Goal = null): void => {
 		let newRewards: goalReward;
 		if (isEnabled) {
 			newRewards = {
@@ -122,19 +128,20 @@ const Goals: React.FC<goalsScreenProps> = ({
 			};
 		}
 
-		const newGoal: Goal = {
-			index: new Date().getTime(),
-			goalIsSteps: isNewGoalTypeSteps,
-			isMainGoal: isEnabled,
-			title: newGoalTitle,
-			note: newGoalNote,
-			difficulty: newGoalDifficulty,
-			rewards: newRewards
-		};
+		//check is for updating a goal, the cancel will call createGoal with the previous goal values
+		//passed as the newGoal argument.  otherwise we will create a goal based on the current states
+		if (!newGoal)
+			newGoal = {
+				index: new Date().getTime(),
+				goalIsSteps: isNewGoalTypeSteps,
+				isMainGoal: isEnabled,
+				title: newGoalTitle,
+				note: newGoalNote,
+				difficulty: newGoalDifficulty,
+				rewards: newRewards
+			};
 
-		// console.log(newGoal);
 		ADD_GOAL(newGoal);
-
 		setGoalStates(); //reset the states for goals to init values
 		setModalVisible(false);
 	};
@@ -153,6 +160,10 @@ const Goals: React.FC<goalsScreenProps> = ({
 			return;
 		}
 
+		setIsUpdating({
+			updating: true,
+			prevGoal: currentGoal
+		});
 		setGoalStates(
 			currentGoal.goalIsSteps,
 			currentGoal.isMainGoal,
@@ -161,8 +172,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 			currentGoal.difficulty,
 			currentGoal.rewards
 		);
-
 		setModalVisible(true);
+		console.log('hi');
 		deleteGoal(index, goalIsSteps);
 	};
 
@@ -183,17 +194,22 @@ const Goals: React.FC<goalsScreenProps> = ({
 			return;
 		}
 
-		let effect: ItemEffect = undefined;
-		inventory.forEach((item: StoreItem) => {
-			// if (item.effect.type === 'increaseRewards')
-			effect = item.effect;
-		});
-		console.log('test');
-		console.log(effect);
+		// let effect: ItemEffect = undefined;
+		// inventory.forEach((item: StoreItem) => {
+		// 	// if (item.effect.type === 'increaseRewards')
+		// 	effect = item.effect;
+		// });
+		// console.log('test');
+		// console.log(effect);
 
 		if (currentGoal.isMainGoal)
+<<<<<<< HEAD
 			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, effect: effect});
 		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, effect: effect});
+=======
+			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, inventory: inventory });
+		else INCREASE_REWARDS({ rewardType: 'coins', amount: currentGoal.rewards.coins, inventory: inventory });
+>>>>>>> 6082268299af9d50d32b4634f2c47bd85c303fed
 		DELETE_GOAL(currentGoal);
 	};
 
@@ -250,6 +266,14 @@ const Goals: React.FC<goalsScreenProps> = ({
 							<Pressable
 								style={styles.buttonModalClose}
 								onPress={() => {
+									console.log(goalsData);
+
+									console.log(isUpdating);
+
+									if (isUpdating.updating) {
+										createGoal(isUpdating.prevGoal);
+										setIsUpdating({ updating: false });
+									}
 									setGoalStates();
 									setModalVisible(false);
 								}}

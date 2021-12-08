@@ -77,9 +77,7 @@ const goalReducer = (state: goalData = initialGoalState, action: { type: string;
 			if (newGoal.goalIsSteps) state[0].data.push(newGoal);
 			else state[1].data.push(newGoal);
 
-			console.log(state);
 			saveGoalsToFirestore(newGoal);
-
 			return state;
 
 		case goalActionTypes.DELETE_GOAL:

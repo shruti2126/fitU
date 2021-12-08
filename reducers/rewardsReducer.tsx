@@ -1,15 +1,22 @@
+import { useSelector } from 'react-redux';
 import * as rewardActionTypes from '../actions/rewardActionTypes';
+<<<<<<< HEAD
 import updateRewards from '../Hooks/updateRewards';
 import { goalReward, Goal } from '../types/GoalTypes.js';
 import { ItemEffect } from '../types/StoreTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchRewards from '../Hooks/fetchRewards';
+=======
+import { goalReward } from '../types/GoalTypes.js';
+import { Store, StoreItem } from '../types/StoreTypes';
+>>>>>>> 6082268299af9d50d32b4634f2c47bd85c303fed
 
 const initialRewardsState: goalReward = {
 	coins: 0,
 	jewels: 0
 };
 
+<<<<<<< HEAD
 const getData = async () => {
 	try {
 		const jsonValue = await AsyncStorage.getItem('userInfo');
@@ -35,10 +42,18 @@ const data = getData().then(async data => {
 const rewardsReducer = (
 	state: goalReward = initialRewardsState,
 	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect, goal: Goal } }
+=======
+type increaseRewards = { rewardType: string; amount: number; inventory: any }
+type decreaseRewards = StoreItem
+
+const rewardsReducer = (
+	state: goalReward = initialRewardsState,
+	action: { type: string; payload: increaseRewards | decreaseRewards }
+>>>>>>> 6082268299af9d50d32b4634f2c47bd85c303fed
 ) => {
+	const payload = action.payload;
 	switch (action.type) {
 		case rewardActionTypes.INCREASE_REWARDS:
-			const payload = action.payload;
 
 			// let newAmount;
 			// if (!payload.effect) {
@@ -48,20 +63,36 @@ const rewardsReducer = (
 			// 	}
 			// }
 
-			if (payload.effect !== undefined) {
-				payload.amount = payload.effect?.effect(payload.amount)	
-			}
-			
+			console.log(payload.inventory);
+
+			let newAmount = payload.amount;
+			payload.inventory.forEach((item: StoreItem) => {
+				console.log(item);
+				
+				if(item.isActive) {
+					switch (item.effect?.type) {
+						case 'increaseRewards':
+							newAmount = item.effect.effect(payload.amount);
+						// case 'singleUseIncreaseRewards':
+					}
+
+				}
+
+			});
+
+			// if (payload.effect !== undefined) {
+			// 	payload.amount = payload.effect?.effect(payload.amount)
+			// }
 
 			if (payload.rewardType === 'coins') {
-				const coins = state.coins + payload.amount;
+				const coins = state.coins + newAmount;
 				state = {
 					coins: coins,
 					jewels: state.jewels
 				};
 			}
 			else if (payload.rewardType === 'jewels') {
-				const jewels = state.jewels + payload.amount;
+				const jewels = state.jewels + newAmount;
 				state = {
 					coins: state.coins,
 					jewels: jewels
@@ -72,6 +103,17 @@ const rewardsReducer = (
 			}
 			updateRewards(state)
 			return state;
+
+		case rewardActionTypes.DECREASE_REWARDS:
+			console.log(payload);
+			console.log('hi');
+			
+			state = {
+				coins: state.coins - payload.coins,
+				jewels: state.jewels - payload.jewels
+			}
+			return state;
+
 
 		default:
 			return state;
