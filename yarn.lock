@@ -3818,6 +3818,11 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
+"fsevents@^2.1.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -4066,6 +4071,11 @@
   "version" "1.0.0"
   dependencies:
     "kind-of" "^6.0.0"
+
+"is-any-array@^1.0.1":
+  "integrity" "sha512-m+FSiaONxBt2W0h9XOUngMBu/WW8uzAKbSk4Ty2aeCcQJ+muBqENexvxUHtDpX65fk5AMCROxqgNX0sSAHstcw=="
+  "resolved" "https://registry.npmjs.org/is-any-array/-/is-any-array-1.0.1.tgz"
+  "version" "1.0.1"
 
 "is-arrayish@^0.2.1":
   "integrity" "sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0="
@@ -5199,6 +5209,20 @@
   "version" "0.5.5"
   dependencies:
     "minimist" "^1.2.5"
+
+"ml-regression-base@^2.0.1":
+  "integrity" "sha512-A6+cmwg6Nvwu0+Z0lg+NvvGysSXcuwbbzHnMFrBJosUnNM+FkMusYK9arbRpPQBQjj+IYeMP8W0K9uTFHiJIkw=="
+  "resolved" "https://registry.npmjs.org/ml-regression-base/-/ml-regression-base-2.1.5.tgz"
+  "version" "2.1.5"
+  dependencies:
+    "is-any-array" "^1.0.1"
+
+"ml-regression-simple-linear@^2.0.3":
+  "integrity" "sha512-xcLviI0Gqs0TXE5+QsPLbJm372RyZsX6xmsufez3Dz6vq/r10+KyOJ8JvUimhryKvPaZQvx6BTnzAfQbj/IeLQ=="
+  "resolved" "https://registry.npmjs.org/ml-regression-simple-linear/-/ml-regression-simple-linear-2.0.3.tgz"
+  "version" "2.0.3"
+  dependencies:
+    "ml-regression-base" "^2.0.1"
 
 "mockdate@^3.0.2":
   "integrity" "sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ=="

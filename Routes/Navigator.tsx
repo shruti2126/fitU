@@ -9,6 +9,10 @@ import Steps from '../screens/Steps';
 import Sleep from '../screens/Sleep';
 import Goals from '../screens/GoalsScreen';
 import ShopScreen from '../screens/ShopScreen';
+import Stats from '../screens/StatsScreen';
+import CorrelationSleep from '../screens/CorrelationSleep';
+import CorrelationStep from '../screens/CorrelationStep';
+
 
 const MainStack = createStackNavigator();
 
@@ -25,6 +29,9 @@ const MainNavigator: React.FC = () => {
 			<Screen name="Sleep" component={Sleep} />
 			<Screen name="Goals" component={Goals} />
 			<Screen name="Shop" component={ShopScreen} />
+			<Screen name="Stats" component={Stats} />
+			<Screen name="Sleep-Weight" component={CorrelationSleep} />
+			<Screen name="Step-Weight" component={CorrelationStep} />
 		</Navigator>
 	);
 };

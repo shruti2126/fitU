@@ -37,6 +37,12 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 						<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />
 						<Card card_title={'Sleep'} nav_function={() => navigation.navigate('Sleep')} />
 					</View>
+
+
+					<TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.StatsButton}>
+						<Text style={styles.buttonText}>GO TO STATS</Text>
+					</TouchableOpacity>
+
 					<TouchableOpacity onPress={signOut} style={styles.button}>
 						<Text style={styles.buttonText}>Sign out</Text>
 					</TouchableOpacity>
@@ -74,6 +80,14 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 		// backgroundColor: '#FFFFFF'
 		// backgroundColor: 'aliceblue'
+	},
+	StatsButton: {
+		backgroundColor: '#f194ff',
+		width: '80%',
+		padding: 15,
+		borderRadius: 10,
+		alignItems: 'center',
+		marginTop: 40
 	},
 	button: {
 		backgroundColor: '#0782F9',
