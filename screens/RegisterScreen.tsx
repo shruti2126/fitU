@@ -53,7 +53,7 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
 	};
 	//const image = {uri: "https://i.stack.imgur.com/cEz3G.jpg"};
 	return (
-		<ImageBackground source={require('../tree.jpeg')} style={styles.image}>
+		<ImageBackground source={require('../LoginBackground.jpeg')} style={styles.image}>
 			<KeyboardAvoidingView style={styles.container} behavior="padding">
 				<View style={styles.inputContainer}>
 					<View style={styles.titleContainer}>
@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		backgroundColor: 'rgba( 0, 0, 0, 0.4)'
 	},
 	inputContainer: {
 		width: '50%'
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
 	},
 	heading: {
 		fontSize: 100,
-		color: '#702963'
+		color: '#ecb7bf'
 	},
 	image: {
 		flex: 1,

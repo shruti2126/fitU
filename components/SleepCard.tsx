@@ -1,3 +1,4 @@
+//import { Text } from  'react-native-elements'
 import React, { useState } from 'react';
 import { FlatList, ImageBackground, SectionList, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -9,23 +10,28 @@ type SleepCardProps = {
 
 const SleepCard: React.FC<SleepCardProps> = ({ goalReducer }) => {
 
-	const [displayData, setDisplayData] = useState<Goal>(goalReducer[1].data[0])
-	const goalData = goalReducer[1];
-	let goals = goalData.data;
+	var displayData = {}
+	let goals = goalReducer[1].data;
 
 	goals.forEach(goal => {
-		if (goal.isMainGoal) {
-			setDisplayData(goal)
+		if (goal != null && goal.isMainGoal) {
+			displayData = goal
 		}
+
 	});
+
+	console.log("display data = ", displayData)
 
 	return (
 		<View style={styles.container}>
 			<View>
 				<Text style={styles.title}>{goalReducer[1].title}</Text>
-				<Text style={styles.item}>Your Main goal: {displayData.title}</Text>
-				<Text style={styles.item}>Note-to-self: {displayData.note}</Text>
-				<Text style={styles.item}>Difficulty of Goal: {displayData.difficulty}</Text>
+				<Text style={styles.header}> Your Main Goal: </Text>
+				<Text style={styles.item}>{displayData.title}</Text>
+				<Text style={styles.header}> Note-to-self:</Text>
+				<Text style={styles.item}> {displayData.note}</Text>
+				<Text style={styles.header}> Difficulty of Goal: </Text>
+				<Text style={styles.item}> {displayData.difficulty}</Text>
 			</View>
 		</View>
 
@@ -40,7 +46,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		paddingLeft: 15,
 		marginBottom: 7,
-		marginTop: 15
+		marginTop: 10
 	},
 	title: {
 		color: 'black',
@@ -52,11 +58,17 @@ const styles = StyleSheet.create({
 		padding: 10,
 		marginVertical: 8,
 		marginHorizontal: 16,
-		borderRadius: 10
+		borderRadius: 10,
+		fontSize: 15
 	},
 	header: {
-		fontSize: 25,
-		backgroundColor: '#fff'
+		fontSize: 20,
+		fontWeight: 'bold',
+		backgroundColor: '#ffe4c4',
+		padding: 10,
+		marginVertical: 8,
+		marginHorizontal: 16,
+		borderRadius: 10
 	}
 });
 

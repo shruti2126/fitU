@@ -11,8 +11,6 @@ let auth = getAuth();
 
 
 export default async function saveGoalsToFirestore(goal: Goal) {
-    // let MainGoal: Goal = {}
-    // let OtherGoals: Goal[] = []
 
     var docName: String = ""
     if (goal.goalIsSteps) {
@@ -34,7 +32,7 @@ export default async function saveGoalsToFirestore(goal: Goal) {
                 goals: arrayUnion(goal)
             })
         }
-
+        console.log("i am here")
     } else {
         if (goal.isMainGoal) {
             await setDoc(docRef, {

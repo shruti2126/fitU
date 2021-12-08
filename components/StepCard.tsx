@@ -1,63 +1,81 @@
-import React from 'react'
-import { View, StyleSheet, Text, Pressable, Image, FlatList, ImageBackground, TouchableOpacity } from 'react-native'
-import {getAuth} from 'firebase/auth'
+//import { Text } from  'react-native-elements'
+import React, { useState } from 'react';
+import { FlatList, ImageBackground, SectionList, StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { goalData, Goal } from '../types/GoalTypes';
 
-
-type StepProps = {
-    card_title?: string;
-    nav_function?: () => void;
+type StepCardProps = {
+    goalReducer: goalData;
 };
- 
+
+const StepCard: React.FC<StepCardProps> = ({ goalReducer }) => {
+
+    var displayData = {}
+    let goals = goalReducer[1].data;
+
+    goals.forEach(goal => {
+        if (goal != null && goal.isMainGoal) {
+            displayData = goal
+        }
+
+    });
+
+    console.log("display data = ", displayData)
+
+    return (
+        <View style={styles.container}>
+            <View>
+                <Text style={styles.title}>{goalReducer[0].title}</Text>
+                <Text style={styles.header}> Your Main Goal: </Text>
+                <Text style={styles.item}>{displayData.title}</Text>
+                <Text style={styles.header}> Note-to-self:</Text>
+                <Text style={styles.item}> {displayData.note}</Text>
+                <Text style={styles.header}> Difficulty of Goal: </Text>
+                <Text style={styles.item}> {displayData.difficulty}</Text>
+            </View>
+        </View>
+
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
-        alignSelf: "center",
-        backgroundColor: 'linen',
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: 'oldlace',
         borderRadius: 10,
-        height: 300,
-        width: 350,
-        margin: 10,
         paddingLeft: 15,
-        paddingTop: 5
+        marginBottom: 7,
+        marginTop: 10
     },
-    profile_header: {
-        textAlign: "center",
-        marginBottom: 20
+    title: {
+        color: 'black',
+        fontWeight: '700',
+        fontSize: 32
     },
-    header: {},
-    body: {
-        marginTop: 7
+    item: {
+        backgroundColor: '#ffe4c4',
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        fontSize: 15
     },
-    text_title: {
-        color: "#1F283A",
-        fontWeight: "400",
+    header: {
         fontSize: 20,
-        // paddingLeft: 15
-    },
-    text_body: {
-        marginBottom: 2
-    },
-    image: {
-        flex: 1,
-        justifyContent: "center",
-        alignContent: 'center',
-        width: '100%',
-        height: '100%',
-      }
-})
+        fontWeight: 'bold',
+        backgroundColor: '#ffe4c4',
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 10
+    }
+});
 
-const StepsCard: React.FC<StepProps> = ({ }) => {
+const mapStateToProps = (state: any) => {
+    return {
+        goalReducer: state.goalReducer
+    };
+};
 
-	return (
-		<View style={styles.container}>
-			<Text style={styles.text_title}>
-				Daily Average 5,573 steps{"\n"}
-                Nov 21-27 2021{"\n"}
-                *graph*
-				
-			</Text>
-
-		</View>
-	)
-}
-export default StepsCard;
+export default connect(mapStateToProps)(StepCard);

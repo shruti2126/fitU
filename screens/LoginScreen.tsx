@@ -11,12 +11,21 @@ import {
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
-import fetchUsername from '../Hooks/fetchUsername';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type loginScreenProps = {
 	navigation: any;
 };
 
+const getData = async () => {
+	try {
+		const jsonValue = await AsyncStorage.getItem('userInfo');
+		return jsonValue != null ? JSON.parse(jsonValue) : null;
+	} catch (e) {
+		// error reading value
+		console.log("there was an error = ", e)
+	}
+}
 
 
 const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
@@ -30,7 +39,12 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 			.then(async (userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				var username = await fetchUsername(email);
+				var username = ""
+				const info = getData().then(async data => {
+					if(data != null) {
+						username = data.username
+					}
+				})
 				if (username == null) console.log("couldn't fetch doc");
 				navigation.navigate('Home', { username: username });
 				setEmail('');
@@ -50,7 +64,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 					<Text style={styles.heading}>fitU</Text>
 				</View>
 				<View style={styles.inputContainer}>
-					<TextInput placeholder="Email" onChangeText={setEmail} value={email} style={styles.input} />
+					<TextInput placeholder="Email" onChangeText={(email) => setEmail(email.toLowerCase())} value={email} style={styles.input} />
 
 					<TextInput
 						placeholder="Password"
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'rgba( 0, 0, 0, 0.6 )'
+		backgroundColor: 'rgba( 0, 0, 0, 0.5)'
 	},
 	inputContainer: {
 		width: '50%'

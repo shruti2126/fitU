@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import SleepCard from '../components/SleepCard';
+import SleepDataCard from '../components/SleepDataCard';
 import SleepFacts from '../components/SleepFacts';
 // import AnimatedBar from "react-native-animated-bar"
 
@@ -15,6 +16,7 @@ const Sleep = () => {
 					fillColor="tomato"
 					barColor="red"
 					borderRadius={5}/> */}
+				<SleepDataCard />
 				<SleepCard />
 				<SleepFacts />
 			</View>
