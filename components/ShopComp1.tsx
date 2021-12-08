@@ -12,7 +12,7 @@ const ShopComp1: React.FC<Props> = (props) => {
                 resizeMode: 'cover' //cover?  strech?
             }} >
                 <Text style={styles.text}>{`Keep up with your goals!
-                Cliam your free rewards!
+                Claim your free rewards!
         `}</Text>
             </ImageBackground>
         </View>
