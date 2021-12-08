@@ -20,38 +20,51 @@ const StoreScreen: React.FC<storeScreenProps> = ({
 	ADD_INVENTORY_ITEM,
 	DECREASE_REWARD
 }) => {
+	const buyItem = (itemToBuy: StoreItem) => {
+		if (rewardsReducer.coins < itemToBuy.coins && rewardsReducer.jewels < itemToBuy.jewels) {
+			alert('Not enough coins and Jewels');
+			return;
+		}
+		else if (rewardsReducer.coins < itemToBuy.coins) {
+			alert('Not enough coins');
+			return;
+		}
+		else if (rewardsReducer.jewels < itemToBuy.jewels) {
+			alert('Not enough jewels');
+			return;
+		}
+		else {
+			BUY_ITEM(itemToBuy);
+			DECREASE_REWARD(itemToBuy);
+			ADD_INVENTORY_ITEM(itemToBuy);
+		}
+	};
+
 	return (
 		<View style={styles.container}>
-			<Text style={styles.storeHeader}>Welcome to the Store!</Text>
+			<View style={{ marginLeft: 10, marginRight: 10 }}>
+				<Text style={styles.storeHeader}>Welcome to the Store!</Text>
+
+				<View style={styles.rewards}>
+					<Text
+						style={[
+							styles.rewardsText,
+							{
+								// borderRigWidth: 1,
+								borderRightWidth: 1,
+								borderRightColor: '#CFCFCF'
+							}
+						]}
+					>
+						Coins: {rewardsReducer.coins}
+					</Text>
+					<Text style={styles.rewardsText}>Jewels: {rewardsReducer.jewels}</Text>
+				</View>
+			</View>
+
 			<FlatList
 				data={storeReducer}
-				renderItem={({ item }) => (
-					<ItemCard
-						item={item}
-						BUY_ITEM={(itemToBuy: StoreItem) => {
-							// console.log(rewardsReducer);
-							// console.log(itemToBuy);
-
-							if (rewardsReducer.coins < itemToBuy.coins && rewardsReducer.jewels < itemToBuy.jewels) {
-								alert('Not enough coins and Jewels');
-								return;
-							}
-							else if (rewardsReducer.coins < itemToBuy.coins) {
-								alert('Not enough coins');
-								return;
-							}
-							else if (rewardsReducer.jewels < itemToBuy.jewels) {
-								alert('Not enough jewels');
-								return;
-							}
-							else {
-								BUY_ITEM(itemToBuy);
-								DECREASE_REWARD(itemToBuy);
-								ADD_INVENTORY_ITEM(itemToBuy);
-							}
-						}}
-					/>
-				)}
+				renderItem={({ item }) => <ItemCard item={item} BUY_ITEM={() => buyItem(item)} />}
 				keyExtractor={(item) => item.id}
 			/>
 		</View>
@@ -61,8 +74,7 @@ const StoreScreen: React.FC<storeScreenProps> = ({
 const styles = StyleSheet.create({
 	container: {},
 	storeHeader: {
-		fontSize: 32,
-		margin: 10
+		fontSize: 32
 	},
 	item: {
 		backgroundColor: '#f9c2ff',
@@ -72,6 +84,19 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 32
+	},
+	rewards: {
+		flexDirection: 'row',
+		marginBottom: 10,
+		borderBottomWidth: 1,
+		borderBottomColor: '#CFCFCF',
+		paddingBottom: 5
+	},
+	rewardsText: {
+		flex: 1,
+		textAlign: 'center',
+		marginTop: 10,
+		fontSize: 15
 	}
 });
 
