@@ -13,6 +13,14 @@ type storeScreenProps = {
 	DECREASE_REWARD: Function;
 };
 
+const ShopBanner: React.FC<Props> = (props) => {
+	return (
+		<View style={styles.container}>
+			<Text style={styles.title}> ✧Reward Center✧</Text>
+		</View>
+	);
+};
+
 const StoreScreen: React.FC<storeScreenProps> = ({
 	storeReducer,
 	rewardsReducer,
@@ -41,9 +49,12 @@ const StoreScreen: React.FC<storeScreenProps> = ({
 	};
 
 	return (
-		<View style={styles.container}>
+		<View>
+			<View style={styles.bannerContainer}>
+				<Text style={styles.bannerTitle}> ✧ Welcome! ✧</Text>
+			</View>
 			<View style={{ marginLeft: 10, marginRight: 10 }}>
-				<Text style={styles.storeHeader}>Welcome to the Store!</Text>
+				<Text style={styles.storeHeader} />
 
 				<View style={styles.rewards}>
 					<Text
@@ -72,7 +83,17 @@ const StoreScreen: React.FC<storeScreenProps> = ({
 };
 
 const styles = StyleSheet.create({
-	container: {},
+	bannerContainer: {
+		padding: 1,
+		backgroundColor: '#1B2BA5'
+	},
+	bannerTitle: {
+		paddingVertical: 8,
+		color: '#FFFFFF',
+		fontSize: 32,
+		textAlign: 'center',
+		fontWeight: 'bold'
+	},
 	storeHeader: {
 		fontSize: 32
 	},
