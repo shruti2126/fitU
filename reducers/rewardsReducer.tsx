@@ -1,22 +1,18 @@
 import { useSelector } from 'react-redux';
 import * as rewardActionTypes from '../actions/rewardActionTypes';
-<<<<<<< HEAD
 import updateRewards from '../Hooks/updateRewards';
 import { goalReward, Goal } from '../types/GoalTypes.js';
 import { ItemEffect } from '../types/StoreTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchRewards from '../Hooks/fetchRewards';
-=======
 import { goalReward } from '../types/GoalTypes.js';
 import { Store, StoreItem } from '../types/StoreTypes';
->>>>>>> 6082268299af9d50d32b4634f2c47bd85c303fed
 
 const initialRewardsState: goalReward = {
 	coins: 0,
 	jewels: 0
 };
 
-<<<<<<< HEAD
 const getData = async () => {
 	try {
 		const jsonValue = await AsyncStorage.getItem('userInfo');
@@ -39,17 +35,15 @@ const data = getData().then(async data => {
 	
 })
 
-const rewardsReducer = (
-	state: goalReward = initialRewardsState,
-	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect, goal: Goal } }
-=======
+// const rewardsReducer = (
+// 	state: goalReward = initialRewardsState,
+// 	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect, goal: Goal } }
 type increaseRewards = { rewardType: string; amount: number; inventory: any }
 type decreaseRewards = StoreItem
 
 const rewardsReducer = (
 	state: goalReward = initialRewardsState,
 	action: { type: string; payload: increaseRewards | decreaseRewards }
->>>>>>> 6082268299af9d50d32b4634f2c47bd85c303fed
 ) => {
 	const payload = action.payload;
 	switch (action.type) {
