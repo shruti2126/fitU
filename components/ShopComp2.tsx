@@ -1,16 +1,34 @@
-import React from "react";
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
+import React, { useState } from "react";
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window')
-const coin = 10;
-const jewl = 0;
-interface Props { }
 
-const ShopComp2: React.FC<Props> = (props) => {
+type ShopComp2Props = {
+    navigation: any;
+};
+const coin = 100;
+const jewl = 0;
+
+const ShopComp2: React.FC<ShopComp2Props> = ({ navigation }) => {
+    navigation = useNavigation();
+    const directToGoal = () => { navigation.navigate('Steps') };
+    const [new_coin, setCoin] = useState(coin);
+    const [new_jewl, setJewl] = useState(jewl);
+    const updateBalance = () => {
+        if (new_coin <= 0) {
+            alert('Complete your goals to earn more coins!');
+            return;
+        }
+        setCoin(new_coin => new_coin - 10);
+        setJewl(new_jewl => new_jewl + 1);
+    };
     return (
         <View style={styles.container} >
             <Text style={styles.text}> Getting started is easy.</Text>
-            <Text style={styles.description}> Accomplish daily goals to earn coins.</Text>
+            <TouchableOpacity onPress={directToGoal}>
+                <Text style={styles.description}> Accomplish daily goals to earn coins.</Text>
+            </TouchableOpacity>
             <Text style={styles.description}> Use coins in exchange for stars.</Text>
             <Text style={styles.text}> </Text>
             <Text style={styles.sub}> ① Create your goals.</Text>
@@ -18,8 +36,11 @@ const ShopComp2: React.FC<Props> = (props) => {
             <Text style={styles.sub}> ③ Earn coins and stars as rewards!</Text>
             <Text style={styles.text}> </Text>
             <Text style={styles.text}> </Text>
-            <Text style={styles.balance}>Your coin balance:  {coin}  </Text>
-            <Text style={styles.balance}>Your star balance:   {jewl}  </Text>
+            <Text style={styles.balance}>Your coin balance:  {new_coin}  </Text>
+            <Text style={styles.balance}>Your star balance:   {new_jewl}  </Text>
+            <TouchableOpacity onPress={updateBalance}>
+                <Text style={styles.description}>10 coins = 1 star</Text>
+            </TouchableOpacity>
         </View>
     );
 };
