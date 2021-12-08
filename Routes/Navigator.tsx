@@ -8,6 +8,7 @@ import StoreScreen from '../screens/StoreScreen';
 import Steps from '../screens/Steps';
 import Sleep from '../screens/Sleep';
 import Goals from '../screens/GoalsScreen';
+import ShopScreen from '../screens/ShopScreen';
 
 const MainStack = createStackNavigator();
 
@@ -23,6 +24,7 @@ const MainNavigator: React.FC = () => {
 			<Screen name="Steps" component={Steps} />
 			<Screen name="Sleep" component={Sleep} />
 			<Screen name="Goals" component={Goals} />
+			<Screen name="Shop" component={ShopScreen} />
 		</Navigator>
 	);
 };
