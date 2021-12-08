@@ -24,7 +24,6 @@ const getData = async () => {
 const data = getData().then(async data => {
 	if (data != null) {
 		const rewards = await fetchRewards(data.email)
-		console.log("REWARDS = ", rewards)
 		if(rewards != undefined) {
 			initialRewardsState.coins = rewards.coins
 			initialRewardsState.jewels = rewards.jewels
@@ -33,9 +32,6 @@ const data = getData().then(async data => {
 	
 })
 
-// const rewardsReducer = (
-// 	state: goalReward = initialRewardsState,
-// 	action: { type: string; payload: { rewardType: string; amount: number; effect: ItemEffect, goal: Goal } }
 type increaseRewards = { rewardType: string; amount: number; inventory: any }
 type decreaseRewards = StoreItem
 
@@ -104,6 +100,7 @@ const rewardsReducer = (
 				coins: state.coins - payload.coins,
 				jewels: state.jewels - payload.jewels
 			}
+			updateRewards(state)
 			return state;
 
 

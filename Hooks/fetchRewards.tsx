@@ -10,12 +10,12 @@ const db = getFirestore;
 let auth = getAuth();
 
 const fetchRewards = async (email: String) => {
-
+    console.log("trying to fetch rewards...")
     const docRef = doc(db, "rewards", email);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        //console.log(docSnap.data())
+        console.log(docSnap.data())
         return docSnap.data();
     } else {
         // doc.data() will be undefined in this case

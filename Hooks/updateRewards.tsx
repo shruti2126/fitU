@@ -8,7 +8,7 @@ const db = getFirestore;
 let auth = getAuth();
 
 const updateRewards = async (rewards : goalReward) => {
-   
+    console.log("trying to update rewards...")
     const docRef = doc(db, "rewards", auth.currentUser?.email);
     const docSnap = await getDoc(docRef);
 
