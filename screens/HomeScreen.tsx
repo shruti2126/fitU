@@ -31,9 +31,8 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 						<Text style={styles.title}>Welcome {username} !</Text>
 					</View>
 
-					<LevelsCard />
-
 					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
+					<LevelsCard />
 					<RewardsCard />
 
 					<View>
