@@ -14,8 +14,7 @@ const rewardsCard: React.FC<RewardsProps> = ({ currentLevel, experienceToComplet
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.textTitle}>Your Level</Text>
-			<Text style={styles.textBody}>Current Level: {currentLevel}</Text>
+			<Text style={styles.textTitle}>Level {currentLevel}</Text>
 			<Text style={styles.textBody}>Experience to Complete: {experienceToComplete}</Text>
 
 			{/* <View style={styles.storeButton}>
@@ -40,7 +39,8 @@ const styles = StyleSheet.create({
 	textTitle: {
 		color: '#1F283A',
 		fontWeight: '700',
-		fontSize: 25
+		fontSize: 25,
+		marginBottom: 5
 		// paddingLeft: 15
 	},
 	textBody: {
