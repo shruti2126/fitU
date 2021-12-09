@@ -24,19 +24,25 @@ import { ItemEffect, StoreItem } from '../types/StoreTypes';
 type goalsScreenProps = {
 	goalsData: any;
 	inventory: any;
+	levels: any;
 	ADD_GOAL: Function;
 	DELETE_GOAL: Function;
 	INCREASE_REWARDS: Function;
 	ADD_INVENTORY_ITEM: Function;
+	PROGRESS_LEVEL: Function;
+	LEVEL_UP: Function;
 };
 
 const Goals: React.FC<goalsScreenProps> = ({
 	goalsData,
 	inventory,
+	levels,
 	ADD_GOAL,
 	DELETE_GOAL,
 	INCREASE_REWARDS,
-	ADD_INVENTORY_ITEM
+	ADD_INVENTORY_ITEM,
+	PROGRESS_LEVEL,
+	LEVEL_UP
 }) => {
 	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
 	const [ isNewGoalTypeSteps, setIsNewGoalTypeSteps ] = useState<boolean>(true);
@@ -194,13 +200,8 @@ const Goals: React.FC<goalsScreenProps> = ({
 			return;
 		}
 
-		// let effect: ItemEffect = undefined;
-		// inventory.forEach((item: StoreItem) => {
-		// 	// if (item.effect.type === 'increaseRewards')
-		// 	effect = item.effect;
-		// });
-		// console.log('test');
-		// console.log(effect);
+		PROGRESS_LEVEL(currentGoal);
+		LEVEL_UP();
 
 		if (currentGoal.isMainGoal)
 			INCREASE_REWARDS({ rewardType: 'jewels', amount: currentGoal.rewards.jewels, inventory: inventory });
@@ -414,7 +415,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: any) => {
 	return {
 		goalsData: state.goalReducer,
-		inventory: state.inventoryReducer
+		inventory: state.inventoryReducer,
+		levels: state.levelsReducer
 	};
 };
 
@@ -424,7 +426,9 @@ const mapDispatchToProps = (dispatch: any) => {
 		DELETE_GOAL: (currentGoal: Goal) => dispatch(actions.DELETE_GOAL(currentGoal)),
 		INCREASE_REWARDS: (rewards: { rewardType: string; amount: number; effect: ItemEffect }) =>
 			dispatch(actions.INCREASE_REWARDS(rewards)),
-		ADD_INVENTORY_ITEM: (item: StoreItem) => dispatch(actions.ADD_ITEM(item))
+		ADD_INVENTORY_ITEM: (item: StoreItem) => dispatch(actions.ADD_ITEM(item)),
+		PROGRESS_LEVEL: (goal: Goal) => dispatch(actions.PROGRESS_LEVEL(goal)),
+		LEVEL_UP: () => dispatch(actions.LEVEL_UP())
 	};
 };
 

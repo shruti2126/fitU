@@ -51,11 +51,8 @@ const rewardsReducer = (
 			// 	}
 			// }
 
-			console.log(payload.inventory);
-
 			let newAmount = payload.amount;
 			payload.inventory.forEach((item: StoreItem) => {
-				console.log(item);
 				
 				if(item.isActive) {
 					switch (item.effect?.type) {
@@ -93,8 +90,6 @@ const rewardsReducer = (
 			return state;
 
 		case rewardActionTypes.DECREASE_REWARDS:
-			console.log(payload);
-			console.log('hi');
 			
 			state = {
 				coins: state.coins - payload.coins,
