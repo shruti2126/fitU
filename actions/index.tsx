@@ -2,8 +2,10 @@ import * as goalActions from './goalActionTypes.js';
 import * as rewardsActions from './rewardActionTypes';
 import * as storeActions from './storeActionTypes';
 import * as inventoryActions from './inventoryActionTypes';
+import * as levelsActionType from '../actions/levelsActionTypes';
 import { Goal } from '../types/GoalTypes';
 import { StoreItem } from '../types/StoreTypes';
+import { level } from '../types/LevelsType.js';
 
 /**
  * Goal Actions
@@ -67,5 +69,23 @@ export const ADD_ITEM = (item: StoreItem) => {
 	return {
 		type: inventoryActions.ADD_ITEM,
 		payload: item
+	};
+};
+
+/**
+ * Levels Actions
+ */
+
+export const PROGRESS_LEVEL = (goal: Goal) => {
+	return {
+		type: levelsActionType.PROGRESS_LEVEL,
+		payload: goal
+	};
+};
+
+export const LEVEL_UP = () => {
+	return {
+		type: levelsActionType.LEVEL_UP,
+		payload: null
 	};
 };
