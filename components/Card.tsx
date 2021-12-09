@@ -5,9 +5,11 @@ import fetchStepGoals from '../Hooks/fetchStepGoals';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchSleepGoals from '../Hooks/fetchSleepGoals';
 import { BorderlessButton, TouchableHighlight } from 'react-native-gesture-handler';
+import { goalData } from '../types/GoalTypes';
 
 
 type homeScreenProps = {
+	goalReducer: goalData
 	card_title: string;
 	nav_function?: () => void;
 };
@@ -22,20 +24,33 @@ const getData = async () => {
 	}
 }
 
-const Card: React.FC<homeScreenProps> = ({ card_title, nav_function}) => {
+const Card: React.FC<homeScreenProps> = ({ goalReducer, card_title, nav_function}) => {
 	
-	const [display, setDisplay] = useState<string>('')
+	let display = ""
 
 	if(card_title === 'Steps') {
-		getData().then(async data => {
-			const step_goals = await fetchStepGoals(data.email)
-			setDisplay(step_goals?.MainGoal.title)
-		})
+		goalReducer[0].data.forEach(goal => {
+			if(goal.isMainGoal) {
+				display = goal.title
+				console.log(display)
+			}
+		});
+		// getData().then(async data => {
+		// 	const step_goals = await fetchStepGoals(data.email)
+		// 	if(step_goals?.MainGoal.length == 0) setDisplay("No Main Steps Goal Yet")
+		// 	else setDisplay(step_goals?.MainGoal.title)
+		// })
 	} else {
-		getData().then(async data => {
-			const sleep_goals = await fetchSleepGoals(data.email)
-			setDisplay(sleep_goals?.MainGoal.title)
-		})
+		goalReducer[1].data.forEach(goal => {
+			if(goal.isMainGoal) {
+				display = goal.title
+			}
+		});
+		// getData().then(async data => {
+		// 	const sleep_goals = await fetchSleepGoals(data.email)
+		// 	if(sleep_goals?.MainGoal.length == 0) setDisplay("No Main Sleep Goal Yet")
+		// 	setDisplay(sleep_goals?.MainGoal.title)
+		// })
 	}
 	
 	return (
@@ -45,17 +60,17 @@ const Card: React.FC<homeScreenProps> = ({ card_title, nav_function}) => {
 			</View>
 			<TouchableHighlight activeOpacity={0.6}
   underlayColor="#FFFFA7" onPress={nav_function} >
-				<View style={styles.container}>
+				{/* <View style={styles.container}> */}
 					{/* <View style={styles.header}>
 						<Text style={styles.text_title}>{card_title}</Text>
 					</View> */}
-					<View style={styles.body}>
+					<View style={styles.container}>
 						<Text style={styles.title}>Main Goal: <Text style={styles.text_title}>{display}</Text></Text>
 					</View>
 					{/* <View style={styles.body}>
 						<Text style={styles.text_body}>Progress:</Text>
 					</View> */}
-				</View>
+				{/* </View> */}
 			</TouchableHighlight>
 		</View>
 	);
@@ -66,6 +81,8 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: 'oldlace',
 		borderRadius: 20,
+		// borderBottomWidth: 1,
+		// borderBottomColor: '#FFFFFF',
 		elevation: 3,
 		shadowOffset: {
 			width: 5,
@@ -120,10 +137,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-// const mapStateToProps = (state: any) => {
-// 	return {
-// 		goalReducer: state.goalReducer
-// 	};
-// };
+const mapStateToProps = (state: any) => {
+	return {
+		goalReducer: state.goalReducer
+	};
+};
 
-export default Card
+export default connect(mapStateToProps)(Card)
