@@ -69,7 +69,7 @@ const Stats: React.FC<StatsProps> = ({ navigation }) => {
     // };
 
     return (
-        <ImageBackground source={require('../Stats_background.png')} style={styles.image}>
+        <ImageBackground source={require('../LoginBackground.jpeg')} style={styles.image}>
 
             {/* <SafeAreaView style={styles.container}>
 
@@ -118,9 +118,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
         // backgroundColor: '#FFFFFF'
         // backgroundColor: 'aliceblue'
+        backgroundColor: 'rgba( 0, 0, 0, 0.6 )'
     },
     common: {
         width: 450,
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
         paddingBottom: 40
     },
     title: {
-        color: 'black',
+        color: 'white',
         fontWeight: '700',
         fontSize: 30,
         paddingBottom: 15

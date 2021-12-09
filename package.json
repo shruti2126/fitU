@@ -30,6 +30,7 @@
     "react-native-web": "0.17.1",
     "react-native-webview": "^11.15.0",
     "react-redux": "^7.2.6",
+    "recharts": "^2.1.6",
     "redux": "^4.1.2"
   },
   "devDependencies": {
