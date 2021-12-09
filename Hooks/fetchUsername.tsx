@@ -6,8 +6,9 @@ import getFirestore from "../config/config";
 
 const db = getFirestore;
 
-const fetchUsername = async (email) => {
+const fetchUsername = async (email: string) => {
 
+    console.log(email)
     const docRef = doc(db, "users", email);
     const docSnap = await getDoc(docRef);
 
@@ -16,6 +17,7 @@ const fetchUsername = async (email) => {
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
+        return null
     }
 
 };

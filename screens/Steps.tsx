@@ -27,7 +27,9 @@ const Steps = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    justifyContent: 'center',
+  },
   image: {
     flex: 1,
     justifyContent: 'center',

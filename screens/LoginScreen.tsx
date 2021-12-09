@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Component } from 'react';
 import {
 	ImageBackground,
 	KeyboardAvoidingView,
@@ -12,6 +12,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import fetchUsername from '../Hooks/fetchUsername';
 
 type loginScreenProps = {
 	navigation: any;
@@ -28,25 +29,37 @@ const getData = async () => {
 }
 
 
+
 const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
+	const [message, setMessage] = useState<string>('')
 	navigation = useNavigation();
 	const auth = getAuth();
 
+	useEffect(() => {
+		if(auth.currentUser) {
+			getData().then(async data => {
+				setEmail(data.email)
+				setPassword(data.password)
+			})
+		}
+	})
+	
 	const login = () => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then(async (userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				var username = ""
-				const info = getData().then(async data => {
+				getData().then(async data => {
 					if(data != null) {
-						username = data.username
+						navigation.navigate('Home', {username: data.username} );
+					} else {
+						console.log("i am here because user doesn't exist")
+						setMessage("Your account doesn't exist. Please register!")
 					}
 				})
-				if (username == null) console.log("couldn't fetch doc");
-				navigation.navigate('Home', { username: username });
+				
 				setEmail('');
 				setPassword('');
 
@@ -79,7 +92,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 					<TouchableOpacity onPress={login} style={styles.button}>
 						<Text style={styles.buttonText}>Login</Text>
 					</TouchableOpacity>
-
+					{/* <Text style={styles.message}> {message} </Text> */}
 					<Text style={styles.text}>New user?</Text>
 					<TouchableOpacity
 						onPress={() => {
@@ -100,7 +113,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'rgba( 0, 0, 0, 0.5)'
+		backgroundColor: 'rgba( 0, 0, 0, 0.6)'
 	},
 	inputContainer: {
 		width: '50%'
@@ -150,6 +163,12 @@ const styles = StyleSheet.create({
 	text: {
 		marginTop: 10,
 		color: 'white'
+	},
+	message : {
+		fontSize: 15,
+		color: 'red',
+		marginTop: 10,
+		marginBottom: 10
 	},
 	titleContainer: {
 		width: '60%',

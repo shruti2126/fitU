@@ -30,7 +30,7 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
 	const [username, setUsername] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-
+	const [message, setMessage] = useState<string>('')
 	navigation = useNavigation();
 	const auth = getAuth();
 
@@ -40,11 +40,14 @@ const RegisterScreen: React.FC<registerScreenProps> = ({ navigation }) => {
 				// Signed in
 				const user = userCredential.user;
 				saveUserToFirestore(username, email);
+				if(password.length < 6) {
+					setMessage("Your password is too short! Please create password of length >= 6.")
+				}
 				navigation.navigate('Home', { username: username });
 				setEmail('');
 				setPassword('');
 				setUsername('');
-				const obj = { email: email, username: username }
+				const obj = { email: email, username: username, password: password}
 				storeData("userInfo", obj)
 			})
 			.catch((error) => {

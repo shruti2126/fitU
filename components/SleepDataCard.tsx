@@ -9,13 +9,12 @@ type dataProps = {
   nav_function?: () => void;
 };
 
-
+//420, 401, 389, 376, 354
 const line = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-    'November', 'December'],
+  labels: ['January', 'February', 'March', 'April'],
   datasets: [
     {
-      data: [412.33, 403, 375, 371, 379, 415, 427, 420, 401, 389, 376, 354],
+      data: [412.33, 403, 375, 371, 379, 415, 427],
       strokeWidth: 2, // optional
     },
   ],
@@ -29,7 +28,7 @@ const SleepDataCard: React.FC<dataProps> = ({ }) => {
       <Text style={styles.title}>Annual Sleep</Text>
       <LineChart
         data={line}
-        width={1000} // from react-native
+        width={350} // from react-native
         height={350}
         yAxisSuffix={'min'}
         chartConfig={{

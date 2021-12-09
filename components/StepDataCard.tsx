@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
+import { ScrollView } from 'react-native-gesture-handler';
 
 //const customData = require('./FinalHealthData.json');
 
@@ -23,14 +24,12 @@ const mockData = [
     weight: 150
   },
 ]
-
+//9803, 7926, 9012, 10256,10447, 10892
 const line = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-    'November', 'December'],
+  labels: ['January', 'February', 'March', 'April'],
   datasets: [
     {
-      data: [6704, 4033, 4572, 5633, 5148, 8077, 9803, 7926, 9012, 10256,
-        10447, 10892],
+      data: [6704, 4033, 4572, 5633, 5148, 8077],
       strokeWidth: 2, // optional
     },
   ],
@@ -42,31 +41,32 @@ const StepDataCard: React.FC<dataProps> = ({ }) => {
 
     <View style={styles.container}>
       <Text style={styles.title}>Annual Steps</Text>
-      <LineChart
-        data={line}
-        width={1000} // from react-native
-        height={350}
-        //yAxisLabel={''}
-        chartConfig={{
-          backgroundColor: '#e26a00',
-          backgroundGradientFrom: '#fb8c00',
-          backgroundGradientTo: '#ffa726',
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16
+       <ScrollView> 
+        <LineChart
+          data={line}
+          width={350} // from react-native
+          height={350}
+          //yAxisLabel={''}
+          chartConfig={{
+            backgroundColor: '#e26a00',
+            backgroundGradientFrom: '#fb8c00',
+            backgroundGradientTo: '#ffa726',
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+            style: {
+              borderRadius: 16
 
-          }
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16
-
-        }}
-      />
-
-    </View>
+            }
+          }}
+          bezier
+          style={{
+            marginVertical: 8,
+            borderRadius: 16,
+          }}
+        />
+        </ScrollView>
+      </View>
+    
   )
 }
 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 15,
     marginBottom: 7,
-    marginTop: 10
+    marginTop: 10, 
   },
   title: {
     color: 'black',
@@ -108,6 +108,9 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     width: '100%',
     height: '100%',
+  }, 
+  LineChart : {
+    width: '80%'
   }
 });
 

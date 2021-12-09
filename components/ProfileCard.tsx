@@ -16,10 +16,10 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 				<Text style={styles.textTitle}>Today's Progress</Text>
 			</View>
 			<View style={styles.progress}>
-				<Text style={styles.progressBody}>Steps Walked: </Text>
+				<Text style={styles.progressBody}>Steps Walked: 5000</Text>
 			</View>
 			<View style={styles.progress}>
-				<Text style={styles.progressBody}>Hours Slept Last night: </Text>
+				<Text style={styles.progressBody}>Hours Slept Last night: 6</Text>
 			</View>
 
 			{/* <Text style={[ styles.textTitle, { marginTop: 140 } ]}>Daily Goals</Text>
@@ -30,7 +30,7 @@ const ProfileCard: React.FC<homeScreenProps> = ({ card_title, goal_navigation })
 				<Text style={styles.progressBody}>Goal 3 </Text>
 			</View> */}
 			<View style={styles.goalButton}>
-				<Button title="View goals" onPress={goal_navigation} color="#f194ff" />
+				<Button title="View goals" onPress={goal_navigation} color="#e1ad01"/>
 			</View>
 			{/* <Pressable style={styles.text_body} onPress={goal_navigation}>
 				<Text style={styles.toGoals}> Click to Goals </Text>
@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: 'oldlace',
 		borderRadius: 20,
+		elevation: 3, 
+		shadowOffset: {width: 1, height: 1},
+		shadowColor: '#333',
+		shadowOpacity: 0.3,
 		// height: 500,
 		height: 170,
 		width: 350,
@@ -53,7 +57,12 @@ const styles = StyleSheet.create({
 		paddingTop: 5
 	},
 	goalButton: {
-		marginTop: 20
+		backgroundColor: '#e1ad01',
+		//width: '70%',
+		padding: 2,
+		borderRadius: 10,
+		//alignItems: 'center',
+		marginTop: 10
 	},
 	progress: {
 		marginTop: 10

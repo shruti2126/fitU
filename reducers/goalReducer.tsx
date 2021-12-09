@@ -50,6 +50,7 @@ const data = getData().then(async data => {
 			}
 			if(sleep_goals?.MainGoal != undefined && sleep_goals?.MainGoal.length != 0) {
 				initialGoalState[1].data.push(sleep_goals?.MainGoal)
+				
 			}
 		}
 		console.log(initialGoalState)

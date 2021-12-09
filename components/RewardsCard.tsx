@@ -18,7 +18,7 @@ const rewardsCard: React.FC<RewardsProps> = ({ coins, jewels }) => {
 			<Text style={styles.textBody}>Jewels: {jewels}</Text>
 
 			<View style={styles.storeButton}>
-				<Button title="Visit Store" onPress={() => navigation.navigate('Store')} color="#f194ff" />
+				<Button title="Visit Store" onPress={() => navigation.navigate('Store')} color="##e1ad01" />
 				{/* <Button title="Visit Store" onPress={() => navigation.navigate('Shop')} color="#f194ff" /> */}
 			</View>
 		</View>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: 'oldlace',
 		borderRadius: 20,
-		height: 160,
+		height: 170,
 		width: 350,
 		margin: 10,
 		paddingLeft: 15,
@@ -45,11 +45,17 @@ const styles = StyleSheet.create({
 	},
 	textBody: {
 		fontSize: 18,
-		marginBottom: 5
+		marginBottom: 5,
+		marginTop: 5
 	},
 
 	storeButton: {
-		marginTop: 20
+		backgroundColor: '#e1ad01',
+		//width: '70%',
+		padding: 5,
+		borderRadius: 10,
+		//alignItems: 'center',
+		marginTop: 10
 	}
 });
 

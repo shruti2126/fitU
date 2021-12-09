@@ -22,6 +22,7 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 	};
 
 	const username = route.params.username;
+	
 
 	return (
 		<ImageBackground source={require('../LoginBackground.jpeg')} style={styles.image}>
@@ -67,7 +68,8 @@ const styles = StyleSheet.create({
 	title: {
 		color: 'white',
 		fontWeight: '700',
-		fontSize: 30
+		fontSize: 30,
+		marginBottom: 10
 	},
 	title_header: {
 		textAlign: 'center',
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
 		// backgroundColor: 'aliceblue'
 	},
 	StatsButton: {
-		backgroundColor: '#f194ff',
+		backgroundColor: '#e1ad01',
 		width: '80%',
 		padding: 15,
 		borderRadius: 10,
@@ -91,12 +93,13 @@ const styles = StyleSheet.create({
 		marginTop: 40
 	},
 	button: {
-		backgroundColor: '#0782F9',
+		backgroundColor: '#187bcd',
 		width: '60%',
-		padding: 15,
+		padding: 10,
 		borderRadius: 10,
 		alignItems: 'center',
-		marginTop: 40
+		marginTop: 30, 
+		marginBottom: 10
 	},
 	buttonText: {
 		color: 'white',
@@ -109,27 +112,5 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		width: '100%',
 		height: '100%'
-		// blurRadius: 50
 	}
-	// image: {
-	// 	flex: 1,
-	// 	justifyContent: 'center',
-	// 	alignContent: 'center',
-	// 	width: '100%',
-	// 	height: '100%'
-	// },
-	// text: {
-	// 	marginTop: 10
-	// },
-	// titleContainer: {
-	// 	width: '100%',
-	// 	justifyContent: 'center',
-	// 	alignItems: 'center',
-	// 	marginTop: 15,
-	// 	marginBottom: 25
-	// },
-	// heading: {
-	// 	fontSize: 100,
-	// 	color: '#702963'
-	// }
 });
