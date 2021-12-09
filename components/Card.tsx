@@ -66,9 +66,14 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		backgroundColor: 'oldlace',
 		borderRadius: 20,
-		elevation: 3, 
-		shadowOffset: {width: 1, height: 1},
-		shadowColor: 'white',
+		elevation: 3,
+		shadowOffset: {
+			width: 5,
+			height: 8
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 5,
+		shadowColor: '#FFFFFF',
 		height: 50,
 		//width: 350,
 		margin: 5,
