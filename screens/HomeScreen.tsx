@@ -5,6 +5,7 @@ import { NavigationRouteContext, useNavigation, Route } from '@react-navigation/
 import Card from '../components/Card';
 import ProfileCard from '../components/ProfileCard';
 import RewardsCard from '../components/RewardsCard';
+import LevelsCard from '../components/LevelsCard';
 
 type homeScreenProps = {
 	route: Route<string>;
@@ -30,6 +31,8 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 						<Text style={styles.title}>Welcome {username} !</Text>
 					</View>
 
+					<LevelsCard />
+
 					<ProfileCard goal_navigation={() => navigation.navigate('Goals')} />
 					<RewardsCard />
 
@@ -37,7 +40,6 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 						<Card card_title={'Steps'} nav_function={() => navigation.navigate('Steps')} />
 						<Card card_title={'Sleep'} nav_function={() => navigation.navigate('Sleep')} />
 					</View>
-
 
 					<TouchableOpacity onPress={() => navigation.navigate('Stats')} style={styles.StatsButton}>
 						<Text style={styles.buttonText}>GO TO STATS</Text>
