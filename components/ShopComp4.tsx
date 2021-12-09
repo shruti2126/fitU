@@ -14,7 +14,7 @@ export default class ShopComp3 extends Component {
         return (
             <ScrollView
                 ref={(scrollView) => { this.scrollView = scrollView; }}
-                style={styles.container}
+                style={styles1.container}
                 //pagingEnabled={true}
                 horizontal={true}
                 showsHorizontalScrollIndicator={true}
@@ -27,125 +27,125 @@ export default class ShopComp3 extends Component {
                     bottom: 0,
                     right: 30,
                 }}>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/coffee.webp")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
 
                     }} >
-                        <ImageBackground source={require("./ShopImage/star25.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c10j0.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/salad.webp")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
                     }} >
-                        <ImageBackground source={require("./ShopImage/star50.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c0j20.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/cap.png")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
                     }} >
-                        <ImageBackground source={require("./ShopImage/star100.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c10j10.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/shirt.png")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
                     }} >
-                        <ImageBackground source={require("./ShopImage/star150.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c20j20.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/sneakers.png")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
                     }} >
-                        <ImageBackground source={require("./ShopImage/star200.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c100j0.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/bike.png")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
                     }} >
-                        <ImageBackground source={require("./ShopImage/star300.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c100j100.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
-                <View style={styles.view}>
+                <View style={styles1.view}>
                     <ImageBackground source={require("./ShopImage/watch.png")} style={styles2.backgroundImage} imageStyle={{
                         resizeMode: 'cover'
                     }} >
-                        <ImageBackground source={require("./ShopImage/star400.png")} style={styles2.icon} imageStyle={{
+                        <ImageBackground source={require("./ShopImage/c200j200.png")} style={styles2.icon} imageStyle={{
                             resizeMode: 'cover'
                         }} >
                         </ImageBackground>
                     </ImageBackground>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles2.button}
                         onPress={() => { }}
                     >
                         <Text style={styles2.text}>get Reward</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </ScrollView>
         );
     }
 }
 
-const styles = StyleSheet.create({
+const styles1 = StyleSheet.create({
     container: {},
     view: {
         marginVertical: 70,

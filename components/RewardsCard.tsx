@@ -18,8 +18,8 @@ const rewardsCard: React.FC<RewardsProps> = ({ coins, jewels }) => {
 			<Text style={styles.textBody}>Jewels: {jewels}</Text>
 
 			<View style={styles.storeButton}>
-				{/* <Button title="Visit Store" onPress={() => navigation.navigate('Store')} color="#f194ff" /> */}
-				<Button title="Visit Store" onPress={() => navigation.navigate('Shop')} color="#f194ff" />
+				<Button title="Visit Store" onPress={() => navigation.navigate('Store')} color="#f194ff" />
+				{/* <Button title="Visit Store" onPress={() => navigation.navigate('Shop')} color="#f194ff" /> */}
 			</View>
 		</View>
 	);
