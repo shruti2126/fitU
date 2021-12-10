@@ -24,45 +24,43 @@ const getData = async () => {
 		return jsonValue != null ? JSON.parse(jsonValue) : null;
 	} catch (e) {
 		// error reading value
-		console.log("there was an error = ", e)
+		console.log('there was an error = ', e);
 	}
-}
-
-
+};
 
 const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-	const [message, setMessage] = useState<string>('')
+	const [ email, setEmail ] = useState<string>('');
+	const [ password, setPassword ] = useState<string>('');
+	const [ message, setMessage ] = useState<string>('');
 	navigation = useNavigation();
 	const auth = getAuth();
 
-	useEffect(() => {
-		if(auth.currentUser) {
-			getData().then(async data => {
-				setEmail(data.email)
-				setPassword(data.password)
-			})
-		}
-	})
-	
+	// useEffect(() => {
+	// 	if(auth.currentUser) {
+	// 		getData().then(async data => {
+	// 			setEmail(data.email)
+	// 			setPassword(data.password)
+	// 		})
+	// 	}
+	// })
+
 	const login = () => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then(async (userCredential) => {
 				// Signed in
 				const user = userCredential.user;
-				getData().then(async data => {
-					if(data != null) {
-						navigation.navigate('Home', {username: data.username} );
-					} else {
-						console.log("i am here because user doesn't exist")
-						setMessage("Your account doesn't exist. Please register!")
+				getData().then(async (data) => {
+					if (data != null) {
+						navigation.navigate('Home', { username: data.username });
 					}
-				})
-				
+					else {
+						console.log("i am here because user doesn't exist");
+						setMessage("Your account doesn't exist. Please register!");
+					}
+				});
+
 				setEmail('');
 				setPassword('');
-
 			})
 			.catch((error) => {
 				alert(error.message);
@@ -77,7 +75,12 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 					<Text style={styles.heading}>fitU</Text>
 				</View>
 				<View style={styles.inputContainer}>
-					<TextInput placeholder="Email" onChangeText={(email) => setEmail(email.toLowerCase())} value={email} style={styles.input} />
+					<TextInput
+						placeholder="Email"
+						onChangeText={(email) => setEmail(email.toLowerCase())}
+						value={email}
+						style={styles.input}
+					/>
 
 					<TextInput
 						placeholder="Password"
@@ -98,7 +101,7 @@ const LoginScreen: React.FC<loginScreenProps> = ({ navigation }) => {
 						onPress={() => {
 							navigation.navigate('Register');
 						}}
-						style={[styles.registerButton, styles.buttonOutline]}
+						style={[ styles.registerButton, styles.buttonOutline ]}
 					>
 						<Text style={styles.buttonOutlineText}>Register</Text>
 					</TouchableOpacity>
@@ -164,7 +167,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		color: 'white'
 	},
-	message : {
+	message: {
 		fontSize: 15,
 		color: 'red',
 		marginTop: 10,
@@ -186,8 +189,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignContent: 'center',
 		width: '100%',
-		height: '100%',
-
+		height: '100%'
 	}
 });
 

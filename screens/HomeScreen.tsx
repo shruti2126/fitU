@@ -22,12 +22,11 @@ const HomeScreen: React.FC<homeScreenProps> = ({ route, navigation }) => {
 	};
 
 	const username = route.params.username;
-	
 
 	return (
 		<ImageBackground source={require('../LoginBackground.jpeg')} style={styles.image}>
 			<ScrollView>
-				<View style={styles.container}>
+				<View style={[ styles.container, styles.shadow ]}>
 					<View style={styles.title_header}>
 						<Text style={styles.title}>Welcome {username} !</Text>
 					</View>
@@ -65,6 +64,15 @@ const styles = StyleSheet.create({
 		// backgroundColor: 'aliceblue'
 		backgroundColor: 'rgba( 0, 0, 0, 0.6 )'
 	},
+	shadow: {
+		shadowOffset: {
+			width: 10,
+			height: 8
+		},
+		shadowOpacity: 0.6,
+		shadowRadius: 5,
+		shadowColor: 'white'
+	},
 	title: {
 		color: 'white',
 		fontWeight: '700',
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 10,
 		alignItems: 'center',
-		marginTop: 30, 
+		marginTop: 30,
 		marginBottom: 10
 	},
 	buttonText: {
@@ -112,5 +120,13 @@ const styles = StyleSheet.create({
 		alignContent: 'center',
 		width: '100%',
 		height: '100%'
+	},
+	shadow: {
+		shadowOffset: {
+			width: 5,
+			height: 8
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 5
 	}
 });

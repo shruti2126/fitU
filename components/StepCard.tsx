@@ -45,6 +45,14 @@ const styles = StyleSheet.create({
 		marginBottom: 7,
 		marginTop: 10
 	},
+	shadow: {
+		shadowOffset: {
+			width: 5,
+			height: 8
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 5
+	},
 	title: {
 		color: 'black',
 		fontWeight: '700',

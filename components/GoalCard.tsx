@@ -29,7 +29,7 @@ export const GoalCard: React.FC<props> = ({
 	// console.log(title);
 
 	return (
-		<View style={[ isMainGoal ? styles.mainGoalContainer : styles.goalsContainer ]}>
+		<View style={[ isMainGoal ? [ styles.mainGoalContainer, styles.shadow ] : styles.goalsContainer ]}>
 			<Text style={styles.goalsTitle}>{title}</Text>
 			<Text>{note}</Text>
 			<Text>Main Goal? {isMainGoal ? 'Yes' : 'No'}</Text>
@@ -62,10 +62,20 @@ const styles = StyleSheet.create({
 	},
 	mainGoalContainer: {
 		marginLeft: 10,
-		backgroundColor: '#f194ff',
+		// backgroundColor: '#f194ff',
+		borderWidth: 1,
+		borderColor: '#f194ff',
 		borderRadius: 10,
 		paddingLeft: 15,
 		marginBottom: 7
+	},
+	shadow: {
+		shadowOffset: {
+			width: 10,
+			height: 8
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 5
 	},
 	goalsTitle: {
 		color: 'black',
