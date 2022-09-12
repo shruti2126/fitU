@@ -1,6 +1,6 @@
 # fitU
 
-#About
+About
 
 Objective : A weight-loss app that uses Statistical analysis to provide users insight into what activity, that they are performing daily/weekly, is affecting their the weight-loss the most.
 
