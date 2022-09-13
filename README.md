@@ -21,7 +21,7 @@ A weight-loss app that uses Statistical analysis to provide users insight into w
 
  - Sleep and Steps screens - Shows Sleep and Steps specific (intended to be pulled directly from apple health kit initially, but currently MOCKED version) information for the user - Main Goal, A note-to-self and Difficulty of goal.
  
- - Stats Screen -> Present descriptions of correlation between each pair of variables through charts and scientific reasoning. 
+ - Stats Screen -> Presents descriptions of correlation between each pair of variables through charts and scientific reasoning. 
                    As users get familiar with correlations in daily life, they could become self-organized and be specific about their target of fitness. 
                    Goal: to consolidate users’ confidence on the feasibility of our plans
 
