@@ -2,7 +2,7 @@
 
 # About
 
-A weight-loss app that uses Statistical analysis to provide users insight into what activity, that they are performing daily/weekly, is affecting their the weight-loss the most.
+A weight-loss app that uses Statistical analysis to provide users insight into what activity, for e.g walking, sleeping, eating etc., they engage in daily/weekly, is affecting their the weight-loss the most.
 
 # Key Features of the app:
 
